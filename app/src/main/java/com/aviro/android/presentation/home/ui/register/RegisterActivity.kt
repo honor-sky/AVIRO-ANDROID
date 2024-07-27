@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentActivity
 import com.aviro.android.R
 import com.aviro.android.domain.entity.menu.Menu
 import com.aviro.android.databinding.*
+import com.aviro.android.databinding.AddMenuLayoutBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import dagger.hilt.android.AndroidEntryPoint

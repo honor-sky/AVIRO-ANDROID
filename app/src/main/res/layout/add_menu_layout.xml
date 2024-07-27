@@ -54,7 +54,7 @@
                     android:textColor="@color/Gray0"
                     android:inputType="textPersonName|textNoSuggestions|textVisiblePassword"
                     android:hint="메뉴 이름"
-                    android:textSize="18sp" />
+                    android:textSize="18dp" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -76,7 +76,7 @@
                         android:paddingEnd="16dp"
                         android:paddingBottom="12dp"
                         android:textColor="@color/Gray0"
-                        android:textSize="18sp" />
+                        android:textSize="18dp" />
 
                     <Button
                         android:id="@+id/pricePopupMenu"
@@ -124,7 +124,7 @@
                     android:paddingEnd="16dp"
                     android:paddingBottom="12dp"
                     android:hint="계란 빼달라고 요청하기"
-                    android:textSize="18sp"
+                    android:textSize="18dp"
                     android:textColorHint="@color/Gray3"/>
                 <!--app:setEditText="@{viewmodel.isRequest}"-->
             </LinearLayout>

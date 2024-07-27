@@ -203,7 +203,7 @@
                         android:text="챌린지"
                         android:visibility="invisible"
                         android:textColor="@color/Gray2"
-                        android:textSize = "17sp" />
+                        android:textSize = "17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -212,7 +212,7 @@
                         android:layout_gravity="center"
                         android:text="챌린지"
                         android:visibility="invisible"
-                        android:textSize = "32sp" />
+                        android:textSize = "32dp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                             android:fontFamily="@font/pretendard_semibold"
                             android:text="챌린지"
                             android:textColor="@color/Gray0"
-                            android:textSize="32sp"
+                            android:textSize="32dp"
                             android:visibility="invisible"
                             tools:ignore="HardcodedText" />
                     </RelativeLayout>
@@ -236,7 +236,7 @@
                         android:layout_gravity="center"
                         android:visibility="invisible"
                         android:text="챌린지"
-                        android:textSize = "20sp" />
+                        android:textSize = "20dp" />
 
                     <!-- 챌린지  -->
                     <FrameLayout

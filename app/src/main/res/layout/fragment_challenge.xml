@@ -70,6 +70,7 @@
                 android:id="@+id/periodTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minHeight="78dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:text="@{viewmodel.challengePeriod}"
@@ -145,6 +146,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minHeight="21dp"
                         android:layout_marginTop="83dp"
                         android:layout_gravity="center"
                         android:fontFamily="@font/pretendard_semibold"
@@ -154,6 +156,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minHeight="18dp"
                         android:layout_marginTop="6dp"
                         android:layout_gravity="center"
                         android:fontFamily="@font/pretendard_medium"
@@ -185,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
                         android:textColor="@color/Cobalt"
-                        android:textSize="15sp"
+                        android:textSize="15Dp"
                         android:text="@{viewmodel.challengeMyPoint}" />
                     <TextView
                         android:layout_width="wrap_content"

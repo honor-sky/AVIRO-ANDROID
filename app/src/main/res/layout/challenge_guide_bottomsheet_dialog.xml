@@ -34,7 +34,7 @@
         android:text="@{String.valueOf(viewmodel.challengeTitle) + ` 챌린지`}"
         android:fontFamily="@font/pretendard_semibold"
         android:textColor="@color/Gray0"
-        android:textSize="20sp"/>
+        android:textSize="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
-                    android:textSize="11sp"
+                    android:textSize="11dp"
                     android:text="포인트를 모아보세요!"
                     android:textColor="#646464" />
 
@@ -87,7 +87,7 @@
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="가게를 등록하고 후기를 작성해서\n나의 나무를 키워보세요!"
                     android:textColor="@color/Gray0"
-                    android:textSize="15sp" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_regular"
-                        android:textSize="11sp"
+                        android:textSize="11dp"
                         android:text="챌린지에 참여해보세요!"
                         android:textColor="#646464"/>
 
@@ -133,7 +133,7 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="더 많은 사람들이\n비건을 선택하는데 도움이 돼요!"
                         android:textColor="@color/Gray0"
-                        android:textSize="15sp" />
+                        android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -167,7 +167,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendard_regular"
-                            android:textSize="11sp"
+                            android:textSize="11dp"
                             android:text="비건 채식은 육류가 포함된 식단보다"
                            android:textColor="#646464"/>
 
@@ -178,7 +178,7 @@
                             android:fontFamily="@font/pretendard_semibold"
                             android:text="탄소 배출 75%를 줄이고\n생물 다양성 파괴를 66%까지 줄여요"
                             android:textColor="@color/Gray0"
-                            android:textSize="15sp" />
+                            android:textSize="15dp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -190,7 +190,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:fontFamily="@font/pretendard_regular"
-            android:textSize="9.5sp"
+            android:textSize="9.5dp"
             android:text="출처 : Peter Scarborough 「Vegans, vegetarians, fish-eaters and meat-eaters in the UK show discrepant environmental impacts」 「Naturefood」, 20 July 2023"
             android:textColor="@color/Gray2"/>
 
@@ -206,7 +206,7 @@
             android:orientation="vertical"
             android:text="이해했어요"
             android:fontFamily="@font/pretendard_semibold"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textColor="@color/Gray7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
