@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="가입 완료\n환영합니다!"
-        android:textSize = "30sp"
+        android:textSize = "30dp"
         android:fontFamily="@font/pretendard_bold"
         android:textColor="@color/Cobalt"
         android:textAlignment="center"
@@ -36,7 +36,7 @@
             android:id="@+id/nextTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:fontFamily="@font/pretendard_semibold"
             android:textColor="@color/Gray7"
             android:text="어비로 시작하기" />

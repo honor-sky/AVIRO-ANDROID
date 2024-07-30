@@ -21,6 +21,7 @@ import androidx.fragment.app.activityViewModels
 import com.aviro.android.R
 import com.aviro.android.common.getMarkerPin
 import com.aviro.android.databinding.FragmentUpdateLocMapBinding
+import com.aviro.android.presentation.BaseFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
@@ -30,7 +31,7 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 
-class SearchMapLocation : Fragment(), OnMapReadyCallback {
+class SearchMapLocation : BaseFragment(), OnMapReadyCallback {
 
     private var _binding: FragmentUpdateLocMapBinding? = null
     private val binding get() = _binding!!

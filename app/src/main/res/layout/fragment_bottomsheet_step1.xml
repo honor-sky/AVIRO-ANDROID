@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="4dp"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:veganTypeColor="@{mapViewmodel.selectedMarker.veganTypeColor}"
                     app:visibilityChanged="@{(mapViewmodel.bottomSheetState == 2)}"/>
                 <!--app:veganTypeColor="@{mapViewmodel.selectedMarker.veganTypeColor}"-->
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     android:textColor="@color/Gray0"
                     android:text="@{mapViewmodel.restaurantSummary.title}"/>
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="4dp"
-                    android:textSize="17sp"
+                    android:textSize="17dp"
                     android:fontFamily="@font/pretendard_semibold"
                     app:veganTypeColor="@{mapViewmodel.selectedMarker.veganTypeColor}"
                     app:visibilityChanged="@{(mapViewmodel.bottomSheetState == 1)}"/>
@@ -122,6 +122,8 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:ellipsize="end"
+                        android:textSize="15dp"
+                        android:fontFamily="@font/pretendard_regular"
                         android:text="@{mapViewmodel.restaurantSummary.address}" />
                 </LinearLayout>
 
@@ -145,7 +147,9 @@
                     android:id="@+id/distanceTextView_step1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="4dp"/>
+                    android:layout_marginStart="4dp"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/pretendard_regular"/>
 
                 <!--후기정보-->
                 <LinearLayout
@@ -160,6 +164,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/pretendard_regular"
                     android:text="@{String.valueOf(mapViewmodel.restaurantSummary.commentCount) + '개'}" />
             </LinearLayout>
 
@@ -177,13 +183,16 @@
                     android:id="@+id/distanceTextView_step2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="4dp"/>
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="15dp"/>
 
                 <TextView
                     android:id="@+id/categoryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/pretendard_regular"
                     android:text="@{mapViewmodel.restaurantSummary.category}" />
 
             </LinearLayout>
@@ -240,14 +249,12 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="38dp"
-            android:paddingBottom="22dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_vertical"
             android:background="@color/Gray7"
             app:visibilityChanged="@{(mapViewmodel.bottomSheetState == 3)}"
             app:layout_constraintTop_toBottomOf="@+id/summary_layout">
-            <!--app:layout_constraintTop_toBottomOf="@+id/restaurantInfo"-->
-            <!--app:visibilityChanged="@{(mapViewmodel.bottomSheetState == 3)}"-->
 
             <Button
                 android:id="@+id/backBtn"
@@ -266,7 +273,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textColor="@color/Gray0"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

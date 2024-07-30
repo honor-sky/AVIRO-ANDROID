@@ -12,11 +12,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import com.aviro.android.R
 import com.aviro.android.databinding.FragmentMypageBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.sign.Sign
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
-class MypageFragment : Fragment() {
+class MypageFragment : BaseFragment() {
 
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!

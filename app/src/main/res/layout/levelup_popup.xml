@@ -36,7 +36,7 @@
         android:text="축하해요!"
         android:fontFamily='@font/pretendard_bold'
         android:textColor="@color/Gray0"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintTop_toBottomOf="@+id/trophy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -48,7 +48,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily='@font/pretendard_bold'
         android:textColor="@color/Gray0"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintTop_toBottomOf="@+id/textview1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -67,7 +67,7 @@
         android:text="지금 확인할래요!"
         android:fontFamily='@font/pretendard_semibold'
         android:textColor="@color/Gray7"
-        android:textSize="17sp"
+        android:textSize="17dp"
         app:layout_constraintTop_toBottomOf="@+id/textview2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -81,7 +81,7 @@
         android:text="아니요, 다음에 볼게요"
         android:fontFamily='@font/pretendard_regular'
         android:textColor="@color/Gray3"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintTop_toBottomOf="@+id/completeBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

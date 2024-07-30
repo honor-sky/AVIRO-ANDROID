@@ -35,10 +35,12 @@
         app:itemIconSize="24dp"
         app:menu="@menu/bottom_nav_menu"
         app:itemRippleColor="@android:color/transparent"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
         app:itemTextColor="@drawable/bottom_bar_color"
         app:itemIconTint="@drawable/bottom_bar_color"
-        app:itemBackground="@drawable/bottom_bar_color"/>
+        app:itemBackground="@drawable/bottom_bar_color"
+     />
 
 
 

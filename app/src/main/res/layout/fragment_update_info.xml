@@ -36,7 +36,7 @@
         android:fontFamily="@font/pretendard_semibold"
         android:text="가게 이름"
         android:textColor="@color/Gray0"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -48,6 +48,8 @@
             android:paddingBottom="12dp"
             android:background="@drawable/base_roundsquare_gray6"
             android:orientation="horizontal"
+            android:textSize="16dp"
+            android:fontFamily="@font/pretendard_medium"
             android:text="@{viewmodel.afterInfoData.title}"
             android:afterTextChanged="@{viewmodel::afterTextChangedPlaceName}"/>
 
@@ -58,21 +60,22 @@
             android:layout_marginTop="20dp"
             android:text="카테고리"
             android:textColor="@color/Gray0"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <!--카테고리-->
         <RadioGroup
             android:id="@+id/categoryRadioGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
+            android:minHeight="24dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
             android:onCheckedChanged="@{(group, id) -> viewmodel.onCheckedChanged(id)}">>
 
         <RadioButton
             android:id="@+id/dishBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:button="@null"
             app:bgCheckBox = "@{viewmodel.categoryCheckedList.get(0)}" />
 
@@ -81,15 +84,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="15dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="식당"
             android:textColor="@color/Gray0"
-            android:fontFamily="@font/pretendard_medium" />
+            android:fontFamily="@font/pretendard_medium"
+            android:textSize="16dp" />
 
         <RadioButton
             android:id="@+id/cafeBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:button="@null"
             app:bgCheckBox = "@{viewmodel.categoryCheckedList.get(1)}"/>
 
@@ -98,15 +103,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="15dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="카페"
             android:textColor="@color/Gray0"
+            android:textSize="16dp"
             android:fontFamily="@font/pretendard_medium"/>
 
         <RadioButton
             android:id="@+id/bakeryBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:button="@null"
             app:bgCheckBox="@{viewmodel.categoryCheckedList.get(2)}" />
 
@@ -115,15 +122,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="15dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="빵집"
             android:textColor="@color/Gray0"
+            android:textSize="16dp"
             android:fontFamily="@font/pretendard_medium"/>
 
         <RadioButton
             android:id="@+id/barBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:button="@null"
             app:bgCheckBox = "@{viewmodel.categoryCheckedList.get(3)}" />
 
@@ -132,9 +141,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="15dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="술집"
             android:textColor="@color/Gray0"
+            android:textSize="16dp"
             android:fontFamily="@font/pretendard_medium"/>
     </RadioGroup>
     </LinearLayout>
@@ -162,7 +173,7 @@
         android:fontFamily="@font/pretendard_semibold"
         android:text="가게 주소"
         android:textColor="@color/Gray0"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -195,7 +206,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@{viewmodel.afterInfoData.address}"
                 android:textColor="@color/Gray0"
-                android:textSize="18sp" />
+                android:textSize="18dp" />
             <Button
                 android:id="@+id/button"
                 android:layout_width="24dp"
@@ -215,6 +226,8 @@
             android:paddingEnd="16dp"
             android:paddingBottom="12dp"
             android:text="@{viewmodel.afterInfoData.address2}"
+            android:textSize="15dp"
+            android:fontFamily="@font/pretendard_medium"
             android:afterTextChanged="@{viewmodel::afterTextChangedAddress2}"
             android:hint="상세 정보를 입력하세요. (예. 동,층,호)"
             android:background="@drawable/base_roundsquare_gray6"

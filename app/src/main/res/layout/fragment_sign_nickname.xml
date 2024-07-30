@@ -40,7 +40,7 @@
             android:textColor="@color/Cobalt"
             android:fontFamily="@font/pretendard_bold"
             android:text="반가워요!\n닉네임을 정해주세요."
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="어비로에서 불릴 닉네임에요."
             android:textColor="@color/Gray1"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:fontFamily="@font/pretendard_regular"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
@@ -80,7 +80,7 @@
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:imeOptions="actionDone"
                 android:hint="닉네임을 입력해주세요"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textColor = "@color/Gray0"
                 android:background = "@drawable/base_edittext_non"
                 app:animatedNickname="@{viewmodel.isNicknameValid}"
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
-                    android:textSize="13sp"
+                    android:textSize="13dp"
                     android:fontFamily="@font/pretendard_regular"
                     app:textColor="@{viewmodel.isNicknameValid}"
                     android:text='@{viewmodel.nicknameNoticeText}' />
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
-                    android:textSize="13sp"
+                    android:textSize="13dp"
                     android:fontFamily="@font/pretendard_regular"
                     android:text='@{viewmodel.nicknameCountText}'/>
 
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:text="다음으로"
                 android:fontFamily="@font/pretendard_semibold"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:textColor="@{viewmodel.isNicknameValid}" />
         </LinearLayout>
         <!--android:onClick="@{() -> viewmodel.onClick(nextBtn)}"-->

@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.ActivitySearchBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.SortingAccDisDialog
 import com.aviro.android.presentation.aviro_dialog.SortingLocationDialog
 import com.aviro.android.presentation.entity.SortingLocEntity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Search : FragmentActivity() {
+class Search : BaseActivity() {
 
     private lateinit var binding: ActivitySearchBinding
 

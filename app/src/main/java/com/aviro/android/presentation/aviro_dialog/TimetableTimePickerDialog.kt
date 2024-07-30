@@ -203,7 +203,6 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
             } else {
                 operatingEntity.isBreak = true
             }
-            //_operating.value = operatingEntity
             viewmodel.setSelectedOperatingData(operatingEntity)
 
         }

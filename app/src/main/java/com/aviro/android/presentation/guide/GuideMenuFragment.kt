@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.databinding.FragmentGuideMenuBinding
+import com.aviro.android.presentation.BaseFragment
 
-class GuideMenuFragment : Fragment() {
+class GuideMenuFragment : BaseFragment() {
 
     private val sharedViewModel: GuideViewModel by activityViewModels()
 

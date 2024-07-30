@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.databinding.FragmentUpdateNumberBinding
+import com.aviro.android.presentation.BaseFragment
 
-class UpdateNumberFragment : Fragment() {
+class UpdateNumberFragment : BaseFragment() {
 
     private var _binding: FragmentUpdateNumberBinding? = null
     private val binding get() = _binding!!

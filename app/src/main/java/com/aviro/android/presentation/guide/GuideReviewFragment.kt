@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aviro.android.databinding.FragmentGuideReviewBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.sign.Sign
 
 
-class GuideReviewFragment : Fragment() {
+class GuideReviewFragment : BaseFragment() {
 
 
     private var _binding: FragmentGuideReviewBinding? = null

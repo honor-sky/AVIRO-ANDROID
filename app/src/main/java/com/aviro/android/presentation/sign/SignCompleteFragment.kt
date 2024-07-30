@@ -9,9 +9,10 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.databinding.FragmentSignCompleteBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.home.Home
 
-class SignCompleteFragment : Fragment() {
+class SignCompleteFragment : BaseFragment() {
 
     private val sharedViewModel: SignViewModel by activityViewModels()
 

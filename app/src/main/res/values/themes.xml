@@ -4,6 +4,9 @@
     <style name="Base.Theme" parent="Theme.AppCompat.Light.NoActionBar"> <!--Theme.Material3.Light.NoActionBar--> <!-- Theme.AppCompat.Light.NoActionBar-->
         <!-- Customize your light theme here. -->
         <!--<item name="colorSecondary">@color/Gray7</item>-->
+
+        <item name="materialAlertDialogTheme">@style/Theme.AVIRO.Dialog</item>
+
         <item name="android:navigationBarColor">@android:color/transparent</item> <!-- 네비게이션 바 배경 투명 -->
         <item name="android:windowLightNavigationBar">true</item> <!-- 네비게이션 바 아이콘 색상을 밝게 -->
         <item name="android:statusBarColor">@android:color/transparent</item> <!-- 상태 표시줄 배경 투명 -->
@@ -34,6 +37,17 @@
     </style>
 
 
+    <style name="BottomNavigationViewTextStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">11dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">17dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+
+
     <!-- Bottom sheet dialog Style -->
     <style name="CustomBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomRoundedBackgroundBottomSheet</item>
@@ -47,6 +61,9 @@
     <style name="Theme.AVIRO.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered"> <!--ThemeOverlay.Material3.MaterialAlertDialog-->
         <item name="android:background">@color/Gray7</item>
 
+        <!--<item name="buttonBarPositiveButtonStyle">@style/Theme.AVIRO.Dialog.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Theme.AVIRO.Dialog.Button.Negative</item>-->
+
         <item name="buttonBarPositiveButtonStyle">@style/Theme.AVIRO.Dialog.Button.Positive</item>
         <item name="buttonBarNegativeButtonStyle">@style/Theme.AVIRO.Dialog.Button.Negative</item>
 
@@ -54,53 +71,54 @@
         <item name="materialAlertDialogBodyTextStyle">@style/AlertDialogMessageText</item>
 
         <item name="textColorAlertDialogListItem">@color/Cobalt</item> <!--@style/ThemeOverlay.AVIRO.Dialog.ItemList-->
-
     </style>
 
     <style name="AlertDialogTitleText" parent="MaterialAlertDialog.Material3.Title.Text"> <!--CenterStacked-->
         <item name="android:fontFamily">@font/pretendard_semibold</item> <!-- 원하는 글꼴로 변경 -->
-        <item name="android:textSize">17sp</item> <!-- 원하는 텍스트 크기로 변경 -->
+        <item name="android:textSize">17dp</item> <!-- 원하는 텍스트 크기로 변경 -->
         <!--<item name="android:textAlignment">center</item>-->
     </style>
 
     <style name="AlertDialogMessageText" parent="MaterialAlertDialog.Material3.Body.Text">
         <item name="android:fontFamily">@font/pretendard_regular</item> <!-- 원하는 글꼴로 변경 -->
-        <item name="android:textSize">15sp</item> <!-- 원하는 텍스트 크기로 변경 -->
+        <item name="android:textSize">15dp</item> <!-- 원하는 텍스트 크기로 변경 -->
         <item name="android:textColor">@color/Gray0</item>
         <!--<item name="android:textAlignment">center</item>-->
     </style>
 
 
-    <style name="Theme.AVIRO.Dialog.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton.Dialog"> <!--Theme.AVIRO.Dialog-->
+   <style name="Theme.AVIRO.Dialog.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
     <item name="materialThemeOverlay">@style/ThemeOverlay.AVIRO.Dialog.PositiveButton</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
-    <style name="Theme.AVIRO.Dialog.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton.Dialog"> <!--Theme.AVIRO.Dialog-->
+    <style name="Theme.AVIRO.Dialog.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="materialThemeOverlay">@style/ThemeOverlay.AVIRO.Dialog.NegativeButton</item>
+    <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
-    <style name="ThemeOverlay.AVIRO.Dialog.PositiveButton" parent=""> <!--Theme.AVIRO.Dialog-->
+    <style name="ThemeOverlay.AVIRO.Dialog.PositiveButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog"> <!--Theme.AVIRO.Dialog-->
         <item name="colorPrimary">@color/Cobalt</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item> <!-- 원하는 글꼴로 변경 -->
-        <item name="android:textSize">15sp</item> <!-- 원하는 텍스트 크기로 변경 -->
+        <item name="android:textSize">15dp</item> <!-- 원하는 텍스트 크기로 변경 -->
     </style>
 
-    <style name="ThemeOverlay.AVIRO.Dialog.NegativeButton" parent=""> <!--Theme.AVIRO.Dialog-->
+    <style name="ThemeOverlay.AVIRO.Dialog.NegativeButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog"> <!--Theme.AVIRO.Dialog-->
         <item name="colorPrimary">@color/Warn_Red</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item> <!-- 원하는 글꼴로 변경 -->
-        <item name="android:textSize">15sp</item> <!-- 원하는 텍스트 크기로 변경 -->
+        <item name="android:textSize">15dp</item> <!-- 원하는 텍스트 크기로 변경 -->
     </style>
 
-    <style name="ThemeOverlay.AVIRO.Dialog.ItemList" parent=""> <!--CenterStacked-->
+    <!--<style name="ThemeOverlay.AVIRO.Dialog.ItemList" parent="">
         <item name="colorPrimary">@color/Cobalt</item>
-        <item name="android:fontFamily">@font/pretendard_regular</item> <!-- 원하는 글꼴로 변경 -->
-        <item name="android:textSize">17sp</item> <!-- 원하는 텍스트 크기로 변경 -->
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">17dp</item>
         <item name="android:textAlignment">center</item>
-    </style>
+    </style>-->
 
-    <style name="AVIRO.TabText" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">18sp</item>
-    </style>
+
 
 
 </resources>

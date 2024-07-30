@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.aviro.android.R
 import com.aviro.android.databinding.ActivitySplashBinding
 import com.aviro.android.domain.entity.base.MappingResult
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.guide.Guide
 import com.aviro.android.presentation.home.Home
 import com.aviro.android.presentation.sign.Sign
@@ -23,7 +24,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
-class Splash : AppCompatActivity() {
+class Splash : BaseActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private val viewmodel: SplashViewModel by viewModels()

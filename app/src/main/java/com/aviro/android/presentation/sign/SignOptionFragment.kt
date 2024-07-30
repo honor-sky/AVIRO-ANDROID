@@ -10,8 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import com.aviro.android.R
 import com.aviro.android.databinding.FragmentSignOptionBinding
+import com.aviro.android.presentation.BaseFragment
 
-class SignOptionFragment : Fragment() {
+class SignOptionFragment : BaseFragment() {
 
     private val sharedViewModel: SignViewModel by activityViewModels()
 

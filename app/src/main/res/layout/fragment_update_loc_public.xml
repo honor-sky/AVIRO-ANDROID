@@ -60,7 +60,7 @@
             android:imeOptions="actionDone"
             android:inputType="textNoSuggestions|textVisiblePassword"
             android:textColor="@color/Cobalt"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:afterTextChanged="@{viewmodel::onTextChangedAddressOnPublic}"
             android:onFocusChangeListener="@{(v, hasFocus) -> viewmodel.onEditTextFocusChanged(hasFocus)}"/>
         <!--}"
@@ -86,7 +86,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:textColor="@color/Gray2"
-        android:textSize="15sp"
+        android:textSize="15dp"
         android:text="도로명이나 지역명을 이용해서 검색해보세요."
         android:fontFamily="@font/pretendard_medium"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +124,7 @@
                 android:text="검색 결과가 없습니다"
                 android:textColor="@color/Gray2"
                 android:fontFamily="@font/pretendard_medium"
-                android:textSize="15sp"/>
+                android:textSize="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                 android:text="주소를 다시 입력해주세요"
                 android:textColor="@color/Gray2"
                 android:fontFamily="@font/pretendard_medium"
-                android:textSize="15sp"/>
+                android:textSize="15dp"/>
         </LinearLayout>
 
         <ScrollView

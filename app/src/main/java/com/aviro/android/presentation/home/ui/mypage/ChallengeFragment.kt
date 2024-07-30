@@ -18,12 +18,13 @@ import androidx.fragment.app.setFragmentResultListener
 import com.aviro.android.R
 import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.FragmentChallengeBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.ChallengeGuideDialog
 import com.aviro.android.presentation.home.Home
 import com.aviro.android.presentation.home.HomeViewModel
 
 //@AndroidEntryPoint
-class ChallengeFragment : Fragment() {
+class ChallengeFragment : BaseFragment() {
 
     private var _binding: FragmentChallengeBinding? = null
     private val binding get() = _binding!!

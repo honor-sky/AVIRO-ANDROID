@@ -1,6 +1,7 @@
 package com.aviro.android.presentation.bottomsheet
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -19,17 +20,27 @@ import com.aviro.android.R
 import com.aviro.android.common.OnKeyboardVisibilityListener
 import com.aviro.android.databinding.FragmentReviewScriptBinding
 import com.aviro.android.domain.entity.review.Review
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.entity.RestaurantInfoForReviewEntity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ReviewActivity : FragmentActivity() {
+class ReviewActivity : BaseActivity() {
 
     private lateinit var binding : FragmentReviewScriptBinding
     private val viewmodel : ReviewViewModel by viewModels()
 
     var reviewcontent : Review? = null
+
+    /*override fun attachBaseContext(newBase: Context) {
+        val configuration = android.content.res.Configuration(newBase.resources.configuration)
+        configuration.fontScale = 1.0f // 시스템 글꼴 크기 설정 무시
+        applyOverrideConfiguration(configuration)
+        super.attachBaseContext(newBase)
+    }
+
+     */
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -248,6 +259,8 @@ class ReviewActivity : FragmentActivity() {
             }
         })
     }
+
+
 
 
 }

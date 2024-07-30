@@ -13,9 +13,10 @@ import com.aviro.android.R
 
 import com.aviro.android.databinding.MypageListFragBinding
 import com.aviro.android.domain.entity.member.MyRestaurant
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.home.HomeViewModel
 
-class MyBookmarkFrag : Fragment() {
+class MyBookmarkFrag : BaseFragment() {
 
     private var _binding: MypageListFragBinding? = null
     private val binding get() = _binding!!

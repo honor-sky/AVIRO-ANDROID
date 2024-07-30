@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import com.aviro.android.R
 import com.aviro.android.databinding.ActivityMenuUpdateBinding
 import com.aviro.android.databinding.AddMenuLayoutBinding
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
@@ -23,7 +24,7 @@ import java.util.HashMap
 import java.util.UUID
 
 @AndroidEntryPoint
-class UpdateMenu : FragmentActivity() {
+class UpdateMenu : BaseActivity() {
 
     private lateinit var binding : ActivityMenuUpdateBinding
     private val viewmodel : UpdateMenuViewModel by viewModels()

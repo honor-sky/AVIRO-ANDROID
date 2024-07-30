@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aviro.android.databinding.FragmentGuideSearchBinding
+import com.aviro.android.presentation.BaseFragment
 
-class GuideSearchFragment : Fragment() {
+class GuideSearchFragment : BaseFragment() {
 
 
     private var _binding: FragmentGuideSearchBinding? = null

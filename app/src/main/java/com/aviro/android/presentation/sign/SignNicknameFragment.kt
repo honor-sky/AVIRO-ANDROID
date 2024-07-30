@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.R
 import com.aviro.android.databinding.FragmentSignNicknameBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 
-class SignNicknameFragment() : Fragment() {
+class SignNicknameFragment() : BaseFragment() {
 
     private val sharedViewModel: SignViewModel by activityViewModels()
 
