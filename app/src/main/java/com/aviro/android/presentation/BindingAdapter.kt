@@ -474,11 +474,11 @@ object BindingAdapter {
     }
     @JvmStatic
     @BindingAdapter("app:setTimetablePickerText")
-    fun setTimetablePickerText(view : TextView, isValid : Boolean) {
-        if(isValid) {
-            view.setTextColor(ContextCompat.getColor(view.context, R.color.Gray0))
-        } else {
+    fun setTimetablePickerText(view : TextView, noBreak : Boolean) {
+        if(noBreak) {
             view.setTextColor(ContextCompat.getColor(view.context, R.color.Gray3))
+        } else {
+            view.setTextColor(ContextCompat.getColor(view.context, R.color.Gray0))
         }
     }
 

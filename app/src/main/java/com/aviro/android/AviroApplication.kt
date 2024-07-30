@@ -1,6 +1,7 @@
 package com.aviro.android
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
@@ -14,6 +15,8 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class AviroApplication : Application() {
+
+
 
     override fun onCreate() {
         super.onCreate()

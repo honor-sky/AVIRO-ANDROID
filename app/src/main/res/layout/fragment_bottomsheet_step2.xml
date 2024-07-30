@@ -16,14 +16,17 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:minHeight="50dp"
         android:background="@drawable/bottomsheet_tab_underline"
-        app:tabTextAppearance="@style/AVIRO.TabText"
-        app:tabIndicatorColor="@color/Gray1"
-        app:tabTextColor="@color/Gray0"
+        app:tabTextAppearance="@style/tab_text"
+        app:tabIndicatorColor="@color/Gray0"
+        app:tabSelectedTextColor="@color/Gray0"
+        app:tabTextColor="@color/Gray4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <!--android:background="@drawable/bottomsheet_tab_underline"-->
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -45,9 +48,11 @@
             android:text="후기" />
     </com.google.android.material.tabs.TabLayout>
 
+
     <com.aviro.android.presentation.home.ui.map.CustomBottomSheetContainerView
         android:id="@+id/bottomsheetViewPagerContainer"
         android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -11,6 +11,7 @@ import com.aviro.android.R
 import com.aviro.android.databinding.FragmentBottomsheetReviewBinding
 import com.aviro.android.domain.entity.member.MemberLevelUp
 import com.aviro.android.domain.entity.review.Review
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.aviro_dialog.LevelUpPopUp
 import com.aviro.android.presentation.aviro_dialog.RecommendPopUp
@@ -19,7 +20,7 @@ import com.aviro.android.presentation.entity.RestaurantInfoForReviewEntity
 import com.aviro.android.presentation.home.HomeViewModel
 import com.aviro.android.presentation.home.ui.map.MapViewModel
 
-class BottomSheetReview(val setReviewAmount : (Int) -> Unit) : Fragment() {
+class BottomSheetReview(val setReviewAmount : (Int) -> Unit) : BaseFragment() {
 
     private lateinit var homeViewmodel: HomeViewModel
     private lateinit var mapViewmodel: MapViewModel

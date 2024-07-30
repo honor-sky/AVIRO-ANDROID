@@ -55,7 +55,7 @@
                     android:gravity="center"
                     android:text="@{myRestaurantItem.category}"
                     android:textColor="@color/Gray7"
-                    android:textSize="14.4sp" />
+                    android:textSize="14.4dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -83,7 +83,7 @@
             android:maxLines="1"
             android:text="@{myRestaurantItem.title}"
             android:textColor="@color/Gray0"
-            android:textSize="20sp" />
+            android:textSize="20dp" />
 
         <!-- 주소 -->
         <TextView
@@ -96,7 +96,7 @@
             android:maxLines="1"
             android:text="@{myRestaurantItem.shortAddress}"
             android:textColor="@color/Gray0"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <!-- 메뉴 -->
         <LinearLayout
@@ -113,7 +113,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:maxLines="1"
                 android:textColor="@color/Gray3"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
             <!--android:text="@{myRestaurantItem.menu + '외' + String.valueOf(myRestaurantItem.menuCountExceptOne) + `개 메뉴`}"-->
             <!-- <TextView
                android:id="@+id/restaurant_menu_count"
@@ -136,7 +136,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:text="@{myRestaurantItem.createdBefore}"
             android:textColor="@color/Gray3"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </LinearLayout>
 
     <!-- 즐겨찾기 버튼 -->

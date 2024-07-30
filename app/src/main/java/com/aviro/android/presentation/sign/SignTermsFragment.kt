@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.R
 import com.aviro.android.databinding.FragmentSignTermsBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 
 
-class SignTermsFragment: Fragment() {
+class SignTermsFragment: BaseFragment() {
 
     private val sharedViewModel: SignViewModel by activityViewModels()
 

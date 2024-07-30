@@ -25,7 +25,7 @@
             android:text="지도중심"
             android:fontFamily="@font/pretendard_medium"
             android:textColor="@color/Gray3"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
         <LinearLayout
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -52,7 +52,7 @@
             android:text="정확도순"
             android:fontFamily="@font/pretendard_medium"
             android:textColor="@color/Gray3"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
         <LinearLayout
             android:layout_width="24dp"
             android:layout_height="24dp"

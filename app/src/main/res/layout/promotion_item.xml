@@ -26,7 +26,7 @@
             android:text="지금 확인하기"
             android:textColor="@color/Gray7"
             android:fontFamily="@font/pretendard_bold"
-            android:textSize="18sp"/>
+            android:textSize="18dp"/>
     </LinearLayout>
 
 

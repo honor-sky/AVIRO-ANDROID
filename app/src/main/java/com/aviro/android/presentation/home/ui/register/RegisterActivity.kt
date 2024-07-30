@@ -22,14 +22,16 @@ import androidx.fragment.app.FragmentActivity
 import com.aviro.android.R
 import com.aviro.android.domain.entity.menu.Menu
 import com.aviro.android.databinding.*
+import com.aviro.android.databinding.AddMenuLayoutBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.util.*
 
 @AndroidEntryPoint
-class RegisterActivity : FragmentActivity() {
+class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: FragmentRegisterBinding
 
@@ -39,6 +41,13 @@ class RegisterActivity : FragmentActivity() {
     val menuItemMap = HashMap<String, Menu>()
     var location_x : Double? = null
     var location_y : Double? = null
+
+    /*override fun attachBaseContext(newBase: Context) {
+        val configuration = android.content.res.Configuration(newBase.resources.configuration)
+        configuration.fontScale = 1.0f // 시스템 글꼴 크기 설정 무시
+        applyOverrideConfiguration(configuration)
+        super.attachBaseContext(newBase)
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

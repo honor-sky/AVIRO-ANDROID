@@ -40,7 +40,7 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="후기"
                 android:textColor="@color/Gray0"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/review_amount_textView"
@@ -51,7 +51,7 @@
                 android:gravity="bottom"
                 android:text="6개"
                 android:textColor="@color/Gray2"
-                android:textSize="13sp" />
+                android:textSize="13dp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -84,7 +84,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="아직 등록된 후기가 없어요."
                 android:textColor="@color/Gray1"
-                android:textSize="17sp" />
+                android:textSize="17dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="소중한 후기를 작성해주세요!"
                 android:textColor="@color/Gray1"
-                android:textSize="17sp" />
+                android:textSize="17dp" />
         </LinearLayout>
         <!-- 후기가 없어요 베리 끝 -->
     </LinearLayout>
@@ -117,7 +117,19 @@
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_weight="1"
-            android:background="@drawable/base_roundsquare_gray4_5" />
+
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/base_roundsquare_gray4_5" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="식당에 대한 경험과 팁을 알려주세요!"
+                android:textColor="@color/Gray4"
+                android:textSize="15dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,7 +141,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:text="등록"
             android:textColor="@color/Gray3"
-            android:textSize="17sp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

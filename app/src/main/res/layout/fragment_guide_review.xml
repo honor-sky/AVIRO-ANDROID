@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:textColor="@color/Gray7"
             android:text="지금 어비로 시작하기" />
 

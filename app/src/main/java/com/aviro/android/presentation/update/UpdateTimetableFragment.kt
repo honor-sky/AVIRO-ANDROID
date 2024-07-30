@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.databinding.FragmentUpdateTimetableBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.TimetableTimePickerDialog
 
 
-class UpdateTimetableFragment : Fragment() {
+class UpdateTimetableFragment : BaseFragment() {
 
     private var _binding: FragmentUpdateTimetableBinding? = null
     private val binding get() = _binding!!

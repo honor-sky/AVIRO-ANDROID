@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="14.4sp"
+                    android:textSize="14.4dp"
                     android:textColor="@color/Gray7"
                     android:text="@{myReviewItem.category}"
                     android:fontFamily="@font/pretendard_bold"/>
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textColor="@color/Gray0"
                 android:text="@{myReviewItem.title}"
                 android:maxLines="1"
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="@{myReviewItem.createdBefore}"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textColor="@color/Gray3"
                 android:fontFamily="@font/pretendard_regular"/>
             <!-- android:text="@{myReviewItem.createdBefore}"-->
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="@{myReviewItem.content}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textColor="@color/Gray3"
                 android:maxLines="6"
                 android:ellipsize="end"

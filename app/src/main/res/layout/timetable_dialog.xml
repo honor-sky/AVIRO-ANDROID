@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="영업 시간"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textColor="@color/Gray0"
         android:fontFamily = "@font/pretendard_bold"
         tools:ignore="Suspicious0dp" />
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="월"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableDayColor="@{timetable.mon.today}"/>
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="@{String.valueOf(timetable.mon.open)}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 app:timetableOpenColor="@{(timetable.mon.today &amp;&amp; timetable.mon.open != `정보없음`)}"
                 android:fontFamily = "@font/pretendard_medium"/>
         </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="9dp"
             android:text="@{String.valueOf(timetable.mon.breaktime) + ` 휴식시간`}"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:fontFamily = "@font/pretendard_medium"
             app:timetableBreakColor="@{timetable.mon.today}"
             app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.mon.breaktime))}"/>
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="화"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:fontFamily = "@font/pretendard_medium"
                     app:timetableDayColor="@{timetable.tue.today}"/>
                 <TextView
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@{String.valueOf(timetable.tue.open)}"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:timetableOpenColor="@{(timetable.tue.today &amp;&amp; timetable.tue.open != `정보없음`)}"
                     android:fontFamily = "@font/pretendard_medium"/>
             </LinearLayout>
@@ -111,7 +111,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="9dp"
                 android:text="@{String.valueOf(timetable.tue.breaktime) + ` 휴식시간`}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableBreakColor="@{timetable.tue.today}"
                 app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.tue.breaktime))}"/>
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="수"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:fontFamily = "@font/pretendard_medium"
                     app:timetableDayColor="@{timetable.wed.today}"/>
                 <TextView
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@{String.valueOf(timetable.wed.open)}"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:timetableOpenColor="@{(timetable.wed.today &amp;&amp; timetable.wed.open != `정보없음`)}"
                     android:fontFamily = "@font/pretendard_medium"/>
             </LinearLayout>
@@ -150,7 +150,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="9dp"
                 android:text="@{String.valueOf(timetable.wed.breaktime) + ` 휴식시간`}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableBreakColor="@{timetable.wed.today}"
                 app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.wed.breaktime))}"/>
@@ -171,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="목"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:fontFamily = "@font/pretendard_medium"
                     app:timetableDayColor="@{timetable.thu.today}"/>
                 <TextView
@@ -179,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@{String.valueOf(timetable.thu.open)}"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:timetableOpenColor="@{(timetable.thu.today &amp;&amp; timetable.thu.open != `정보없음`)}"
                     android:fontFamily = "@font/pretendard_medium"/>
             </LinearLayout>
@@ -189,7 +189,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="9dp"
                 android:text="@{String.valueOf(timetable.thu.breaktime) + ` 휴식시간`}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableBreakColor="@{timetable.thu.today}"
                 app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.thu.breaktime))}"/>
@@ -210,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="금"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:fontFamily = "@font/pretendard_medium"
                     app:timetableDayColor="@{timetable.fri.today}"/>
                 <TextView
@@ -218,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@{String.valueOf(timetable.fri.open)}"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:timetableOpenColor="@{(timetable.fri.today &amp;&amp; timetable.fri.open != `정보없음`)}"
                     android:fontFamily = "@font/pretendard_medium"/>
             </LinearLayout>
@@ -228,7 +228,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="9dp"
                 android:text="@{String.valueOf(timetable.fri.breaktime) + ` 휴식시간`}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableBreakColor="@{timetable.fri.today}"
                 app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.fri.breaktime))}"/>
@@ -249,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="토"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:fontFamily = "@font/pretendard_medium"
                     app:timetableDayColor="@{timetable.sat.today}"/>
                 <TextView
@@ -257,7 +257,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@{String.valueOf(timetable.sat.open)}"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:timetableOpenColor="@{(timetable.sat.today &amp;&amp; timetable.sat.open != `정보없음`)}"
                     android:fontFamily = "@font/pretendard_medium"/>
             </LinearLayout>
@@ -267,7 +267,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="9dp"
                 android:text="@{String.valueOf(timetable.sat.breaktime) + ` 휴식시간`}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableBreakColor="@{timetable.sat.today}"
                 app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.sat.breaktime))}"/>
@@ -288,7 +288,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="일"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:fontFamily = "@font/pretendard_medium"
                     app:timetableDayColor="@{timetable.sun.today}"/>
                 <TextView
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="@{String.valueOf(timetable.sun.open)}"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     app:timetableOpenColor="@{(timetable.sun.today &amp;&amp; timetable.sun.open != `정보없음`)}"
                     android:fontFamily = "@font/pretendard_medium"/>
             </LinearLayout>
@@ -306,7 +306,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="9dp"
                 android:text="@{String.valueOf(timetable.sun.breaktime) + ` 휴식시간`}"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:fontFamily = "@font/pretendard_medium"
                 app:timetableBreakColor="@{timetable.sun.today}"
                 app:visibilityChanged="@{!(TextUtils.isEmpty(timetable.sun.breaktime))}"/>

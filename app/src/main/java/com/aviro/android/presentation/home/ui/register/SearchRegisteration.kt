@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.databinding.FragmentSearchRegisterationBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.entity.SortingLocEntity
 import com.aviro.android.presentation.search.SearchAdapter
@@ -15,7 +16,7 @@ import com.aviro.android.presentation.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchRegisteration : FragmentActivity() {
+class SearchRegisteration : BaseActivity() {
 
     private lateinit var binding: FragmentSearchRegisterationBinding
     private val viewmodel: SearchViewModel by viewModels()

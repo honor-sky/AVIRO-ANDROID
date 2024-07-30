@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_semibold"
             android:textColor="@color/Gray0"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:text="@{review.nickname}" />
         <TextView
             android:id="@+id/updatedDate_textView"
@@ -37,7 +37,7 @@
             android:layout_marginStart="7dp"
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/Gray2"
-            android:textSize="13sp"
+            android:textSize="13dp"
             android:text="@{review.updatedTime}" />
         <ImageButton
             android:id="@+id/updateBtn"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_semibold"
             android:textColor="@color/Gray0"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:text="@{review.content}" />
         <!-- android:maxLines="4"
         android:ellipsize="end"-->
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textColor="@color/Gray0"
-                android:textSize="16sp"/>
+                android:textSize="16dp"/>
         </LinearLayout>
 
     </LinearLayout>

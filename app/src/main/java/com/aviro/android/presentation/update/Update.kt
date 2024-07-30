@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.aviro.android.databinding.ActivityUpdateBinding
+import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -16,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class Update : FragmentActivity() {
+class Update : BaseActivity() {
 
     private lateinit var binding : ActivityUpdateBinding
     private val viewmodel : UpdateViewModel by viewModels()
