@@ -1,7 +1,9 @@
 package com.aviro.android.presentation.bottomsheet
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,7 @@ import com.aviro.android.R
 import com.aviro.android.databinding.FragmentBottomsheetHomeBinding
 import com.aviro.android.domain.entity.member.MemberLevelUp
 import com.aviro.android.domain.entity.review.Review
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.aviro_dialog.LevelUpPopUp
 import com.aviro.android.presentation.aviro_dialog.RecommendPopUp
@@ -28,8 +31,9 @@ import com.aviro.android.presentation.home.HomeViewModel
 import com.aviro.android.presentation.home.ui.map.MapViewModel
 import com.aviro.android.presentation.update.Update
 import com.aviro.android.presentation.update.UpdateMenu
+import javax.inject.Singleton
 
-class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : Fragment() {
+class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //val setReviewAmount : (Int) -> Unit
 
     private lateinit var homeViewmodel: HomeViewModel
     private lateinit var mapViewmodel: MapViewModel
@@ -40,13 +44,61 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : Fragment() {
     lateinit var menuAdapter :  MenuAdapter
     lateinit var reviewAdapter : ReviewAdapter
 
+    //private lateinit var setReviewAmount: (Int) -> Unit
+
     enum class UpdateType {
         LOC, TIME, NUMBER, HOMEPAGE
     }
 
 
-    // 사용자에게 화면이 그려질때 생성됨
-    @SuppressLint("NotifyDataSetChanged")
+    /*
+
+    companion object {
+
+        private const val ARG_SET_REVIEW_AMOUNT = "setReviewAmount"
+        private const val HOME_VIEWMODEL = "homeViewModel"
+        private const val MAP_VIEWMODEL = "mapViewModel"
+        private const val BOTTOM_SHEET_VIEWMODEL = "bottomsheetViewModel"
+
+        @JvmStatic
+        fun newInstance(
+            bottomSheetViewModel: BottomSheetViewModel,
+            mapViewModel: MapViewModel,
+            homeViewModel: HomeViewModel,
+            setReviewAmount: (Int) -> Unit
+        ) : BottomSheetHome{
+            Log.d("글자 크기 변경 에러","newInstance")
+
+             return BottomSheetHome().apply {
+                this.setReviewAmount = setReviewAmount
+                this.viewmodel = bottomSheetViewModel
+                this.homeViewmodel = homeViewModel
+                this.mapViewmodel = mapViewModel
+            }
+
+        }
+
+    }
+
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("글자 크기 변경 에러","BottomSheet_Home:onCreate")
+        arguments?.let {
+            setReviewAmount = it.getSerializable(ARG_SET_REVIEW_AMOUNT) as (Int) -> Unit
+            this.viewmodel = it.getSerializable(BOTTOM_SHEET_VIEWMODEL) as BottomSheetViewModel
+            this.homeViewmodel = it.getSerializable(HOME_VIEWMODEL) as HomeViewModel
+            this.mapViewmodel = it.getSerializable(MAP_VIEWMODEL) as MapViewModel
+        }
+    }
+
+     */
+
+
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBottomsheetHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -69,7 +121,10 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : Fragment() {
         }
     }
 
+
     fun setViewModel(bottomSheetViewModel: BottomSheetViewModel, mapViewModel: MapViewModel,  homeViewmodel: HomeViewModel) {
+        Log.d("글자 크기 변경 에러","setViewModel")
+
         this.viewmodel = bottomSheetViewModel
         this.mapViewmodel = mapViewModel
         this.homeViewmodel = homeViewmodel
@@ -77,7 +132,7 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : Fragment() {
 
     private fun setAdapter() {
         menuAdapter = MenuAdapter()
-        Log.d("BottomSheetHome:ERROR", "${viewmodel.userNickname}")
+        //Log.d("BottomSheetHome:ERROR", "${viewmodel.userNickname}")
         reviewAdapter = ReviewAdapter(viewmodel,  //viewmodel.userNickname!!
             {item ->
                 viewmodel._selectedReviewForReport.value = item

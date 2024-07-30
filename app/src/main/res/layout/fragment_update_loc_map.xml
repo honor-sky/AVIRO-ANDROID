@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="@color/Gray2"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:text="지도를 움직여 아이콘을 원하는 위치로 옮겨보세요."
         android:fontFamily="@font/pretendard_medium"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:textColor="@color/Gray0"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:fontFamily="@font/pretendard_medium" />
 
         <Button
@@ -98,7 +98,7 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/base_roundsquare_cobalt_10"
             android:text="등록"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:fontFamily="@font/pretendard_semibold"
             android:textColor="@color/Gray7"/>
     </LinearLayout>

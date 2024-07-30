@@ -18,6 +18,7 @@ import com.aviro.android.databinding.FragmentSignSocialBinding
 import com.aviro.android.domain.entity.key.GOOGLE
 import com.aviro.android.domain.entity.key.KAKAO
 import com.aviro.android.domain.entity.key.NAVER
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -38,7 +39,7 @@ import com.navercorp.nid.profile.data.NidProfileResponse
 import java.util.*
 
 
-class SignSocialFragment : Fragment() {
+class SignSocialFragment : BaseFragment() {
 
     private val viewmodel: SignViewModel by activityViewModels()
 

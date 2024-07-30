@@ -143,9 +143,11 @@ class MypageViewModel @Inject constructor (
     init {
         _isLoding.value = false
 
-        getSignType() // 소셜로그인 타입
+        // feature
 
-        getMyInfo()  // 챌린지 정보 호출
+        getSignType()
+
+        getMyInfo()
         getChallengeInfo()
 
         getMyReviewList()
@@ -169,7 +171,6 @@ class MypageViewModel @Inject constructor (
                         _challengePeriod.value = data.period
                         _challengeTitle.value = data.title
 
-                        //AmplitudeUtils.challengePresent()
                     }
                     is MappingResult.Error -> {
                         _errorLiveData.value = it.message
@@ -188,10 +189,14 @@ class MypageViewModel @Inject constructor (
                         _nicknameText.value = it.data.toString()
                         _nickname.value = it.data.toString()
                     }
+
                     is MappingResult.Error -> {
                         _errorLiveData.value = it.message
                     }
                 }
+            }
+
+            viewModelScope.launch {
 
                 getMyInfoUseCase.getCount().let {
                     when (it) {
@@ -201,10 +206,14 @@ class MypageViewModel @Inject constructor (
                             _reviewAmount.value = data.commentCount.toString() + "개"
                             _bookmarkAmount.value = data.bookmarkCount.toString() + "개"
                         }
+
                         is MappingResult.Error -> {
                             _errorLiveData.value = it.message
                         }
                     }
+                }
+
+                viewModelScope.launch {
 
                     getMyInfoUseCase.getChallengeLevel().let {
                         when (it) {
@@ -222,11 +231,12 @@ class MypageViewModel @Inject constructor (
                                         "참여중인 ${data.total}명 중 ${data.userRank}등에요!"
                                 }
                             }
+
                             is MappingResult.Error -> {
                                 _errorLiveData.value = it.message
                             }
                         }
-                    }
+                }
 
                 }
             }

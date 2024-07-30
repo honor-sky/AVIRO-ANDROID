@@ -23,7 +23,8 @@
     <LinearLayout
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
+        android:minHeight="54dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
@@ -44,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_search"
+            android:layout_gravity="center_vertical"
             android:elevation="10dp"
             android:orientation="vertical">
         </LinearLayout>
@@ -51,9 +53,10 @@
             android:id="@+id/searchbarTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="21dp"
             android:layout_marginStart="7dp"
             android:fontFamily="@font/pretendard_medium"
-            android:textSize="18sp"/>
+            android:textSize="18dp"/>
     </LinearLayout>
 
     <!-- 화면 크기를 지정해주지 않으면 버벅거리는 문제 발생 -->

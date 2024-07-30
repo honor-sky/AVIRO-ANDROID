@@ -17,7 +17,7 @@
         android:fontFamily="@font/pretendard_regular"
         android:paddingStart="21dp"
         android:paddingBottom="9dp"
-        android:textSize="13sp" />
+        android:textSize="13dp" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"

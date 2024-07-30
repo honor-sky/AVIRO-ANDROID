@@ -48,7 +48,7 @@
                     android:fontFamily="@font/pretendard_bold"
                     android:text="가게 정보"
                     android:textColor="@color/Gray0"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/info_updatedDate"
@@ -57,7 +57,7 @@
                     android:gravity="end"
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/Gray2"
-                    android:textSize="13sp"
+                    android:textSize="13dp"
                     android:text="@{`업데이트 ` + RestaurantInfo.updatedTime.toString()}" />
             </LinearLayout>
 
@@ -90,7 +90,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="@{RestaurantInfo.address.toString()}"
                         android:textColor="@color/Gray0"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,7 +112,7 @@
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/pretendard_medium"
                         android:textColor="@color/Keyword_Blue"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/pretendard_medium"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/moreTiemtable"
@@ -145,7 +145,7 @@
                         android:gravity="end"
                         android:text="더보기"
                         android:textColor="@color/Gray2"
-                        android:textSize="14sp"
+                        android:textSize="14dp"
                         app:visibilityChanged="@{viewmodel.restaurantInfo.haveTime}" />
                 </LinearLayout>
 
@@ -168,7 +168,7 @@
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/pretendard_medium"
                         android:textColor="@color/Keyword_Blue"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
                 </LinearLayout>
             </LinearLayout>
             <!-- 정보 끝 -->
@@ -201,7 +201,7 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:text="가게 정보 수정 요청하기"
                     android:textColor="@color/Keyword_Blue"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </LinearLayout>
 
             <!--구분선-->
@@ -232,7 +232,7 @@
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="@{viewmodel.userNickname + `님의 후기를 들려주세요!`}"
                     android:textColor="@color/Gray0"
-                    android:textSize="17sp" />
+                    android:textSize="17dp" />
 
                 <LinearLayout
                     android:id="@+id/writingReviewBtn"
@@ -259,7 +259,7 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="지금 후기 작성하기"
                         android:textColor="@color/Gray7"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -285,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_bold"
                     android:textColor="@color/Gray0"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:text="메뉴" />
 
                 <TextView
@@ -296,7 +296,7 @@
                     android:gravity="bottom"
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/Gray2"
-                    android:textSize="13sp" />
+                    android:textSize="13dp" />
                 <!--viewmodel.menuList.count-->
 
                 <TextView
@@ -306,7 +306,7 @@
                     android:gravity="end"
                     android:fontFamily="@font/pretendard_regular"
                     android:textColor="@color/Gray2"
-                    android:textSize="13sp"/>
+                    android:textSize="13dp"/>
             </LinearLayout>
 
 
@@ -349,7 +349,7 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:text="메뉴 정보 수정 요청하기"
                     android:textColor="@color/Keyword_Blue"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -369,7 +369,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="메뉴 더보기"
                         android:textColor="@color/Gray2"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -410,7 +410,7 @@
                         android:fontFamily="@font/pretendard_bold"
                         android:text="후기"
                         android:textColor="@color/Gray0"
-                        android:textSize="20sp" />
+                        android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/review_amount_textView"
@@ -420,7 +420,7 @@
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="bottom"
                         android:textColor="@color/Gray2"
-                        android:textSize="13sp" />
+                        android:textSize="13dp" />
                 </LinearLayout>
 
                 <ScrollView
@@ -446,7 +446,7 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:text="아직 등록된 후기가 없어요."
                     android:textColor="@color/Gray1"
-                    android:textSize="17sp" />
+                    android:textSize="17dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -468,7 +468,7 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:text="후기 더보기"
                     android:textColor="@color/Gray2"
-                    android:textSize="14sp"/>
+                    android:textSize="14dp"/>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -509,7 +509,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="가게 삭제 요청하기"
                         android:textColor="@color/Warn_Red"
-                        android:textSize="14sp"/>
+                        android:textSize="14dp"/>
 
                 </LinearLayout>
             </LinearLayout>

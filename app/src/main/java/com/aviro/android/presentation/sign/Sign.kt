@@ -7,9 +7,11 @@ import android.util.Log
 import android.webkit.*
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.aviro.android.R
 import com.aviro.android.databinding.ActivitySignBinding
+import com.aviro.android.databinding.FragmentReviewScriptBinding
 import com.aviro.android.domain.entity.key.APPLE
 import com.aviro.android.domain.entity.key.GOOGLE
 import com.aviro.android.presentation.BaseActivity
@@ -22,8 +24,9 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class Sign : BaseActivity<ActivitySignBinding>(R.layout.activity_sign) {
+class Sign : BaseActivity() {
 
+    private lateinit var binding : ActivitySignBinding
     private val viewmodel: SignViewModel by viewModels() //뷰모델 의존성 주입
 
     lateinit var fragmentManager: FragmentManager
@@ -32,6 +35,13 @@ class Sign : BaseActivity<ActivitySignBinding>(R.layout.activity_sign) {
         super.onCreate(savedInstanceState)
 
         val action = intent.getStringExtra("Action")
+
+        binding = ActivitySignBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        binding.lifecycleOwner = this
+
 
         fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()

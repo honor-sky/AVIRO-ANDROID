@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.R
 import com.aviro.android.databinding.FragmentChangeNicknameBinding
+import com.aviro.android.presentation.BaseFragment
 
-class NicknameChangeFragment : Fragment() {
+class NicknameChangeFragment : BaseFragment() {
 
     private var _binding: FragmentChangeNicknameBinding? = null
     private val binding get() = _binding!!

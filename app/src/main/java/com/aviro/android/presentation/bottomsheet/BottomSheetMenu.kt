@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.aviro.android.R
 import com.aviro.android.databinding.FragmentBottomsheetMenuBinding
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.home.ui.map.MapViewModel
 import com.aviro.android.presentation.update.UpdateMenu
 
 
-class BottomSheetMenu : Fragment() {
+class BottomSheetMenu : BaseFragment() {
 
     private lateinit var mapViewmodel: MapViewModel
     private lateinit var viewmodel: BottomSheetViewModel

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_bold"
             android:textColor="@color/Gray0"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:text="메뉴" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:gravity="bottom"
             android:text="@{RestaurantMenu.count + `개`}"
             android:textColor="@color/Gray2"
-            android:textSize="13sp" />
+            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/updatedDate_textView"
@@ -58,7 +58,7 @@
             android:gravity="end"
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/Gray2"
-            android:textSize="13sp" />
+            android:textSize="13dp" />
         <!--android:text="@{menu.updatedTime + `업데이트`}"-->
     </LinearLayout>
 
@@ -103,7 +103,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="메뉴 정보 수정 요청하기"
             android:textColor="@color/Keyword_Blue"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

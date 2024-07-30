@@ -9,11 +9,12 @@ import androidx.fragment.app.setFragmentResult
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.aviro.android.databinding.FragmentUpdateLocBinding
+import com.aviro.android.presentation.BaseFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class UpdateLocFragment : Fragment() {
+class UpdateLocFragment : BaseFragment() {
 
     private var _binding: FragmentUpdateLocBinding? = null
     private val binding get() = _binding!!

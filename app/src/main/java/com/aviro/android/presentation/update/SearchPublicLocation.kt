@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.databinding.FragmentUpdateLocPublicBinding
+import com.aviro.android.presentation.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchPublicLocation : Fragment() {
+class SearchPublicLocation : BaseFragment() {
 
     private var _binding: FragmentUpdateLocPublicBinding? = null
     private val binding get() = _binding!!

@@ -31,6 +31,7 @@ import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.common.DistanceCalculator
 import com.aviro.android.databinding.FragmentMapBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
+import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.aviro_dialog.PromotionPopUp
 import com.aviro.android.presentation.bottomsheet.*
@@ -49,7 +50,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class Map : Fragment(), OnMapReadyCallback {
+class Map : BaseFragment(), OnMapReadyCallback {
 
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
@@ -76,19 +77,25 @@ class Map : Fragment(), OnMapReadyCallback {
         Manifest.permission.ACCESS_COARSE_LOCATION,
     )
 
+    //private lateinit var fragList : Array<Fragment>
+
+
     val frag1 = BottomSheetHome({count -> setBottomSheetTabRevieAmount(count)})
     val frag2 = BottomSheetMenu()
     val frag3 = BottomSheetReview({count -> setBottomSheetTabRevieAmount(count)})
     val fragList = arrayOf(frag1, frag2, frag3)
 
+
+
     private var promotionPopUp : PromotionPopUp? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("글자 크기 변경 에러","onCreate:Map")
 
         //checkOnOffGPS()
-
 
         val fm = childFragmentManager
         mapFragment = fm.findFragmentById(R.id.map_fragment) as MapFragment?
@@ -98,6 +105,22 @@ class Map : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         bottomSheetViewmodel.getNickname()
+
+        /*
+        val frag1 = BottomSheetHome.newInstance(
+            bottomSheetViewModel = bottomSheetViewmodel,
+            mapViewModel = viewmodel,
+            homeViewModel = homeViewmodel,
+            {reviewAmount -> setBottomSheetTabRevieAmount(reviewAmount)}
+        )
+
+        val frag2 = BottomSheetMenu()
+        val frag3 = BottomSheetReview({count -> setBottomSheetTabRevieAmount(count)})
+        fragList = arrayOf(frag1, frag2, frag3)
+
+         */
+
+
 
         frag1.setViewModel(bottomSheetViewmodel, viewmodel, homeViewmodel)
         frag2.setViewModel(bottomSheetViewmodel, viewmodel)
@@ -114,6 +137,7 @@ class Map : Fragment(), OnMapReadyCallback {
 
         binding.viewmodel = viewmodel
         binding.lifecycleOwner = viewLifecycleOwner
+
         binding.mapFragment.setViewModel(viewmodel)
 
 
@@ -1015,7 +1039,9 @@ class Map : Fragment(), OnMapReadyCallback {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("글자 크기 변경 에러","onDestroy:Map")
         viewmodel.cancelSelectedMarker(viewmodel._selectedMarker.value)
+
     }
 
 

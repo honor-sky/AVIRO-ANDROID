@@ -3,6 +3,8 @@ package com.aviro.android.presentation.home
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.fonts.Font
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
@@ -38,10 +40,16 @@ class Home : FragmentActivity() {
     private val homeViewModel : HomeViewModel by viewModels()
 
     val frag1 = Map()
-    //val frag2 = RegisterFragment()
     val frag3 = ChallengeFragment()
 
-    val fragList = arrayOf(frag1, frag3) //frag2,
+    val fragList = arrayOf(frag1, frag3)
+
+    override fun attachBaseContext(newBase: Context) {
+        val configuration = android.content.res.Configuration(newBase.resources.configuration)
+        configuration.fontScale = 1.0f
+        applyOverrideConfiguration(configuration)
+        super.attachBaseContext(newBase)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

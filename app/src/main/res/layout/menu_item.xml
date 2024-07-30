@@ -34,7 +34,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:text="@{menu.menu}"
             android:textColor="@color/Gray0"
-            android:textSize="18sp" />
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/menu_price_TextView"
@@ -44,7 +44,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@{menu.price}"
             android:textColor="@color/Gray0"
-            android:textSize="17sp" />
+            android:textSize="17dp" />
 
         <TextView
             android:id="@+id/menu_request_TextView"
@@ -56,7 +56,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@{menu.howToRequest.toString()}"
             android:textColor="@color/Gray1"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:visibilityChanged="@{(menu.howToRequest.toString().length() != 0)}"/>
 
         <View

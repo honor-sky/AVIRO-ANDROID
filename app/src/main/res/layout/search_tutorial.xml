@@ -38,14 +38,14 @@
                 android:text="원하는 가게를 찾고 싶을 때"
                 android:textColor="@color/Gray3"
                 android:fontFamily="@font/pretendard_medium"
-                android:textSize="14sp"/>
+                android:textSize="14dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="‘가게 이름’을 검색해보세요"
                 android:textColor="@color/Gray1"
                 android:fontFamily="@font/pretendard_bold"
-                android:textSize="16sp"/>
+                android:textSize="16dp"/>
         </LinearLayout>
         </LinearLayout>
 
@@ -82,14 +82,14 @@
             android:text="원하는 지역으로 이동하고 싶을 때"
             android:textColor="@color/Gray3"
             android:fontFamily="@font/pretendard_medium"
-            android:textSize="14sp"/>
+            android:textSize="14dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="‘지역명’ 또는 ‘지하철역명’을 검색해보세요"
             android:textColor="@color/Gray1"
             android:fontFamily="@font/pretendard_bold"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
     </LinearLayout>
     </LinearLayout>
 
