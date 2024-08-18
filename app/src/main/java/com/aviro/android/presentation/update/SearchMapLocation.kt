@@ -145,10 +145,6 @@ class SearchMapLocation : BaseFragment(), OnMapReadyCallback {
                 binding.addressUpdateBtn.background = ContextCompat.getDrawable(requireContext(), R.drawable.base_roundsquare_cobalt_10)
                 binding.addressUpdateBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray7))
 
-//                val parentFragment = parentFragment as UpdateLocFragment
-//                parentFragment.setAddrrssData(it)
-//                parentFragment.setFragmentResult()
-
                 binding.addressTextView.text = it
 
             } ?: run {
