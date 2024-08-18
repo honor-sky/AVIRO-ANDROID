@@ -133,8 +133,6 @@ class UpdateViewModel @Inject constructor (
         _afterHomepageData.value = restaurantInfo.value!!.url ?: ""
         _afterPhoneData.value = restaurantInfo.value!!.phone ?: ""
 
-        //_beforeCategoryData.value = restaurantInfo.value!!.category
-        //_afterCategoryData.value = _beforeCategoryData.value
         _categoryCheckedList.value = getCategoryBooleanList(restaurantInfo.value!!.category)
         _afterInfoData.value = restaurantInfo.value!!
 
@@ -189,7 +187,6 @@ class UpdateViewModel @Inject constructor (
     fun checkChangedInfo() {
         Log.d("checkChangedInfo", "${restaurantInfo.value},${afterInfoData.value}")
         _isChangeRestaurantInfo.value = (restaurantInfo.value != afterInfoData.value)
-
     }
 
 
@@ -242,7 +239,7 @@ class UpdateViewModel @Inject constructor (
     }
 
     fun afterTextChangedAddress2(s : Editable) {
-        _afterInfoData.value = _afterInfoData.value!!.copy(address2 = s.toString())
+        _afterInfoData.value = _afterInfoData.value!!.copy(address2 = if (s.toString().isEmpty()) null else s.toString())
         checkChangedInfo()
 
     }
