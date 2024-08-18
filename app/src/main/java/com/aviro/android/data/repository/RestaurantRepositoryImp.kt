@@ -1,7 +1,6 @@
 package com.aviro.android.data.repository
 
 import android.content.Context
-import android.util.Log
 
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
 import com.aviro.android.domain.entity.search.VeganOptions

@@ -19,7 +19,7 @@ class ResultCall<T>(private val call: Call<T>, private val retrofit: Retrofit, p
                 call.enqueue(object : Callback<T> {
                     // 서버로부터 응답이 정상적으로 들어왔을때
                     override fun onResponse(call: Call<T>, response: Response<T>) {
-                        Log.d("ResultCall","${response}")
+                        //Log.d("ResultCall","${response}")
                         if (response.isSuccessful) { // 2xx
                             val code = response.code()
 

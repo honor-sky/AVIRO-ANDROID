@@ -18,6 +18,7 @@ import com.aviro.android.presentation.entity.RestaurantInfoForUpdateEntity
 import com.aviro.android.presentation.entity.UpdatingTimetableEntity
 import com.aviro.android.presentation.mapper.toTimetableUpdating
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -247,131 +248,181 @@ class UpdateViewModel @Inject constructor (
     }
 
 
+    suspend fun updateRestaurantData() {
 
-    fun updateRestaurantData() {
-
-        var resultPhone = true
-        var resultUrl = true
-        var resultTimeTable = true
-        var resultInfo = true
-
-        viewModelScope.launch {
-        // 가게 전화번호 정보 변경
-        if(isChangePhone.value == true){
-            //viewModelScope.launch {
-                updateRestaurantUseCase.updatePhone(_restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title,
-                    _restaurantInfo.value!!.phone ?: "", _afterPhoneData.value!!).let {
-                        // 없다가 추가될 수도 있음
-                        when(it) {
-                            is MappingResult.Success<*> -> {
-                                resultPhone = true
-                            }
-                            is MappingResult.Error -> {
-                                resultPhone = false
-                                //_error.value = it.message ?: "전화번호 정보를 수정하지 못했습니다.\n다시 시도해주세요."
-                            }
-                        }
-                }
-            //}
-        }
-
-        // 가게 홈페이지 정보 변경
-        if(isChangeUrl.value == true){
-            //viewModelScope.launch {
-                updateRestaurantUseCase.updateUrl(_restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title,
-                    _restaurantInfo.value!!.url ?: "", afterHomepageData.value!!).let {
+        val updatePhone = viewModelScope.async {
+            // 가게 전화번호 정보 변경
+            if (isChangePhone.value == true) {
+                updateRestaurantUseCase.updatePhone(
+                    _restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title,
+                    _restaurantInfo.value!!.phone ?: "", _afterPhoneData.value!!
+                ).let {
                     // 없다가 추가될 수도 있음
-                    when(it) {
+                    when (it) {
                         is MappingResult.Success<*> -> {
-                            resultUrl = true
+                            return@async "success"
                         }
                         is MappingResult.Error -> {
-                            resultUrl = false
-                            //_error.value = it.message ?: "홈페이지 정보를 수정하지 못했습니다.\n다시 시도해주세요."
+                            return@async it.message ?: "전화번호 정보를 수정하지 못했습니다.\n다시 시도해주세요."
                         }
                     }
                 }
-            //}
+
+            } else {
+                return@async null
+            }
+        }
+
+        val updateHomepage = viewModelScope.async {
+            // 가게 홈페이지 정보 변경
+            if (isChangeUrl.value == true) {
+                updateRestaurantUseCase.updateUrl(
+                    _restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title,
+                    _restaurantInfo.value!!.url ?: "", afterHomepageData.value!!
+                ).let {
+                    // 없다가 추가될 수도 있음
+                    when (it) {
+                        is MappingResult.Success<*> -> {
+                            return@async "success"
+                        }
+
+                        is MappingResult.Error -> {
+                            return@async it.message ?: "홈페이지 정보를 수정하지 못했습니다.\n다시 시도해주세요."
+
+                        }
+                    }
+                }
+
+            } else {
+                return@async null
+            }
         }
 
         // 가게 타임테이블 정보 변경
-        if(isChangeTime.value == true){
-            //viewModelScope.launch {
-                updateRestaurantUseCase.updateTime(_restaurantInfo.value!!.placeId,
-                    afterTimetableData.value!!.toTimetableUpdating()).let {
-                        when(it) {
-                            is MappingResult.Success<*> -> {
-                                resultTimeTable = true
-                            }
-                            is MappingResult.Error -> {
-                                resultTimeTable = false
-                                //_error.value = it.message ?: "운영시간 정보를 수정하지 못했습니다.\n다시 시도해주세요."
-                            }
+        val updateTimetable = viewModelScope.async {
+            if (isChangeTime.value == true) {
+                updateRestaurantUseCase.updateTime(
+                    _restaurantInfo.value!!.placeId,
+                    afterTimetableData.value!!.toTimetableUpdating()
+                ).let {
+                    when (it) {
+                        is MappingResult.Success<*> -> {
+                            return@async "success"
                         }
 
+                        is MappingResult.Error -> {
+                            return@async it.message ?:  "운영시간 정보를 수정하지 못했습니다.\n다시 시도해주세요."
+                        }
+                    }
+
                 }
-            //}
+            } else {
+                return@async null
+            }
         }
 
         // 가게 기본 정보 변경
-        if(isChangeRestaurantInfo.value == true) {
+        val updateInfo = viewModelScope.async {
+            if (isChangeRestaurantInfo.value == true) {
 
-                val infoUpdating : MutableMap<String, Any> = mutableMapOf("placeId" to _restaurantInfo.value!!.placeId,
-                    "title" to _restaurantInfo.value!!.title)
+                val infoUpdating: MutableMap<String, Any> = mutableMapOf(
+                    "placeId" to _restaurantInfo.value!!.placeId,
+                    "title" to _restaurantInfo.value!!.title
+                )
 
                 // 가게명 변경 되었는가?
-                if(restaurantInfo.value!!.title != afterInfoData.value!!.title) {
-                    infoUpdating["changedTitle"] = BeforeAfterString(_restaurantInfo.value!!.title, afterInfoData.value!!.title)
+                if (restaurantInfo.value!!.title != afterInfoData.value!!.title) {
+                    infoUpdating["changedTitle"] = BeforeAfterString(
+                        _restaurantInfo.value!!.title,
+                        afterInfoData.value!!.title
+                    )
                 }
 
                 // 가게 카테고리 변경 되었는가?
-                if(restaurantInfo.value!!.category != afterInfoData.value!!.category) {
-                    infoUpdating["category"] = BeforeAfterString(_restaurantInfo.value!!.category, afterInfoData.value!!.category)
+                if (restaurantInfo.value!!.category != afterInfoData.value!!.category) {
+                    infoUpdating["category"] = BeforeAfterString(
+                        _restaurantInfo.value!!.category,
+                        afterInfoData.value!!.category
+                    )
                 }
 
                 // 가게 주소 변경 되었는가? (하나라도 변경 되었으면 add1, add2 모두 넣음) -> 위치도
-                if(restaurantInfo.value!!.address2 != afterInfoData.value!!.address2 || restaurantInfo.value!!.address != afterInfoData.value!!.address) {
-                    infoUpdating["address2"] = BeforeAfterString(_restaurantInfo.value!!.address2, afterInfoData.value!!.address2)
-                    infoUpdating["address"] = BeforeAfterString(_restaurantInfo.value!!.address, afterInfoData.value!!.address)
+                if (restaurantInfo.value!!.address2 != afterInfoData.value!!.address2 || restaurantInfo.value!!.address != afterInfoData.value!!.address) {
+                    infoUpdating["address2"] = BeforeAfterString(
+                        _restaurantInfo.value!!.address2 ?: "",
+                        afterInfoData.value!!.address2 ?: ""
+                    )
+                    infoUpdating["address"] = BeforeAfterString(
+                        _restaurantInfo.value!!.address,
+                        afterInfoData.value!!.address
+                    )
+                    infoUpdating["y"] = BeforeAfterString(
+                        _restaurantInfo.value!!.x.toString(),
+                        afterInfoData.value!!.x.toString()
+                    )
+                    infoUpdating["x"] = BeforeAfterString(
+                        _restaurantInfo.value!!.y.toString(),
+                        afterInfoData.value!!.y.toString()
+                    )
                 }
 
-                if(restaurantInfo.value!!.address != afterInfoData.value!!.address) {
-                    infoUpdating["y"] = BeforeAfterString(_restaurantInfo.value!!.x.toString(), afterInfoData.value!!.x.toString())
-                    infoUpdating["x"] = BeforeAfterString(_restaurantInfo.value!!.y.toString(), afterInfoData.value!!.y.toString())
-                }
 
-                updateRestaurantUseCase.updateRestaurantInfo(infoUpdating).let{
-                    when(it) {
+                updateRestaurantUseCase.updateRestaurantInfo(infoUpdating).let {
+                    when (it) {
                         is MappingResult.Success<*> -> {
                             // 변경사항 로컬 DB에 바로 반영 -> 없은
                             // 현재 화면에 바로 반영 -> 마커색, 이름, 운영시간
                             // 재실행시 반영 -> 카테고리, 운영시간, 주소
                             // 나중에 반영 -> 전화번호, 홈페이지 링크
-                            resultInfo = true
+                            return@async "success"
                         }
+
                         is MappingResult.Error -> {
-                            resultInfo = false
-                            //_error.value = it.message ?: "가게 정보를 수정하지 못했습니다.\n다시 시도해주세요."
+                            return@async it.message ?: "가게 정보를 수정하지 못했습니다.\n다시 시도해주세요."
                         }
                     }
                 }
 
-            }
-
-            // 에러가 하나라도 있음
-            if(!(resultInfo && resultPhone && resultUrl && resultTimeTable)) {
-
-                _error.value = "가게 정보를 수정하지 못했습니다.\n다시 시도해주세요."
             } else {
-
-                AmplitudeUtils.placeEdit(afterInfoData.value!!.title)
-                _toast.value = "조금만 기다려주세요!\n관리자가 매일 꼼꼼하게 검수하고 있어요."
+                return@async null
             }
-
         }
 
 
+        var resultPhone = updatePhone.await()
+        var resultUrl = updateTimetable.await()
+        var resultTimeTable = updateHomepage.await()
+        var resultInfo =  updateInfo.await()
 
-    }
+
+        // 모두 null 인 경우는 없음
+        // 하나라도 "success"가 있고, 나머지가 null 또는 "success"인지 확인
+        if (
+            listOf(resultPhone, resultUrl, resultTimeTable, resultInfo).any { it == "success" } &&
+            listOf(resultPhone, resultUrl, resultTimeTable, resultInfo).all { it == null || it == "success" }
+        ) {
+            AmplitudeUtils.placeEdit(afterInfoData.value!!.title)
+            _toast.value = "조금만 기다려주세요!\n관리자가 매일 꼼꼼하게 검수하고 있어요."
+
+        } else {
+            // 하나라도 null 또는 "success"가 아닌 값이 있는지 확인
+
+            if(resultPhone != "success" && resultPhone != null) {
+                _error.value = resultPhone
+            }
+            if(resultUrl != "success" && resultUrl != null) {
+                _error.value = resultUrl
+            }
+            if(resultInfo != "success" && resultUrl != null) {
+                _error.value = resultInfo
+            }
+            if(resultTimeTable != "success" && resultTimeTable != null) {
+                _error.value = resultTimeTable
+            }
+        }
+
+
+        }
+
 
 }

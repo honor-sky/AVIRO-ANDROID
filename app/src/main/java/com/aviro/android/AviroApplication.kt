@@ -16,8 +16,6 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class AviroApplication : Application() {
 
-
-
     override fun onCreate() {
         super.onCreate()
 

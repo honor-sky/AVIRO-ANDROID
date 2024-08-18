@@ -38,7 +38,6 @@ class UpdateAddressViewModel @Inject constructor (
     val isSearchingAddress : LiveData<Boolean>
         get() = _isSearchingAddress
 
-
     var _isAddressResult = MutableLiveData<Boolean>()
     val isAddressResult : LiveData<Boolean>
         get() = _isAddressResult
@@ -67,7 +66,7 @@ class UpdateAddressViewModel @Inject constructor (
 
     init {
         _isSearchingAddress.value = false
-        _isAddressResult.value = false
+        _isAddressResult.value = true
     }
 
 
@@ -80,8 +79,6 @@ class UpdateAddressViewModel @Inject constructor (
                     is MappingResult.Success<*> -> {
                         if(it.data != null) {
                             val data = it.data as PublicAddressList
-
-                            Log.d("publicAddressList","${data.publicAddressList}")
 
                             if(currentPage == 1) {
                                 totalAmount = data.totalCount.toInt()
