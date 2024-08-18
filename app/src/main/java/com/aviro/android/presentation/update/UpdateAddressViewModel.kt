@@ -125,7 +125,6 @@ class UpdateAddressViewModel @Inject constructor (
     fun getRoadAddress(x : Double, y : Double) {
         viewModelScope.launch {
             searchLocationUseCase.getRoadAddressOfCoordination(y, x).let {
-                Log.d("getRoadAddress","${it}")
                 when(it) {
                     is MappingResult.Success<*> -> {
                         val data = it.data as RoadAddressOfCoordi
