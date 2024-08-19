@@ -153,9 +153,6 @@ class UpdateViewModel @Inject constructor (
             sunBreak = restaurantTimetable.value?.sun?.breaktime ?: "",
         )
 
-        //_afterTimetableData.value = _beforeTimetableData.value!!.copy()
-
-
         _afterTimetableData.value = UpdatingTimetableEntity(
             mon = restaurantTimetable.value?.mon?.open ?: "" ,
             monBreak = restaurantTimetable.value?.mon?.breaktime ?: "",
@@ -185,7 +182,6 @@ class UpdateViewModel @Inject constructor (
 
     }
     fun checkChangedInfo() {
-        Log.d("checkChangedInfo", "${restaurantInfo.value},${afterInfoData.value}")
         _isChangeRestaurantInfo.value = (restaurantInfo.value != afterInfoData.value)
     }
 

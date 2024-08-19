@@ -71,7 +71,7 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
             val closeTime = if(open == "" ||open == null|| open == "정보 없음") "" else open.split('-')[1]
             val breakStartTime = if(breakTime == "" || breakTime == null || breakTime == "정보 없음") "" else  breakTime.split('-')[0]
             val breakEndTime = if(breakTime == ""  || breakTime == null || breakTime == "정보 없음") "" else breakTime.split('-')[1]
-            val isBreak = !(breakTime == ""  || breakTime == null || breakTime == "정보 없음")
+            val isBreak = if(breakTime == ""  || breakTime == null || breakTime == "정보 없음") false else true
 
             binding.workingBtn.isChecked = true
             binding.holidayBtn.isChecked = false
@@ -101,17 +101,24 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
 
         viewmodel.SelectedOperatingData.observe(viewLifecycleOwner) {
             Log.d("SelectedOperatingData","${it}")
-            // 시작 시간 - 마감 시간 (휴식도 동일)
-            if((it.openTime != "" && it.closeTime == "") || (it.closeTime != "" && it.openTime == "") ||
-                (it.breakStartTime != "" && it.breakEndTime == "") || (it.breakEndTime != "" && it.breakStartTime == "")) {
+
+            // 정보 없음
+            if((it.openTime == "" && it.closeTime == "" && it.breakStartTime == "" && it.breakEndTime == "") ||
+                // 시간 선택이 하나만 된 경우
+                ((it.openTime != "" && it.closeTime == "") || (it.closeTime != "" && it.openTime == "") ||
+                    (it.breakStartTime != "" && it.breakEndTime == "") || (it.breakEndTime != "" && it.breakStartTime == "") )) {
                 binding.timeUpdateBtn.isEnabled = false
                 binding.timeUpdateBtn.background = ContextCompat.getDrawable(requireContext(), R.drawable.base_roundsquare_gray6_30)
                 binding.timeUpdateTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray2))
+
             } else {
+
                 binding.timeUpdateBtn.isEnabled = true
                 binding.timeUpdateBtn.background = ContextCompat.getDrawable(requireContext(), R.drawable.base_roundsquare_cobalt_30)
                 binding.timeUpdateTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray7))
             }
+
+
         }
     }
 
@@ -189,7 +196,6 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
              }
 
         binding.cancelBtn.setOnClickListener {
-            Log.d("TimetableTimePickerDialog","cancelBtn")
             setResultAndDismiss(open, breakTime)
             //dismiss()
         }
