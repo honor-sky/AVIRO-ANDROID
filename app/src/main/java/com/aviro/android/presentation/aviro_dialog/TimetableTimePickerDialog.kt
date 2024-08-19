@@ -52,11 +52,10 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
         initListener()
         initObserver()
 
-
-
         return binding.root
 
     }
+
 
     fun initUI() {
 
@@ -100,8 +99,6 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
     fun initObserver() {
 
         viewmodel.SelectedOperatingData.observe(viewLifecycleOwner) {
-            Log.d("SelectedOperatingData","${it}")
-
             // 정보 없음
             if((it.openTime == "" && it.closeTime == "" && it.breakStartTime == "" && it.breakEndTime == "") ||
                 // 시간 선택이 하나만 된 경우
@@ -117,8 +114,6 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
                 binding.timeUpdateBtn.background = ContextCompat.getDrawable(requireContext(), R.drawable.base_roundsquare_cobalt_30)
                 binding.timeUpdateTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray7))
             }
-
-
         }
     }
 
@@ -128,43 +123,31 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
             val dialog = TimePickerDialog(requireContext(), timeList) { selectedTime ->
                 operatingEntity.openTime = selectedTime
                 viewmodel.setSelectedOperatingData(operatingEntity)
-                //_operating.value = operatingEntity
-                Log.d("selectedTime","${selectedTime}")
-                //Log.d("selectedTime","${_operating.value!!}")
-
             }
             dialog.show()
         }
         binding.closeTimePicker.setOnClickListener {
-            //showTimePicker(viewmodel._closeTime)
             val timeList = generateTimeList()
             val dialog = TimePickerDialog(requireContext(), timeList) { selectedTime ->
                 operatingEntity.closeTime = selectedTime
                 viewmodel.setSelectedOperatingData(operatingEntity)
-                //_operating.value = operatingEntity
-
-
             }
             dialog.show()
         }
         binding.breakStartTimePicker.setOnClickListener {
-            //showTimePicker(viewmodel._breakStartTime)
             val timeList = generateTimeList()
             val dialog = TimePickerDialog(requireContext(), timeList) { selectedTime ->
                 operatingEntity.breakStartTime = selectedTime
                 operatingEntity.isBreak = true
                 viewmodel.setSelectedOperatingData(operatingEntity)
-                //_operating.value = operatingEntity
             }
             dialog.show()
         }
         binding.breakEndTimePicker.setOnClickListener {
-            //showTimePicker(viewmodel._breakEndTime)
             val timeList = generateTimeList()
             val dialog = TimePickerDialog(requireContext(), timeList) { selectedTime ->
                 operatingEntity.breakEndTime = selectedTime
                 operatingEntity.isBreak = true
-                //_operating.value = operatingEntity
                 viewmodel.setSelectedOperatingData(operatingEntity)
             }
             dialog.show()
@@ -175,6 +158,7 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
             if(viewmodel.SelectedOperatingData.value!!.isHoliday) {
                 setResultAndDismiss("휴무", "")
             } else {
+
                 // 영업시간 파싱
                 var open : String
                 if(viewmodel.SelectedOperatingData.value!!.openTime != "" && viewmodel.SelectedOperatingData.value!!.closeTime != "") {
@@ -223,7 +207,6 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
                 operatingEntity.isAllHours = true
             }
 
-            //_operating.value = operatingEntity
             viewmodel.setSelectedOperatingData(operatingEntity)
         }
 
@@ -233,7 +216,7 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
                     operatingEntity.isHoliday = false
                     operatingEntity.isAllHours = false
                     operatingEntity.isBreak = true
-                    //_operating.value = operatingEntity
+
                     viewmodel.setSelectedOperatingData(operatingEntity)
                 }
                 R.id.holidayBtn -> { 
@@ -244,14 +227,11 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
                     operatingEntity.closeTime = ""
                     operatingEntity.breakStartTime = ""
                     operatingEntity.breakEndTime = ""
-                    //_operating.value = operatingEntity
+
                     viewmodel.setSelectedOperatingData(operatingEntity)
                 }
-
             }
         }
-
-
     }
 
 
@@ -273,9 +253,4 @@ class TimetableTimePickerDialog(val day : String,  val viewmodel : UpdateViewMod
         //operating.removeObservers(viewLifecycleOwner)
         _binding = null
     }
-
-
-
-
-
 }
