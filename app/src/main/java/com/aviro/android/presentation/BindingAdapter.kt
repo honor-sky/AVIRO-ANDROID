@@ -472,13 +472,15 @@ object BindingAdapter {
     fun setTimetablePickerBG(view : View, isValid : Boolean) {
         view.background = if(isValid) ContextCompat.getDrawable(view.context, R.drawable.base_roundsquare_border_gray7_10) else ContextCompat.getDrawable(view.context, R.drawable.base_roundsquare_border_gray6_10)
     }
+
     @JvmStatic
     @BindingAdapter("app:setTimetablePickerText")
-    fun setTimetablePickerText(view : TextView, noBreak : Boolean) {
-        if(noBreak) {
-            view.setTextColor(ContextCompat.getColor(view.context, R.color.Gray3))
-        } else {
+    fun setTimetablePickerText(view : TextView, isValid : Boolean) {
+        if(isValid) {
+            // isValid 가 true면 시간이 선택된 상태 -> 검정
             view.setTextColor(ContextCompat.getColor(view.context, R.color.Gray0))
+        } else {
+            view.setTextColor(ContextCompat.getColor(view.context, R.color.Gray3))
         }
     }
 

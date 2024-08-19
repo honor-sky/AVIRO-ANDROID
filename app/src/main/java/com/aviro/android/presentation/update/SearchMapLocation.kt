@@ -128,8 +128,11 @@ class SearchMapLocation : BaseFragment(), OnMapReadyCallback {
 
         binding.addressUpdateBtn.setOnClickListener {
             val parentFragment = parentFragment as UpdateLocFragment
+
+            parentFragment.setAddrrssData(addressViewmodel.addressOfMap.value!!)
+            parentFragment.setFragmentResult()
+
             val fragmentManager  = parentFragment.parentFragmentManager.beginTransaction()
-            //fragmentManager.setCustomAnimations(R.anim.slide_left_enter, R.anim.slide_right_exit, R.anim.slide_right_enter, R.anim.slide_left_exit)
             fragmentManager.remove(parentFragment).commit()
         }
 
@@ -141,10 +144,6 @@ class SearchMapLocation : BaseFragment(), OnMapReadyCallback {
                 binding.addressUpdateBtn.isEnabled = true
                 binding.addressUpdateBtn.background = ContextCompat.getDrawable(requireContext(), R.drawable.base_roundsquare_cobalt_10)
                 binding.addressUpdateBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray7))
-
-                val parentFragment = parentFragment as UpdateLocFragment
-                parentFragment.setAddrrssData(it)
-                parentFragment.setFragmentResult()
 
                 binding.addressTextView.text = it
 
