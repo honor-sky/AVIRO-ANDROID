@@ -16,6 +16,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.amplitude.core.Amplitude
 import com.aviro.android.R
@@ -30,6 +32,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,9 +45,7 @@ class SearchViewModel @Inject constructor(
 
     // 내부저장소에서 이전에 검색했던 검색어 추출
     val prefs = context.getSharedPreferences("pre_searched_data", Context.MODE_PRIVATE)
-    //private var preSearchedList = prefs.getString("pre_searched_data", "")
     private lateinit var preSearchedList : MutableMap<String, Int>
-    //private var preSearchedSet = prefs.getStringSet("pre_searched_data", mutableSetOf()) ?: mutableSetOf()
 
     private val _isSearching = MutableLiveData<Boolean>()
     val isSearching: LiveData<Boolean> = _isSearching
@@ -73,7 +74,6 @@ class SearchViewModel @Inject constructor(
     private val _searchList = MutableLiveData<List<SearchedRestaurantItem>>() // 가게 리스트
     var searchList : LiveData<List<SearchedRestaurantItem>> = _searchList
 
-
     private val _selectedSearchedItem = MutableLiveData<SearchedRestaurantItem>() // 가게 리스트
     var selectedSearchedItem : LiveData<SearchedRestaurantItem> = _selectedSearchedItem
 
@@ -88,22 +88,16 @@ class SearchViewModel @Inject constructor(
 
     var centerOfMapX : Double? = null
     var centerOfMapY : Double? = null
-    private var Keyword  = ""
     var currentPage  = 1
     var isEnd  = true
     var searchListSize = 0
-    var isNewKeyword = false
 
+    // 무한스크롤 구현에 지속적으로 사용되기 때문에 키워드는 변수로 저장
+    var keyword = ""
+    var isNewKeyword = false
 
     init {
         _isSearching.value = false //검색중 아님
-        /*
-        if(prefs.getStringSet("pre_searched_data", null) != null) {
-            preSearchedSet = prefs.getStringSet("pre_searched_data", null)!!
-        } else {
-            preSearchedSet = LinkedHashSet()
-        }
-         */
 
         setPreSearchedWord()
         _isProgress.value = false
@@ -131,12 +125,11 @@ class SearchViewModel @Inject constructor(
         return null
     }
 
-    /* 수정사항 : 가게 검색과 비건 유형 매칭 로직을 UseCase에서 한 번에 처리 (뷰모델에서는 완성된 결과 데이터만 반환 해주세요) */
     fun initList() {
         _isProgress.value = true
         viewModelScope.launch {
             searchRestaurantUseCase.getSearchedRestaurantList(
-                Keyword,
+                keyword,
                 _SrotingLocation.value!!.x,
                 _SrotingLocation.value!!.y,
                 1,
@@ -179,7 +172,7 @@ class SearchViewModel @Inject constructor(
         _isProgress.value = true
         viewModelScope.launch {
             searchRestaurantUseCase.getSearchedRestaurantList(
-                Keyword,
+                keyword,
                 _SrotingLocation.value!!.x,
                 _SrotingLocation.value!!.y,
                 currentPage,
@@ -229,12 +222,6 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    // editText에 값이 입력될때
-    fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        Keyword = s.toString()
-        currentPage = 1
-        initList()
-    }
 
     // 포커스 여부에 따라 키보드
     fun onEditTextFocusChanged(editTextView : View, hasFocus : Boolean) {

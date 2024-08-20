@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.ActivitySearchBinding
@@ -14,6 +16,8 @@ import com.aviro.android.presentation.aviro_dialog.SortingAccDisDialog
 import com.aviro.android.presentation.aviro_dialog.SortingLocationDialog
 import com.aviro.android.presentation.entity.SortingLocEntity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class Search : BaseActivity() {
@@ -67,6 +71,14 @@ class Search : BaseActivity() {
             (binding.PreSearchRecyclerview.adapter as PreSearchAdapter).preSearchedList =
                 it?.toList()?.toMutableList()
             (binding.PreSearchRecyclerview.adapter as PreSearchAdapter).notifyDataSetChanged()
+        }
+
+        binding.EditTextSearchBar.addTextChangedListener {
+            lifecycleScope.launch {
+                delay(500L)
+                viewmodel.keyword = it.toString()
+                viewmodel.initList()
+            }
         }
 
         // 새로은 검색결과

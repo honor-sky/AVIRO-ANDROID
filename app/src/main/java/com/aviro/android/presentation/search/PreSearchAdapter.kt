@@ -42,7 +42,9 @@ class PreSearchAdapter(private val searchViewModel : SearchViewModel, private va
             binding.word.setOnClickListener {
                 // 이전 검색어 클릭
                 searchBar.setText(item)
-                searchViewModel.onTextChanged(item,0,0,0)
+                searchViewModel.keyword = item
+                searchViewModel.initList()
+                //searchViewModel.onTextChanged(item,0,0,0)
                 searchViewModel.onEditTextFocusChanged(searchBar, true)
 
             }
