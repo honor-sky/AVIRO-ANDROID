@@ -99,7 +99,6 @@
                     android:inputType="textNoSuggestions|textVisiblePassword"
                     android:textColor="@color/Gray2"
                     android:textSize="18dp"
-                    android:onTextChanged="@{viewmodel::onTextChanged}"
                     android:onFocusChangeListener="@{(v, hasFocus) -> viewmodel.onEditTextFocusChanged(v, hasFocus)}"
                     android:onKey="@{(view, keyCode, event) -> viewmodel.searchRestaurant(EditTextSearchBar, keyCode, event)}"/>
 
