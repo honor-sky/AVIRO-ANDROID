@@ -38,6 +38,7 @@ class UpdateAddressViewModel @Inject constructor (
     val isSearchingAddress : LiveData<Boolean>
         get() = _isSearchingAddress
 
+
     var _isAddressResult = MutableLiveData<Boolean>()
     val isAddressResult : LiveData<Boolean>
         get() = _isAddressResult
@@ -66,7 +67,7 @@ class UpdateAddressViewModel @Inject constructor (
 
     init {
         _isSearchingAddress.value = false
-        _isAddressResult.value = true
+        _isAddressResult.value = false
     }
 
 
@@ -79,6 +80,8 @@ class UpdateAddressViewModel @Inject constructor (
                     is MappingResult.Success<*> -> {
                         if(it.data != null) {
                             val data = it.data as PublicAddressList
+
+                            Log.d("publicAddressList","${data.publicAddressList}")
 
                             if(currentPage == 1) {
                                 totalAmount = data.totalCount.toInt()
@@ -125,6 +128,7 @@ class UpdateAddressViewModel @Inject constructor (
     fun getRoadAddress(x : Double, y : Double) {
         viewModelScope.launch {
             searchLocationUseCase.getRoadAddressOfCoordination(y, x).let {
+                Log.d("getRoadAddress","${it}")
                 when(it) {
                     is MappingResult.Success<*> -> {
                         val data = it.data as RoadAddressOfCoordi

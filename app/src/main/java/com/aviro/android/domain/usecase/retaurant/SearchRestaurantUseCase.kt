@@ -1,6 +1,5 @@
 package com.aviro.android.domain.usecase.retaurant
 
-import android.util.Log
 import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.domain.entity.base.MappingResult
 import com.aviro.android.domain.repository.RestaurantRepository

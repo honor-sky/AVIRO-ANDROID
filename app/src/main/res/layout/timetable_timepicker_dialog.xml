@@ -247,7 +247,7 @@
                 android:layout_weight="1"
                 android:text="@{viewmodel.selectedOperatingData.breakStartTime.isEmpty() ? `시간 선택` : viewmodel.selectedOperatingData.breakStartTime}"
                 android:textSize="16dp"
-                app:setTimetablePickerText="@{(viewmodel.SelectedOperatingData.breakStartTime != null &amp;&amp; !viewmodel.SelectedOperatingData.breakStartTime.isEmpty())}"
+                app:setTimetablePickerText="@{!(viewmodel.selectedOperatingData.isHoliday || viewmodel.selectedOperatingData.isBreak)}"
                 android:fontFamily = "@font/pretendard_medium"/>
 
             <Button
@@ -284,7 +284,7 @@
                 android:layout_weight="1"
                 android:text="@{viewmodel.selectedOperatingData.breakEndTime.isEmpty() ? `시간 선택` : viewmodel.selectedOperatingData.breakEndTime}"
                 android:textSize="16dp"
-                app:setTimetablePickerText="@{(viewmodel.SelectedOperatingData.breakEndTime != null &amp;&amp; !viewmodel.SelectedOperatingData.breakEndTime.isEmpty())}"
+                app:setTimetablePickerText="@{!(viewmodel.selectedOperatingData.isHoliday || viewmodel.selectedOperatingData.isBreak)}"
                 android:fontFamily = "@font/pretendard_medium"/>
 
             <Button

@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.aviro.android.databinding.ActivityUpdateBinding
@@ -15,7 +14,6 @@ import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -72,11 +70,7 @@ class Update : BaseActivity() {
     fun initListener() {
 
         binding.updateBtn.setOnClickListener {
-
-            lifecycleScope.launch {
-                viewmodel.updateRestaurantData()
-            }
-
+            viewmodel.updateRestaurantData()
         }
 
         binding.backBtn.setOnClickListener {
