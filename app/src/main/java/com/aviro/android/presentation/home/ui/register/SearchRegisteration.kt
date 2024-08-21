@@ -16,7 +16,10 @@ import com.aviro.android.presentation.entity.SortingLocEntity
 import com.aviro.android.presentation.search.SearchAdapter
 import com.aviro.android.presentation.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -79,12 +82,16 @@ class SearchRegisteration : BaseActivity() {
     fun initObserver() {
 
         binding.EditTextSearchBar.addTextChangedListener {
+            viewmodel._keyword.value = it.toString()
             lifecycleScope.launch {
-                delay(500L)
-                viewmodel.keyword = it.toString()
-                viewmodel.initList()
+                viewmodel._keyword
+                    .debounce(300) // 0.3초 동안 입력값이 없는 경우만 방출
+                    .collect {
+                        viewmodel.initList()
+                    }
             }
         }
+
 
         viewmodel.searchList.observe(this) {
             if (viewmodel.isNewKeyword == true) {
