@@ -170,7 +170,7 @@ class RestaurantRepositoryImp @Inject constructor (
         val response = restaurantKakaoDataSource.getSearchedRestaurant(keyword, x, y, page, size, sort)
 
         response.onSuccess {
-            //Log.d("THREAD", "${Thread.currentThread().name}")
+
             if (it.documents.size != 0) {
                 val isEnd = it.meta.is_end
                 result = getVeganTypeOfSearching(isEnd, it.documents)

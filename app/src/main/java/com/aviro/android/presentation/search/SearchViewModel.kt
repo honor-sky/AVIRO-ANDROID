@@ -33,6 +33,8 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -93,8 +95,10 @@ class SearchViewModel @Inject constructor(
     var searchListSize = 0
 
     // 무한스크롤 구현에 지속적으로 사용되기 때문에 키워드는 변수로 저장
-    var keyword = ""
+    //var keyword = ""
     var isNewKeyword = false
+    val _keyword = MutableStateFlow("")
+    var keyword : MutableStateFlow<String> = _keyword
 
     init {
         _isSearching.value = false //검색중 아님
@@ -129,7 +133,7 @@ class SearchViewModel @Inject constructor(
         _isProgress.value = true
         viewModelScope.launch {
             searchRestaurantUseCase.getSearchedRestaurantList(
-                keyword,
+                keyword.value,
                 _SrotingLocation.value!!.x,
                 _SrotingLocation.value!!.y,
                 1,
@@ -139,6 +143,7 @@ class SearchViewModel @Inject constructor(
 
                 when (it) {
                     is MappingResult.Success<*> -> {
+
                         val data = it.data as SearchedRestaurantList
 
                         if(data.searchedList.size == 0) {
@@ -172,7 +177,7 @@ class SearchViewModel @Inject constructor(
         _isProgress.value = true
         viewModelScope.launch {
             searchRestaurantUseCase.getSearchedRestaurantList(
-                keyword,
+                keyword.value,
                 _SrotingLocation.value!!.x,
                 _SrotingLocation.value!!.y,
                 currentPage,
@@ -181,6 +186,7 @@ class SearchViewModel @Inject constructor(
             ).let {
                 when (it) {
                     is MappingResult.Success<*> -> {
+
                         val data = it.data as SearchedRestaurantList
 
                         isNewKeyword = false
