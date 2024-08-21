@@ -3,8 +3,11 @@ package com.aviro.android.presentation.search
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.ActivitySearchBinding
@@ -14,6 +17,11 @@ import com.aviro.android.presentation.aviro_dialog.SortingAccDisDialog
 import com.aviro.android.presentation.aviro_dialog.SortingLocationDialog
 import com.aviro.android.presentation.entity.SortingLocEntity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class Search : BaseActivity() {
@@ -69,6 +77,25 @@ class Search : BaseActivity() {
             (binding.PreSearchRecyclerview.adapter as PreSearchAdapter).notifyDataSetChanged()
         }
 
+        binding.EditTextSearchBar.addTextChangedListener {
+            viewmodel._keyword.value = it.toString()
+            // 새로운 입력값 생길때마다 새로운 코루틴 생성
+            lifecycleScope.launch {// main 스레드 -> IO 스레드 + 매번 생성 X 하게 만들면 좋을 듯
+
+                /* 새로운 검색어가 들어오면 0.3초 후에 가장 최신의 검색어로 검색이 요청됨
+                 * '이디야'를 입력해도 ㅇ, ㅣ, ㄷ, ㅣ, ㅇ, ㅑ 를 입려할 때마다 새로운 검색 코루틴이 생기지만 0.3초 후에 검색이 요청되므로
+                 * 모두 '이디야' 로 검색 요청됨
+                 * 그런데 여러개의 코루틴이 0.3초 간격을 두고 실행되는데 경우에 따라 아직 이전 코루틴이 끝나기 전에 다른 코루틴이 실행되는 경우
+                 * 이전 코루틴은 취소되므로 initList()가 취소됨 */
+
+                viewmodel._keyword
+                    .debounce(300) // 0.3초 동안 입력값이 없는 경우만 방출
+                    .collect {
+                        viewmodel.initList()
+                    }
+            }
+        }
+
         // 새로은 검색결과
         viewmodel.searchList.observe(this) {
             if (viewmodel.isNewKeyword == true) {
@@ -106,8 +133,7 @@ class Search : BaseActivity() {
            /* AviroDialogUtils.createTwoChoiceDialog(this, "검색 위치 설정",
                 "지도 중심", "내 위치 중심",
                 { viewmodel.sortCenterOfMapLoc() }, { viewmodel.sortCenterOfMyLoc() }).show()
-
-            */
+           */
         }
 
         //  정렬 기준 변경
@@ -117,8 +143,7 @@ class Search : BaseActivity() {
             AviroDialogUtils.createTwoChoiceDialog(this, "정렬 기준",
                 "정확도순", "거리순",
                 { viewmodel.sortAccuracy() }, { viewmodel.sortDistance() }).show()
-
-             */
+            */
         }
 
 

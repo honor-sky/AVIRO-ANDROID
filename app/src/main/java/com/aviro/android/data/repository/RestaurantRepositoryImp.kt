@@ -28,6 +28,9 @@ import com.aviro.android.domain.repository.RestaurantRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -159,39 +162,30 @@ class RestaurantRepositoryImp @Inject constructor (
     }
 
 
-
     // 키워드로 가게를 검색함
     override suspend fun searchRestaurant(keyword : String, x : String?, y : String?, page : Int, size : Int, sort : String) : MappingResult {
+
         lateinit var result: MappingResult
-      
-            val response =
-                restaurantKakaoDataSource.getSearchedRestaurant(keyword, x, y, page, size, sort)
+        // main 스레드에서 호출 -> 검색 결과가 순서대로 반환되어야 하므로 main 스레드가 적합
+        val response = restaurantKakaoDataSource.getSearchedRestaurant(keyword, x, y, page, size, sort)
 
-            response.onSuccess {
-                // 맵핑
-                if (it.documents.size != 0) {
-                    // 검색 페이지 end 여부
-                    val isEnd = it.meta.is_end
-                    // 어비로 서버에 비건 정보 받아옴
-                    /* suspend 함수는 병렬적으로 수행되기 때문에 이 함수 실행이 완료될 때까지 기다려주는 것이 아니라
-                     * 병렬적으로 처리해버린다. 비건 정보를 받아와 최종 검색 결과를 반환할 때까지 기다려줌 */
+        response.onSuccess {
 
-                    val job = CoroutineScope(Dispatchers.IO).launch {
-                        result = getVeganTypeOfSearching(isEnd, it.documents)
-                    }
-                    job.join()
-
-                } else {
-                    result = MappingResult.Error("검색 결과가 없어요")
-                }
-
-            }.onFailure {
+            if (it.documents.size != 0) {
+                val isEnd = it.meta.is_end
+                result = getVeganTypeOfSearching(isEnd, it.documents)
+            } else {
                 result = MappingResult.Error("검색 결과가 없어요")
             }
 
-        return result
+        }.onFailure {
+            result = MappingResult.Error("검색 결과가 없어요")
+        }
 
+        return result
     }
+
+
 
     // 검색한 가게들의 비건 유형을 받아옴
     override suspend fun getVeganTypeOfSearching(isEnd : Boolean, SearchedPlaceRawList : List<Document>) : MappingResult { //Result<List<SearchedRestaurantItem>>
@@ -206,33 +200,42 @@ class RestaurantRepositoryImp @Inject constructor (
         val request = RestaurantVeganTypeRequest(request_list_veganTypeOfRestaurant)
 
         lateinit var result : MappingResult
-        val respose = restaurantAviroDataSource.getVeganTypeOfSearching(request)
-        respose.onSuccess {
-            val code = it.statusCode
-            val data = it.data
-            if(code == 200 && data != null) {
-                // 등록되어 있는 가게만 반환
-                data.placeList.map { veganType ->
-                    if (veganType.index in item_list.indices) {
-                        item_list[veganType.index!!].placeId = veganType.placeId
-                        item_list[veganType.index].veganType.allVegan = veganType.allVegan
-                        item_list[veganType.index].veganType.someMenuVegan = veganType.someMenuVegan
-                        item_list[veganType.index].veganType.ifRequestVegan = veganType.ifRequestVegan
-                    }
-                }
-               
-                val searchedRestaurantList = SearchedRestaurantList(isEnd, item_list)
-                result = MappingResult.Success(null, searchedRestaurantList)
 
-            } else {
-                // 비건 정보 가져오기 실패
-                // 그냥 검색 결과만 화면에 띄움 -> 클릭해도 placeId 없기 떄문에 상세 정보 제공 X, 좌표 이동만 가능
-                val searchedRestaurantList = SearchedRestaurantList(isEnd, item_list)
-                result = MappingResult.Success("알 수 없는 오류로 비건 식당 정보를 제공하지 못합니다.\n다시 시도해주시면 더 자세한 비건 식당 정보를 알 수 있어요!", searchedRestaurantList)
+        //val job = CoroutineScope(Dispatchers.IO).async {
+            val respose = restaurantAviroDataSource.getVeganTypeOfSearching(request)
+            respose.onSuccess {
+                val code = it.statusCode
+                val data = it.data
+                if (code == 200 && data != null) {
+                    // 등록되어 있는 가게만 반환
+                    data.placeList.map { veganType ->
+                        if (veganType.index in item_list.indices) {
+                            item_list[veganType.index!!].placeId = veganType.placeId
+                            item_list[veganType.index].veganType.allVegan = veganType.allVegan
+                            item_list[veganType.index].veganType.someMenuVegan =
+                                veganType.someMenuVegan
+                            item_list[veganType.index].veganType.ifRequestVegan =
+                                veganType.ifRequestVegan
+                        }
+                    }
+
+                    val searchedRestaurantList = SearchedRestaurantList(isEnd, item_list)
+                    result = MappingResult.Success(null, searchedRestaurantList)
+
+                } else {
+                    // 비건 정보 가져오기 실패
+                    // 그냥 검색 결과만 화면에 띄움 -> 클릭해도 placeId 없기 떄문에 상세 정보 제공 X, 좌표 이동만 가능
+                    val searchedRestaurantList = SearchedRestaurantList(isEnd, item_list)
+                    result = MappingResult.Success(
+                        "알 수 없는 오류로 비건 식당 정보를 제공하지 못합니다.\n다시 시도해주시면 더 자세한 비건 식당 정보를 알 수 있어요!",
+                        searchedRestaurantList
+                    )
+                }
+            }.onFailure {
+                result = MappingResult.Error(it.message)
             }
-        }.onFailure {
-            result = MappingResult.Error(it.message)
-        }
+        //}
+        //job.await()
         return result
 
     }

@@ -4,7 +4,9 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.databinding.FragmentSearchRegisterationBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
@@ -14,6 +16,11 @@ import com.aviro.android.presentation.entity.SortingLocEntity
 import com.aviro.android.presentation.search.SearchAdapter
 import com.aviro.android.presentation.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchRegisteration : BaseActivity() {
@@ -30,12 +37,11 @@ class SearchRegisteration : BaseActivity() {
         binding.lifecycleOwner = this
 
 
-        val X = intent.getDoubleExtra("NaverMapOfX", 0.0) //이름으로 값 추출, 만약 없다면 가져올 default 값 설정
+        val X = intent.getDoubleExtra("NaverMapOfX", 0.0) // 이름으로 값 추출, 만약 없다면 가져올 default 값 설정
         val Y = intent.getDoubleExtra("NaverMapOfY",0.0)
         // 기본 정렬 기준
         val SortingLoc = SortingLocEntity(X.toString(), Y.toString() , "accuracy")
         viewmodel._SrotingLocation.value = SortingLoc
-
 
         binding.searchRecyclerview.adapter = SearchAdapter(viewmodel)
 
@@ -54,12 +60,10 @@ class SearchRegisteration : BaseActivity() {
                 if (viewmodel._isProgress.value == false) { // 아직 로딩중이면 호출 x
                     // 스크롤이 끝에 도달했는지 확인
                     if (!binding.searchRecyclerview.canScrollVertically(1)) { // 더이상 하단으로 내려갈 수 없음
-                        Log.d("searchRecyclerview", "스크롤 끝에 도달함!!")
                         viewmodel.currentPage++
                         viewmodel.nextList()
                     }
                 }
-
             }
         })
 
@@ -72,26 +76,36 @@ class SearchRegisteration : BaseActivity() {
             binding.EditTextSearchBar.text = null
         }
 
-
-
-
     }
 
 
     fun initObserver() {
 
+        binding.EditTextSearchBar.addTextChangedListener {
+            viewmodel._keyword.value = it.toString()
+            lifecycleScope.launch {
+                viewmodel._keyword
+                    .debounce(300) // 0.3초 동안 입력값이 없는 경우만 방출
+                    .collect {
+                        viewmodel.initList()
+                    }
+            }
+        }
+
+
         viewmodel.searchList.observe(this) {
             if (viewmodel.isNewKeyword == true) {
+
                 binding.searchRecyclerview.removeAllViews() // 기존 검색 리스트 삭제
                 (binding.searchRecyclerview.adapter as SearchAdapter).searchedList = it as MutableList<SearchedRestaurantItem>?
 
-            }
-            // 무한 스크롤
-            else {
+            } else {
+                // 무한 스크롤
+
                 val currentPosition = (binding.searchRecyclerview.adapter as SearchAdapter).itemCount // 현재 아이템 총 갯수
                 // 리사이클러 어댑터의 아이텝 리스트에 추가
                 (binding.searchRecyclerview.adapter as SearchAdapter).searchedList!!.addAll(it.slice(currentPosition..it.size-1))
-                Log.d("BindingAdapter", "${(binding.searchRecyclerview.adapter as SearchAdapter).searchedList}")
+
                 // 새로 들어온 아이템 홀더에서 바인딩 하도록 notify
                 (binding.searchRecyclerview.adapter as SearchAdapter).notifyItemRangeInserted(
                     currentPosition, // 새로 삽입될 포지션
@@ -138,8 +152,5 @@ class SearchRegisteration : BaseActivity() {
                 finish()
             }
         }
-
-}
-
-
+   }
 }
