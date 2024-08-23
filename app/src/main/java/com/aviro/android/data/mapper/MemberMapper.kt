@@ -113,7 +113,7 @@ fun MyCommentListResponse.toMyCommentList() : List<MyComment> {
 fun MyBookmarkListResponse.toMyBookmarkList() : List<MyRestaurant> {
     //mutableListOf<MyRestaurant>()
 
-    val myRestaurantList = this.placeList.map {
+    val myRestaurantList = this.bookmarkList.map {
         MyRestaurant(
             placeId = it.placeId,
             title = it.title,

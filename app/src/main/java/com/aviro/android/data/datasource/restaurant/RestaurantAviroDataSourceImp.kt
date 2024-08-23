@@ -1,5 +1,6 @@
 package com.aviro.android.data.datasource.restaurant
 
+import android.util.Log
 import com.android.aviro.data.model.restaurant.RestaurantVeganTypeResponse
 import com.aviro.android.data.api.RestaurantService
 import com.aviro.android.data.model.base.BaseResponse
@@ -16,7 +17,7 @@ class RestaurantAviroDataSourceImp @Inject constructor (
 ) : RestaurantAviroDataSource {
 
     override suspend fun getRestaurant(request : ReataurantListRequest) : Result<DataResponse<ReataurantListReponse>>  {
-
+        Log.d("RestaurantAviroDataSourceImp","${request}")
         return restaurantService.getRestaurant(request.x,request.y,request.wide,request.time)
         }
 

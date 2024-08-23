@@ -19,8 +19,13 @@ fun ChallengeCommentResponse.toChallengeComment() : ChallengeComment {
 }
 
 
-fun ChallengePopUpResponse.toChallengePopUp() : ChallengePopUp {
-    return ChallengePopUp(
-        imageUrl = this.imageUrl
+fun NoticePopUpResponse.toChallengePopUp() : NoticePopUp {
+    return NoticePopUp(
+        title = this.title,
+        image_url = this.image_url,
+        url = this.url,
+        event = this.event,
+        button_color = this.button_color,
+        order = this.order
     )
 }

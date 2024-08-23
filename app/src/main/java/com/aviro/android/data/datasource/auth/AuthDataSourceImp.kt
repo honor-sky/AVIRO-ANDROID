@@ -12,23 +12,23 @@ import javax.inject.Named
 
 
 class AuthDataSourceImp @Inject constructor(
-    @Named("AuthService") private val authService : AuthService,
-    @Named("AuthService2") private val authService2 : AuthService,
+    @Named("AuthService") private val authServiceBase : AuthService,
+    @Named("AuthService2") private val authService2Support : AuthService
 ) : AuthDataSource {
 
     // 서버로 refresh token 요청 (구글, 애플)
     override suspend fun getTokens(request: TokensRequest) : Result<DataResponse<TokenResponse>> {
-        return authService.getTokens(request)
+        return authServiceBase.getTokens(request)
     }
 
     // 서버로 로그인 요청 (구글, 애플 자동 로그인)
     override suspend fun requestSignIn(request: SignInRequest) : Result<DataResponse<SignInResponse>> {
-        return authService.sign(request)
+        return authServiceBase.sign(request)
     }
 
     // 회원여부와 닉네임 요청 (카카오, 네이버 로그인)
     override suspend fun getUser(userId: String) : Result<DataResponse<UserResponse>> {
-        return authService2.getUser(userId)
+        return authService2Support.getUser(userId) //authService2
     }
 
 }

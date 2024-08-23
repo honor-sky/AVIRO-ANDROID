@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ApiModule {
 
-    private val AVIRO_BASE_URL = com.aviro.android.BuildConfig.AWS_API_KEY_V2
+    private val AVIRO_BASE_URL_V2 = com.aviro.android.BuildConfig.AWS_API_KEY_V2
     private val AVIRO_BASE_URL_V3 = com.aviro.android.BuildConfig.AWS_API_KEY_V3
     private val KAKAO_BASE_URL = com.aviro.android.BuildConfig.KAKAO_RESTAPI_URL
     private val PUBLIC_BASE_URL = com.aviro.android.BuildConfig.PUBLIC_API_URL
@@ -36,11 +36,11 @@ class ApiModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class AviroClient
+    annotation class AviroBaseClient
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class AviroClient2
+    annotation class AviroSupportClient
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
@@ -52,11 +52,11 @@ class ApiModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class AviroRetrofit
+    annotation class AviroBaseRetrofit
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class AviroRetrofit2
+    annotation class AviroSupportRetrofit
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
@@ -68,8 +68,8 @@ class ApiModule {
 
     @Singleton
     @Provides
-    @AviroClient
-    fun provideAviroClient(): OkHttpClient {
+    @AviroBaseClient
+    fun provideAviroBaseClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(logger)
             .addNetworkInterceptor(AviroHeaderInterceptor()) //aws, kakao 다르게 설정
@@ -78,8 +78,8 @@ class ApiModule {
 
     @Singleton
     @Provides
-    @AviroClient2
-    fun provideAviroClient2(): OkHttpClient {
+    @AviroSupportClient
+    fun provideAviroSupportClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(logger)
             .addNetworkInterceptor(AviroHeaderInterceptor()) //aws, kakao 다르게 설정
@@ -110,11 +110,11 @@ class ApiModule {
 
     @Singleton
     @Provides
-    @AviroRetrofit
-    fun provideAviroRetrofit(@ApiModule.AviroClient client : OkHttpClient, resultCallAdapterFactory: ResultCallAdapterFactory): Retrofit { //AWS
+    @AviroBaseRetrofit
+    fun provideAviroBaseRetrofit(@ApiModule.AviroBaseClient client : OkHttpClient, resultCallAdapterFactory: ResultCallAdapterFactory): Retrofit { //AWS
         return Retrofit.Builder()
             .client(client)
-            .baseUrl(AVIRO_BASE_URL)
+            .baseUrl(AVIRO_BASE_URL_V2)
             .addConverterFactory(GsonConverterFactory.create()) //gson
             .addCallAdapterFactory(resultCallAdapterFactory)
             .build()
@@ -122,8 +122,8 @@ class ApiModule {
 
     @Singleton
     @Provides
-    @AviroRetrofit2
-    fun provideAviroRetrofit2(@ApiModule.AviroClient2 client : OkHttpClient, resultCallAdapterFactory: ResultCallAdapterFactory): Retrofit { //AWS
+    @AviroSupportRetrofit
+    fun provideAviroSupportRetrofit(@ApiModule.AviroSupportClient client : OkHttpClient, resultCallAdapterFactory: ResultCallAdapterFactory): Retrofit { //AWS
         return Retrofit.Builder()
             .client(client)
             .baseUrl(AVIRO_BASE_URL_V3)
@@ -161,34 +161,42 @@ class ApiModule {
     // 싱글톤으로 auth api 인스턴스를 생성
     @Singleton
     @Provides
-    @Named("AuthService")
-    fun provideAuthService(@ApiModule.AviroRetrofit aviroRetrofit: Retrofit): AuthService {
+    @Named("AuthServiceBase")
+    fun provideAuthServiceBase(@ApiModule.AviroBaseRetrofit aviroRetrofit: Retrofit): AuthService {
         return aviroRetrofit.create(AuthService::class.java)
     }
 
     @Singleton
     @Provides
-    @Named("AuthService2")
-    fun provideAuthService2(@ApiModule.AviroRetrofit2 aviroRetrofit: Retrofit): AuthService {
+    @Named("AuthServiceSupport")
+    fun provideAuthServiceSupport(@ApiModule.AviroSupportRetrofit aviroRetrofit: Retrofit): AuthService {
         return aviroRetrofit.create(AuthService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideMemberService(@ApiModule.AviroRetrofit aviroRetrofit: Retrofit): MemberService {
+    fun provideMemberService(@ApiModule.AviroBaseRetrofit aviroRetrofit: Retrofit): MemberService {
         return aviroRetrofit.create(MemberService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideChallengeService(@ApiModule.AviroRetrofit aviroRetrofit: Retrofit): ChallengeService {
+    @Named("ChallengeServiceBase")
+    fun provideChallengeServiceBase(@ApiModule.AviroBaseRetrofit aviroRetrofit: Retrofit): ChallengeService {
+        return aviroRetrofit.create(ChallengeService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    @Named("ChallengeServiceSupport")
+    fun provideChallengeServiceSupport(@ApiModule.AviroSupportRetrofit aviroRetrofit: Retrofit): ChallengeService {
         return aviroRetrofit.create(ChallengeService::class.java)
     }
 
 
     @Singleton
     @Provides
-    fun provideRestaurantService(@ApiModule.AviroRetrofit aviroRetrofit: Retrofit): RestaurantService {
+    fun provideRestaurantService(@ApiModule.AviroBaseRetrofit aviroRetrofit: Retrofit): RestaurantService {
         return aviroRetrofit.create(RestaurantService::class.java)
     }
 

@@ -7,22 +7,27 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.core.content.ContextCompat
 import com.aviro.android.databinding.PromotionItemBinding
+import com.aviro.android.presentation.entity.NoticePopUpEvent
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 
 
-class PromotionAdapter : BaseAdapter() {
+class NoticePopUpAdapter(private val gotoUrl: (String) -> Unit,
+                         private val gotoApp: (NoticePopUpEvent) -> Unit) : BaseAdapter() {
 
     // 이미지, 버튼색, 메서드
-    private lateinit var popupImgList : List<String>
-    private lateinit var funcList : List<() -> Unit>
+    private lateinit var imageList : List<String>
+    private lateinit var eventList : List<String>
+    private lateinit var urlList : List<String>
+    private lateinit var colorList : List<String>
+
     override fun getCount(): Int {
-        return popupImgList.size
+        return imageList.size
     }
 
     override fun getItem(p0: Int): String {
-       return popupImgList[p0]
+       return imageList[p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -30,23 +35,19 @@ class PromotionAdapter : BaseAdapter() {
     }
 
     override fun getView(position: Int, p1: View?, parent: ViewGroup?): View {
-        /*
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_item, parent, false)
-        }
-         */
+
         val layoutInflater = LayoutInflater.from(parent!!.context)
         val binding = PromotionItemBinding.inflate(layoutInflater, parent, false)
 
 
         Glide.with(parent.context)
-            .load(popupImgList[position])
+            .load(imageList[position])
             .transform(CenterCrop(), GranularRoundedCorners(30f, 30f, 0f, 0f)) // 상단 모서리 둥글게
             .into(binding.popupImg)
 
         val shapeDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            setColor(ContextCompat.getColor(parent.context, com.aviro.android.R.color.Green)) // 매번 바뀔 수 있음
+            setColor(ContextCompat.getColor(parent.context, colorList[position]!!.toInt())) // 매번 바뀔 수 있음
             cornerRadii = floatArrayOf(
                 0f, 0f,
                 0f, 0f,
@@ -57,12 +58,16 @@ class PromotionAdapter : BaseAdapter() {
 
         binding.popupBtn.background = shapeDrawable
 
-
         binding.popupBtn.setOnClickListener {
-            funcList[position].invoke()
-        }
+            if(eventList[position] == "") {
+                gotoUrl(urlList[position])
+            } else {
+                // event에 따라 내부 함수 호출
+                val event = NoticePopUpEvent.fromEvent(eventList[position])
+                gotoApp(event ?: NoticePopUpEvent.UNKNOWN)
+            }
 
-        //convertView.setOnClickListener(View.OnClickListener { onItemClicked(position) })
+        }
 
 
         return binding.root
@@ -70,18 +75,26 @@ class PromotionAdapter : BaseAdapter() {
 
     fun setImgData(imageList : List<String>) {
         imageList.let {
-            this.popupImgList = imageList
+            this.imageList = imageList
         }
     }
 
-    fun setClickFuntion(funcList : List<() -> Unit>) {
-        funcList.let {
-            this.funcList = funcList
+    fun setEventData(eventList : List<String>) {
+        eventList.let {
+            this.eventList = imageList
         }
     }
 
-    fun setColor() {
+    fun setUrlData(urlList : List<String>) {
+        urlList.let {
+            this.urlList = imageList
+        }
+    }
 
+    fun setColorData(colorList : List<String>) {
+        colorList.let {
+            this.colorList = imageList
+        }
     }
 
 
