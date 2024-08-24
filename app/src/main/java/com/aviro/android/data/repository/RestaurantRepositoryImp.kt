@@ -174,6 +174,7 @@ class RestaurantRepositoryImp @Inject constructor (
             if (it.documents.size != 0) {
                 val isEnd = it.meta.is_end
                 result = getVeganTypeOfSearching(isEnd, it.documents)
+                Log.d("RestaurantAviroDataSourceImp","${result}")
             } else {
                 result = MappingResult.Error("검색 결과가 없어요")
             }
@@ -194,7 +195,7 @@ class RestaurantRepositoryImp @Inject constructor (
 
         SearchedPlaceRawList.map {
             request_list_veganTypeOfRestaurant.add(RequestedVeganTypeOfRestaurantDTO(it.place_name, it.x.toDouble(), it.y.toDouble()))
-            item_list.add(SearchedRestaurantItem(null, it.place_name, it.address_name, it.road_address_name,it.phone, DistanceCalculator.translateDistanceLevel(it.distance), it.x, it.y, VeganOptions(false, false, false)))
+            item_list.add(SearchedRestaurantItem(-1, null, it.place_name, it.address_name, it.road_address_name,it.phone, DistanceCalculator.translateDistanceLevel(it.distance), it.x, it.y, VeganOptions(false, false, false)))
         }
 
         val request = RestaurantVeganTypeRequest(request_list_veganTypeOfRestaurant)
@@ -210,7 +211,8 @@ class RestaurantRepositoryImp @Inject constructor (
                     // 등록되어 있는 가게만 반환
                     data.placeList.map { veganType ->
                         if (veganType.index in item_list.indices) {
-                            item_list[veganType.index!!].placeId = veganType.placeId
+                            item_list[veganType.index].index = veganType.index
+                            item_list[veganType.index].placeId = veganType.placeId
                             item_list[veganType.index].veganType.allVegan = veganType.allVegan
                             item_list[veganType.index].veganType.someMenuVegan =
                                 veganType.someMenuVegan

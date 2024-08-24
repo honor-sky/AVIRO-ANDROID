@@ -33,7 +33,7 @@ import com.aviro.android.databinding.FragmentMapBinding
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
 import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
-import com.aviro.android.presentation.aviro_dialog.PromotionPopUp
+import com.aviro.android.presentation.aviro_dialog.NoticePopUp
 import com.aviro.android.presentation.bottomsheet.*
 import com.aviro.android.presentation.home.Home
 import com.aviro.android.presentation.home.HomeViewModel
@@ -87,7 +87,7 @@ class Map : BaseFragment(), OnMapReadyCallback {
 
 
 
-    private var promotionPopUp : PromotionPopUp? = null
+    private var promotionPopUp : NoticePopUp? = null
 
 
 
@@ -515,7 +515,7 @@ class Map : BaseFragment(), OnMapReadyCallback {
                 "확인").show()
         }
 
-        viewmodel.promotionData.observe(viewLifecycleOwner) {
+        viewmodel.noticeData.observe(viewLifecycleOwner) {
             it?.let {
                 checkPromotion()
             }
@@ -607,7 +607,11 @@ class Map : BaseFragment(), OnMapReadyCallback {
     fun checkPromotion() {
        // 띄울 광고 있는지
             if(promotionPopUp == null) {
-                promotionPopUp = PromotionPopUp(requireContext(), viewmodel.promotionData.value!!, homeViewmodel)
+                promotionPopUp = NoticePopUp(requireContext(),  viewmodel.noticeData.value!!, homeViewmodel)
+                //promotionPopUp!!.setData(viewmodel.noticeData.value!!)
+            } else {
+                // 데이터 셋팅 다시
+                promotionPopUp!!.setData(viewmodel.noticeData.value!!)
             }
 
             // 광고 팝업 (24시간인지 아닌지 확인)

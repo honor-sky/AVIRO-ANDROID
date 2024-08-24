@@ -5,7 +5,7 @@ data class RestaurantVeganTypeResponse (
         )
 
 data class VeganType(
-        val index : Int?,
+        val index : Int,
         val placeId : String,
         val allVegan : Boolean,
         val someMenuVegan : Boolean,
