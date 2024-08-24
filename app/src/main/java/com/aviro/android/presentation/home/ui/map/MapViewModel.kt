@@ -12,7 +12,7 @@ import com.aviro.android.common.getVeganType
 import com.aviro.android.common.setBookmarkMarkerClickListener
 import com.aviro.android.common.setMarkerClickListener
 import com.aviro.android.domain.entity.base.MappingResult
-import com.aviro.android.domain.entity.challenge.ChallengePopUp
+import com.aviro.android.domain.entity.challenge.NoticePopUp
 import com.aviro.android.domain.entity.marker.MarkerOfMap
 import com.aviro.android.domain.entity.restaurant.*
 import com.aviro.android.domain.usecase.challenge.GetChallengeInfo
@@ -69,9 +69,9 @@ class MapViewModel @Inject constructor (
     val restaurantSummary : LiveData<RestaurantSummary>
         get() = _restaurantSummary
 
-    var _promotionData = MutableLiveData<List<String>>()
-    val promotionData : LiveData<List<String>>
-        get() = _promotionData
+    var _noticeData = MutableLiveData<List<NoticePopUp>>()
+    val noticeData : LiveData<List<NoticePopUp>>
+        get() = _noticeData
 
 
     // 바텀시트 보여지는지 여부
@@ -142,8 +142,8 @@ class MapViewModel @Inject constructor (
                 when(it){
                     is MappingResult.Success<*> -> {
                         if (it.data != null) {
-                            val data = it.data as ChallengePopUp
-                            _promotionData.value = listOf(data.imageUrl)
+                            val data = it.data as List<NoticePopUp>
+                            _noticeData.value = data
 
                         }
                     }

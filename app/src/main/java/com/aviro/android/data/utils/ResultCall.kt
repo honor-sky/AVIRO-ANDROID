@@ -14,6 +14,8 @@ class ResultCall<T>(private val call: Call<T>, private val retrofit: Retrofit, p
     override fun enqueue(callback: Callback<Result<T>>) {
         val requestKey = "${call.request().url}"
 
+        //Log.d("url","${call.request().url}")
+
         if (requestMap.putIfAbsent(requestKey, call) == null) {
 
                 call.enqueue(object : Callback<T> {

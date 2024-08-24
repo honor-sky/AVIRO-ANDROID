@@ -70,7 +70,7 @@ fun MemberLevelUpResponse.toMemberLevelUp() : MemberLevelUp {
     )
 }
 
-fun MyRestaurantListResponse.toMyRestaurantList() : List<MyRestaurant> {
+fun MyRestaurantListResponse.toMyRestaurantList() : List<MyRestaurant>? {
     //mutableListOf<MyRestaurant>()
 
     val myRestaurantList = this.placeList.map {
@@ -92,7 +92,7 @@ fun MyRestaurantListResponse.toMyRestaurantList() : List<MyRestaurant> {
 
 }
 
-fun MyCommentListResponse.toMyCommentList() : List<MyComment> {
+fun MyCommentListResponse.toMyCommentList() : List<MyComment>? {
     val myCommentList = this.commentList.map {
         MyComment(
             commentId = it.commentId,
@@ -110,7 +110,7 @@ fun MyCommentListResponse.toMyCommentList() : List<MyComment> {
     return myCommentList
 }
 
-fun MyBookmarkListResponse.toMyBookmarkList() : List<MyRestaurant> {
+fun MyBookmarkListResponse.toMyBookmarkList() : List<MyRestaurant>? {
     //mutableListOf<MyRestaurant>()
 
     val myRestaurantList = this.placeList.map {

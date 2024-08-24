@@ -11,6 +11,7 @@ import kotlinx.serialization.Serializable
 //@Serializable
 data class SearchedRestaurantItem(
    // @SerializedName("placeId")
+    var index : Int,
     var placeId : String?,
     //@SerializedName("placeName")
     val placeName : String,

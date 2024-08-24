@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/promotionListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/base_roundsquare_border_gray7_10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:background="@drawable/base_roundsquare_transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
+    <!--@drawable/base_roundsquare_border_gray7_10-->
 
     <LinearLayout
         android:layout_width="match_parent"

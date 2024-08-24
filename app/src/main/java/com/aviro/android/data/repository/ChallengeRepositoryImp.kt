@@ -56,9 +56,9 @@ class ChallengeRepositoryImp @Inject constructor(
         response.onSuccess {
             val code = it.statusCode
             val data = it.data
+            Log.d("getChallengePopUp","${response}")
             if(code == 200) {
                 if(data != null) {
-                    Log.d("getChallengePopUp","${data.toChallengePopUp()}")
                     return MappingResult.Success(null, data.toChallengePopUp())
                 }
             }
@@ -66,6 +66,7 @@ class ChallengeRepositoryImp @Inject constructor(
             return MappingResult.Error("${it.message}")
 
         }.onFailure {
+            Log.d("getChallengePopUp","${response}")
             result = MappingResult.Error(it.message)
 
         }
