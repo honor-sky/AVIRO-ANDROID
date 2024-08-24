@@ -142,8 +142,8 @@ class MapViewModel @Inject constructor (
                 when(it){
                     is MappingResult.Success<*> -> {
                         if (it.data != null) {
-                            val data = it.data as NoticePopUp
-                            _noticeData.value = listOf(data)
+                            val data = it.data as List<NoticePopUp>
+                            _noticeData.value = data
 
                         }
                     }

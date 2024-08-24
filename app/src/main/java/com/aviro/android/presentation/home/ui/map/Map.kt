@@ -607,8 +607,8 @@ class Map : BaseFragment(), OnMapReadyCallback {
     fun checkPromotion() {
        // 띄울 광고 있는지
             if(promotionPopUp == null) {
-                promotionPopUp = NoticePopUp(requireContext(),  homeViewmodel)
-                promotionPopUp!!.setData(viewmodel.noticeData.value!!)
+                promotionPopUp = NoticePopUp(requireContext(),  viewmodel.noticeData.value!!, homeViewmodel)
+                //promotionPopUp!!.setData(viewmodel.noticeData.value!!)
             } else {
                 // 데이터 셋팅 다시
                 promotionPopUp!!.setData(viewmodel.noticeData.value!!)

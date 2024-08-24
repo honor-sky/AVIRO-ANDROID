@@ -12,8 +12,8 @@ import javax.inject.Named
 
 
 class AuthDataSourceImp @Inject constructor(
-    @Named("AuthService") private val authServiceBase : AuthService,
-    @Named("AuthService2") private val authService2Support : AuthService
+    @Named("AuthServiceBase") private val authServiceBase : AuthService,
+    @Named("AuthServiceSupport") private val authServiceSupport : AuthService
 ) : AuthDataSource {
 
     // 서버로 refresh token 요청 (구글, 애플)
@@ -28,7 +28,7 @@ class AuthDataSourceImp @Inject constructor(
 
     // 회원여부와 닉네임 요청 (카카오, 네이버 로그인)
     override suspend fun getUser(userId: String) : Result<DataResponse<UserResponse>> {
-        return authService2Support.getUser(userId) //authService2
+        return authServiceSupport.getUser(userId) //authService2
     }
 
 }

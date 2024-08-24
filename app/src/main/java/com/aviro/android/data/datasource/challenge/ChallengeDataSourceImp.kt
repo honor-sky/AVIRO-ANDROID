@@ -1,6 +1,7 @@
 package com.aviro.android.data.datasource.challenge
 
 import com.aviro.android.data.api.ChallengeService
+import com.aviro.android.data.model.base.DataListResponse
 import com.aviro.android.data.model.base.DataResponse
 import com.aviro.android.data.model.challenge.ChallengeCommentResponse
 import com.aviro.android.data.model.challenge.ChallengeInfoResponse
@@ -9,8 +10,8 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ChallengeDataSourceImp @Inject constructor(
-    @Named("challengeServiceBase") private val challengeServiceBase : ChallengeService,
-    @Named("challengeServiceSupport") private val challengeServiceSupport : ChallengeService,
+    @Named("ChallengeServiceBase") private val challengeServiceBase : ChallengeService,
+    @Named("ChallengeServiceSupport") private val challengeServiceSupport : ChallengeService,
 ) : ChallengeDataSource {
 
     // 챌린지 기간, 이름
@@ -20,7 +21,7 @@ class ChallengeDataSourceImp @Inject constructor(
     override suspend fun getChallengeComment() : Result<DataResponse<ChallengeCommentResponse>> {
         return challengeServiceBase.getChallengeComment()
     }
-    override suspend fun getChallengePopUp() : Result<DataResponse<NoticePopUpResponse>> {
+    override suspend fun getChallengePopUp() : Result<DataListResponse<NoticePopUpResponse>> {
         return challengeServiceSupport.getChallengePopUp()
     }
 

@@ -1,6 +1,7 @@
 package com.aviro.android.data.api
 
 
+import com.aviro.android.data.model.base.DataListResponse
 import com.aviro.android.data.model.base.DataResponse
 import com.aviro.android.data.model.challenge.ChallengeCommentResponse
 import com.aviro.android.data.model.challenge.ChallengeInfoResponse
@@ -19,6 +20,6 @@ interface ChallengeService {
 
     @GET("map/load/popup")
     suspend fun getChallengePopUp(
-    ) : Result<DataResponse<NoticePopUpResponse>>
+    ) : Result<DataListResponse<NoticePopUpResponse>>
 
 }
