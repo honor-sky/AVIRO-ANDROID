@@ -17,6 +17,57 @@ interface AmplitudeUtils {
     fun init(amplitude : Amplitude)
 }
 */
+/*
+enum class UserAMType(
+    val typeName : String
+) {
+    signUpClick("signup_click"),
+    signUpComplete("signup_complete"),
+    userLogin("login_complete"),
+    userLogout("logout_complete"),
+    withdrawal("withdrawal_complete")
+}
+
+enum class BrowseAMType(
+    val typeName : String
+) {
+    ("search_enter_term"),
+    ("search_click_result"),
+    ("bookmark_click_in place"),
+    ("bookmark_click_in map"),
+    ("bookmark_click_list"),
+    ("place_view_sheet"),
+    ("place_view_half"),
+    ("place_view_menu"),
+    ("place_view_review")
+
+}
+
+
+enum class EngageAMType(
+    val typeName : String
+) {
+
+    ("review_view_upload"),
+    ("review_complete_upload"),
+    ("place_view_upload"),
+    ("place_complete_upload"),
+
+    ("challenge_click_checking_levelup"),
+
+    ("challenge_view"),
+
+    ("place_click_edit_place"),
+    ("place_complete_edit_place"),
+
+    ("place_click_edit_menu"),
+    ("place_complete_edit_menu"),
+
+    ("place_click_remove"),
+    ("place_complete_remove")
+
+}*/
+
 
 enum class AMType(
     val typeName : String
