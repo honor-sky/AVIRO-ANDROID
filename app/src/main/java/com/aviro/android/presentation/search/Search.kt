@@ -15,6 +15,7 @@ import com.aviro.android.domain.entity.search.SearchedRestaurantItem
 import com.aviro.android.presentation.BaseActivity
 import com.aviro.android.presentation.aviro_dialog.SortingAccDisDialog
 import com.aviro.android.presentation.aviro_dialog.SortingLocationDialog
+import com.aviro.android.presentation.entity.SearchType
 import com.aviro.android.presentation.entity.SortingLocEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -37,6 +38,8 @@ class Search : BaseActivity() {
         setContentView(binding.root)
         binding.viewmodel = viewmodel
         binding.lifecycleOwner = this
+
+        viewmodel._searchType.value = SearchType.CURRENT.typeName
 
         setLocation()
         setAdapter()
@@ -78,6 +81,7 @@ class Search : BaseActivity() {
         }
 
         binding.EditTextSearchBar.addTextChangedListener {
+
             viewmodel._keyword.value = it.toString()
             // 새로운 입력값 생길때마다 새로운 코루틴 생성
             lifecycleScope.launch {// main 스레드 -> IO 스레드 + 매번 생성 X 하게 만들면 좋을 듯
@@ -89,7 +93,7 @@ class Search : BaseActivity() {
                  * 이전 코루틴은 취소되므로 initList()가 취소됨 */
 
                 viewmodel._keyword
-                    .debounce(300) // 0.3초 동안 입력값이 없는 경우만 방출
+                    .debounce(200) // 0.3초 동안 입력값이 없는 경우만 방출
                     .collect {
                         viewmodel.initList()
                     }
@@ -115,11 +119,15 @@ class Search : BaseActivity() {
         }
 
 
-        viewmodel.selectedSearchedItem.observe(this) {
-            AmplitudeUtils.placeSearch(it.placeName)  // 앱플리튜드 연결
-            viewmodel.storeSearchedWord(it.placeName) // 검색한 가게
+        viewmodel.selectedSearchedItem.observe(this) { item ->
 
-            intent.putExtra("search_item", it)
+            // 검색한 가게 클릭 트래킹
+            val rank = viewmodel.searchList.value?.indexOfFirst { it.placeId == item.placeId } ?: -1
+            AmplitudeUtils.searchKeyword(item.placeId ?: "", item.placeName, viewmodel.keyword.value, item.veganType.category ?: "", rank)
+
+            viewmodel.storeSearchedWord(item.placeName) // 검색한 가게
+
+            intent.putExtra("search_item", item)
             setResult(Activity.RESULT_OK, intent)
             finish()
         }

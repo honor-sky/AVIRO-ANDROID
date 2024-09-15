@@ -19,7 +19,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.size
 import androidx.fragment.app.FragmentActivity
+import com.amplitude.core.Amplitude
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.domain.entity.menu.Menu
 import com.aviro.android.databinding.*
 import com.aviro.android.databinding.AddMenuLayoutBinding
@@ -63,6 +65,8 @@ class RegisterActivity : BaseActivity() {
         addMenuItem()
         initListener()
         initObserver()
+
+        AmplitudeUtils.placeUploadClick() // 가게 등록하기 화면 진입
 
     }
 

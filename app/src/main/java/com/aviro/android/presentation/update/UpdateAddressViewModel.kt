@@ -154,7 +154,7 @@ class UpdateAddressViewModel @Inject constructor (
     }
 
     // 공공 주소 검색중인지 확인 (포커스 여부)
-    fun onEditTextFocusChanged(hasFocus : Boolean) {  //editTextView : View,
+    fun onEditTextFocusChanged(hasFocus : Boolean) {
         _isSearchingAddress.value = hasFocus
     }
 

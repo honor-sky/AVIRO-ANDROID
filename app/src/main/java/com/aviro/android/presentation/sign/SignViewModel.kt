@@ -16,7 +16,9 @@ import com.aviro.android.domain.entity.key.APPLE
 import com.aviro.android.domain.entity.key.GOOGLE
 import com.aviro.android.domain.entity.key.KAKAO
 import com.aviro.android.domain.entity.key.NAVER
+import com.aviro.android.domain.entity.key.USER_BIRTH_KEY
 import com.aviro.android.domain.entity.key.USER_EMAIL_KEY
+import com.aviro.android.domain.entity.key.USER_GENDER_KEY
 import com.aviro.android.domain.entity.key.USER_ID_KEY
 import com.aviro.android.domain.entity.key.USER_NAME_KEY
 import com.aviro.android.domain.entity.key.USER_NICKNAME_KEY
@@ -29,6 +31,7 @@ import com.aviro.android.domain.usecase.auth.GetTokenUseCase
 import com.aviro.android.domain.usecase.auth.LogoutUseCase
 import com.aviro.android.domain.usecase.auth.ManualSignInUseCase
 import com.aviro.android.domain.usecase.member.CreateMemberUseCase
+import com.aviro.android.presentation.entity.SocialType
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
@@ -167,7 +170,7 @@ class SignViewModel @Inject constructor(
 
 
 
-    // 애플에서만 사용
+    // 애플로그인에서만 사용 (애플 토큰이 없는 경우)
     fun createTokens(type : String, id_token : String, auth_code : String, email : String, name : String?) {
         viewModelScope.launch {
             _isLoding.value = true
@@ -175,16 +178,11 @@ class SignViewModel @Inject constructor(
            createTokensUseCase(id_token, auth_code).let {
                when(it){
                    is MappingResult.Success<*> -> {
-                       val data = it.data as Tokens
-                        if(data.isMember) { // 회원임
+                       val Tokendata = it.data as Tokens
+                        if(Tokendata.isMember) { // 회원임
                             when(type) {
                                 APPLE -> {
-                                    // 갑자기 통신 장애 등 발생할 수는
-                                    memberRepository.saveMemberInfoToLocal(USER_ID_KEY, it.data.userId)
-                                    memberRepository.saveMemberInfoToLocal(USER_EMAIL_KEY, email)
-                                    name?.let { memberRepository.saveMemberInfoToLocal(USER_NAME_KEY,  it) }
-                                    authRepository.saveSignTypeToLocal(type)
-
+                                    // 애플로그인에서 토큰 생성 후 회원가입 되어있으면 진행
                                     autoSignInUseCase().let {//token
                                         when(it){
                                             is MappingResult.Success<*> -> {
@@ -192,7 +190,16 @@ class SignViewModel @Inject constructor(
 
                                                 _isSignUp.value = false
 
-                                                AmplitudeUtils.login(data.userId, _signName.value, _signEmail.value, data.nickname, type)
+                                                /*memberRepository.saveMemberInfoToLocal(USER_ID_KEY, it.data.userId)
+                                                memberRepository.saveMemberInfoToLocal(USER_EMAIL_KEY, email)
+                                                memberRepository.saveMemberInfoToLocal(USER_NAME_KEY,  name ?: "")
+                                                memberRepository.saveMemberInfoToLocal(USER_BIRTH_KEY, data.birthday ?: "")
+                                                memberRepository.saveMemberInfoToLocal(USER_GENDER_KEY, data.gender ?: "")
+                                                memberRepository.saveMemberInfoToLocal(USER_NICKNAME_KEY, data.nickname!!)
+                                                */
+                                                authRepository.saveSignTypeToLocal(type)
+
+                                                AmplitudeUtils.login(data.userId, name, data.nickname, data.birthday, data.gender, email, type) // 애플 로그인 진행
                                             }
                                             is MappingResult.Error -> {
                                                 // 토큰 발급 받아서 자동로그인 하려고 하는데 에러나는 경우
@@ -205,6 +212,7 @@ class SignViewModel @Inject constructor(
                                 }
                             }
                        } else {
+                           // 애플로그인 토큰 발급 후, 회원이 아닌 경우 진행
                            _signUserId.value = it.data.userId
                             _signType.value = type
                             _signName.value = name
@@ -234,12 +242,15 @@ class SignViewModel @Inject constructor(
                             memberRepository.saveMemberInfoToLocal(USER_ID_KEY, _signUserId.value!!)
                             memberRepository.saveMemberInfoToLocal(USER_EMAIL_KEY, _signEmail.value!!)
                             memberRepository.saveMemberInfoToLocal(USER_NAME_KEY, _signName.value ?: "")
+                            memberRepository.saveMemberInfoToLocal(USER_BIRTH_KEY, data.birthday ?: "")
+                            memberRepository.saveMemberInfoToLocal(USER_GENDER_KEY, data.gender ?: "")
                             authRepository.saveSignTypeToLocal(_signType.value!!)
                             memberRepository.saveMemberInfoToLocal(USER_NICKNAME_KEY, data.nickname!!)
                             _isSignUp.value = false
 
+
                             // 이름, 이메일, 닉네임 정보 가져오기
-                            AmplitudeUtils.login(_signUserId.value!!, _signName.value, _signEmail.value, data.nickname!!, _signType.value!!)
+                            AmplitudeUtils.login(_signUserId.value!!, _signName.value,  data.nickname!!, data.birthday, data.gender ,_signEmail.value, _signType.value!!) // 카카오,네이버, 구글 로그인 진행
 
                         } else {
                             // 회원가입 필요
@@ -446,6 +457,7 @@ class SignViewModel @Inject constructor(
 
     }
 
+    // 모든 소셜로그인의 회원가입 진행시
     fun onClickSignUp() {
         // 회원가입
         // 애플, 구글, 카카오, 네이버 별로 다르게
@@ -460,10 +472,16 @@ class SignViewModel @Inject constructor(
                         _isComplete.value = true
                         _isCompleteSignUp.value = true
 
-                        AmplitudeUtils.signUp(_signUserId.value!!)
+                        when(_signType.value!!) {
+                            SocialType.APPLE.toString() ->  AmplitudeUtils.signUpComplete("apple")
+                            SocialType.KAKAO.toString() ->  AmplitudeUtils.signUpComplete("kakao")
+                            SocialType.NAVER.toString() ->  AmplitudeUtils.signUpComplete("naver")
+                            SocialType.GOOGLE.toString() ->  AmplitudeUtils.signUpComplete("google")
+                        }
 
+                        AmplitudeUtils.signUpComplete(_signType.value!!) // 회원가입 완료
                         // 이름, 이메일, 닉네임 정보 가져오기
-                        AmplitudeUtils.login(_signUserId.value!! , _signName.value, _signEmail.value, nickname, _signType.value!!)
+                        AmplitudeUtils.login(_signUserId.value!! , _signName.value,  nickname, birthdayText.value, gender, _signEmail.value, _signType.value!!)
 
                     }
                     is MappingResult.Error -> {

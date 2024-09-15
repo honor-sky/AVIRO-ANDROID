@@ -6,6 +6,8 @@ import com.aviro.android.data.model.base.DataResponse
 import com.aviro.android.data.model.member.MemberLevelUpResponse
 import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
+import com.aviro.android.data.model.review.RestaurantReviewAddRequest
+import com.aviro.android.data.model.review.ReviewAddResponse
 import com.aviro.android.data.model.search.RestaurantVeganTypeRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -71,12 +73,12 @@ interface RestaurantService {
     @POST("map/add/place")
     suspend fun createRestaurant(
         @Body request : RestaurantRequest
-    ): Result<DataResponse<MemberLevelUpResponse>>
+    ): Result<DataResponse<RestaurantAddResponse>> //Result<DataResponse<MemberLevelUpResponse>>
 
     @POST("map/add/comment")
     suspend fun createRestaurantReview(
         @Body request : RestaurantReviewAddRequest
-    ): Result<DataResponse<MemberLevelUpResponse>>
+    ): Result<DataResponse<ReviewAddResponse>> //Result<DataResponse<MemberLevelUpResponse>>
 
     @POST("map/report/place")
     suspend fun reportRestaurant(

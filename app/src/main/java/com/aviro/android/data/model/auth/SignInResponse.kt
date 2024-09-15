@@ -5,5 +5,7 @@ data class SignInResponse(
     val userName : String?,
     val userEmail : String,
     val nickname : String,
+    val gender : String,
+    val birthday : String,
     val marketingAgree : Int,
     )

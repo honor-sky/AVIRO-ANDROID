@@ -47,14 +47,12 @@ class NoticePopUp(context : Context, val data : List<NoticePopUp>, val viewmodel
             prefs.edit().putLong("isShow", System.currentTimeMillis()).apply()
             dismiss()
 
-            AmplitudeUtils.didTappedNoMoreShowWelcome()
         }
 
         binding.cancelBtn.setOnClickListener {
             prefs.edit().putLong("isShow", -1).apply()
             dismiss()
 
-            AmplitudeUtils.didTappedCloseWelcome()
         }
     }
 
@@ -88,9 +86,6 @@ class NoticePopUp(context : Context, val data : List<NoticePopUp>, val viewmodel
             NoticePopUpEvent.MTCH -> {
                 viewmodel._currentNavigation.value = HomeViewModel.WhereToGo.MYPAGE
                 viewmodel._isNavigation.value = true
-
-                AmplitudeUtils.challengePresent()
-                AmplitudeUtils.didTappedCheckWelcome()
             }
 
             NoticePopUpEvent.UNKNOWN -> {

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.MypageListFragBinding
 import com.aviro.android.domain.entity.member.MyRestaurant
 import com.aviro.android.presentation.BaseFragment
@@ -49,6 +50,7 @@ class MyRestaurantFrag : BaseFragment() {
     fun initUI() {
         binding.titleTextView.text = "내가 등록한 가게"
         viewmodel._isBookMarkScreen.value = false
+
     }
 
 
@@ -63,6 +65,7 @@ class MyRestaurantFrag : BaseFragment() {
             setFragmentResult("requestKey", bundleOf("resultKey" to "MypageToChallenge"))
             fragmentManager.remove(this@MyRestaurantFrag).commit()
         }
+
         binding.recyclerView.adapter = adapter
     }
 

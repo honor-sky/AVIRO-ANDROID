@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import com.aviro.android.AviroApplication
 import com.aviro.android.BuildConfig
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.FragmentSignSocialBinding
 import com.aviro.android.domain.entity.key.GOOGLE
 import com.aviro.android.domain.entity.key.KAKAO
@@ -63,22 +64,25 @@ class SignSocialFragment : BaseFragment() {
 
         binding.appleBtn.setOnClickListener {
             onClickApple()
+            AmplitudeUtils.signUpClick("apple")
         }
 
 
 
         binding.naverBtn.setOnClickListener {
             onClickNaver()
+            AmplitudeUtils.signUpClick("naver")
         }
 
 
         binding.kakaoBtn.setOnClickListener {
             onClickKaKao()
+            AmplitudeUtils.signUpClick("kakao")
         }
 
         binding.googleBtn.setOnClickListener {
             onClickGoogle()
-
+            AmplitudeUtils.signUpClick("google")
         }
 
         // 에러 팝업
@@ -247,7 +251,7 @@ class SignSocialFragment : BaseFragment() {
                 }
 
             } catch (e: ApiException) {
-                Log.d("GOOGLE:ApiException", "handleSignInResult: error" + e.statusCode)
+
                 if (e.statusCode == 12501) {
                     // 사용자 취소
                 }

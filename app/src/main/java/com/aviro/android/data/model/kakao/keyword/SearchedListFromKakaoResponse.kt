@@ -8,12 +8,12 @@ import kotlinx.serialization.Serializable
 data class SearchedListFromKakaoResponse (
         //val id : String,
         val meta : Meta,
-        val total_count : Int,
         val documents : List<Document>,
 )
 
 data class Meta(
         val is_end : Boolean,
+        val total_count : Int,
         val pageable_count : Int,
         val same_name : SameName,
 )

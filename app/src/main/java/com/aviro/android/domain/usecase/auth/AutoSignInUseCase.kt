@@ -11,7 +11,9 @@ import com.aviro.android.domain.entity.key.KAKAO
 import com.aviro.android.domain.entity.key.NAVER
 import com.aviro.android.domain.entity.key.REFRESH_TOKEN_KEY
 import com.aviro.android.domain.entity.key.UNKNOWN
+import com.aviro.android.domain.entity.key.USER_BIRTH_KEY
 import com.aviro.android.domain.entity.key.USER_EMAIL_KEY
+import com.aviro.android.domain.entity.key.USER_GENDER_KEY
 import com.aviro.android.domain.entity.key.USER_ID_KEY
 import com.aviro.android.domain.entity.key.USER_NAME_KEY
 import com.aviro.android.domain.entity.key.USER_NICKNAME_KEY
@@ -110,14 +112,14 @@ class AutoSignInUseCase @Inject constructor (
                                 val isSignIn = checkKakaoAccessToken()
                                 if (isSignIn) {
                                     // 회원가입 했는지 확인
-                                    Log.d("AutoSignInUseCase:KAKAO","로그인 성공 ")
+                                    //Log.d("AutoSignInUseCase:KAKAO","로그인 성공 ")
                                     return MappingResult.Success("", null)
                                 } else {
                                     return MappingResult.Error(null)
                                 }
                             } else {
                                 //로그인 필요
-                                Log.d("AutoSignInUseCase:KAKAO","재로그인 필요")
+                                //Log.d("AutoSignInUseCase:KAKAO","재로그인 필요")
                                 return MappingResult.Error(null)
                             }
                         }
@@ -138,6 +140,8 @@ class AutoSignInUseCase @Inject constructor (
                                         }
                                         memberRepository.saveMemberInfoToLocal(USER_EMAIL_KEY, data.userEmail)
                                         memberRepository.saveMemberInfoToLocal(USER_NICKNAME_KEY, data.nickname)
+                                        memberRepository.saveMemberInfoToLocal(USER_BIRTH_KEY, data.birthday ?: "")
+                                        memberRepository.saveMemberInfoToLocal(USER_GENDER_KEY, data.gender ?: "")
                                     }
                                 }
 

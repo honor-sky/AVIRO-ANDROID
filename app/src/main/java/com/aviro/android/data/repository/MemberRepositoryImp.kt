@@ -1,6 +1,7 @@
 package com.aviro.android.data.repository
 
 import android.util.Log
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.data.datasource.datastore.DataStoreDataSource
 import com.aviro.android.data.datasource.member.MemberDataSource
 import com.aviro.android.data.mapper.*
@@ -170,6 +171,12 @@ class MemberRepositoryImp @Inject constructor (
             val code = it.statusCode
             if(code == 200) {
                 result = MappingResult.Success(it.message, null)
+
+                Log.d("API_TEST" ,"${it}")
+
+                // 북마크 총개수 업데이트
+                AmplitudeUtils.updateTotalBookmarks(it.addedBookmark)
+
             } else {
                 result = MappingResult.Error(it.message)
             }

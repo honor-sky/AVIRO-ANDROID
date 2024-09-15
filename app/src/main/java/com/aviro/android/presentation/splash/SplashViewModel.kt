@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.domain.entity.base.MappingResult
+import com.aviro.android.domain.entity.key.USER_BIRTH_KEY
 import com.aviro.android.domain.entity.key.USER_EMAIL_KEY
+import com.aviro.android.domain.entity.key.USER_GENDER_KEY
 import com.aviro.android.domain.entity.key.USER_ID_KEY
 import com.aviro.android.domain.entity.key.USER_NAME_KEY
 import com.aviro.android.domain.entity.key.USER_NICKNAME_KEY
@@ -41,7 +43,9 @@ class SplashViewModel @Inject constructor (
         viewModelScope.launch {
             // 현재 어떤 로그인 되어 있는지 확인
             autoSignInUseCase().let {
+                Log.d("SplashSignIn","${it}")
                 when(it){
+
                     is MappingResult.Success<*> -> {
                         _isSignIn.value = true
 
@@ -49,10 +53,12 @@ class SplashViewModel @Inject constructor (
                         val userName = memberRepository.getMemberInfoFromLocal(USER_NAME_KEY) ?: ""
                         val userEmail = memberRepository.getMemberInfoFromLocal(USER_EMAIL_KEY) ?: ""
                         val userNickname = memberRepository.getMemberInfoFromLocal(USER_NICKNAME_KEY)
+                        val birthday = memberRepository.getMemberInfoFromLocal(USER_BIRTH_KEY) ?: ""
+                        val gender = memberRepository.getMemberInfoFromLocal(USER_GENDER_KEY) ?: ""
                         val signType = authRepository.getSignTypeFromLocal()
 
                         // 이름, 이메일, 닉네임 정보 가져오기
-                        AmplitudeUtils.login(userId!!, userName, userEmail, userNickname!!, signType)
+                        AmplitudeUtils.login(userId!!, userName, userNickname!!, birthday, gender, userEmail,  signType)
 
                     }
                     is MappingResult.Error -> {

@@ -1,4 +1,4 @@
-package com.aviro.android.data.model.restaurant
+package com.aviro.android.data.model.review
 
 data class RestaurantReviewAddRequest(
     val commentId : String,

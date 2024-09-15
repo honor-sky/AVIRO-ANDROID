@@ -17,6 +17,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.common.OnKeyboardVisibilityListener
 import com.aviro.android.databinding.FragmentReviewScriptBinding
 import com.aviro.android.domain.entity.review.Review
@@ -33,14 +34,6 @@ class ReviewActivity : BaseActivity() {
 
     var reviewcontent : Review? = null
 
-    /*override fun attachBaseContext(newBase: Context) {
-        val configuration = android.content.res.Configuration(newBase.resources.configuration)
-        configuration.fontScale = 1.0f // 시스템 글꼴 크기 설정 무시
-        applyOverrideConfiguration(configuration)
-        super.attachBaseContext(newBase)
-    }
-
-     */
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,15 +44,14 @@ class ReviewActivity : BaseActivity() {
         binding = FragmentReviewScriptBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.viewmodel = viewmodel
         binding.lifecycleOwner = this
-
 
         initUI()
         initListener()
         initObserver()
         setAnimation()
+
 
     }
 

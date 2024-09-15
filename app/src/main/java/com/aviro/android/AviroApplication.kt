@@ -37,7 +37,6 @@ class AviroApplication : Application() {
 
         // Amplitude 변수 초기화
         if (!BuildConfig.DEBUG) {
-            Log.d("Amplitude","Amplitude가 초기화 되었습니다!!")
             val amplitude = Amplitude(
                 Configuration(
                     apiKey = BuildConfig.AMPLITUDE_API_KEY,

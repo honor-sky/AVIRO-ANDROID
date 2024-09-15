@@ -1,11 +1,11 @@
 package com.aviro.android.data.datasource.member
 
-import android.util.Log
 import com.aviro.android.data.api.MemberService
 import com.aviro.android.data.model.auth.SignInResponse
 import com.aviro.android.data.model.base.BaseResponse
 import com.aviro.android.data.model.base.DataResponse
 import com.aviro.android.data.model.member.*
+import com.aviro.android.data.model.member.BookmarkAddResponse
 
 import javax.inject.Inject
 
@@ -42,7 +42,7 @@ class MemberDataSourceImp @Inject constructor (
         return memberService.updateNickname(request)
     }
 
-    override suspend fun addBookmark(request : AddBookmarkRequest) : Result<BaseResponse> {
+    override suspend fun addBookmark(request : AddBookmarkRequest) : Result<BookmarkAddResponse> {
         return memberService.addBookmark(request)
     }
     override suspend fun deleteBookmark(place_id : String, user_id : String) : Result<BaseResponse> {

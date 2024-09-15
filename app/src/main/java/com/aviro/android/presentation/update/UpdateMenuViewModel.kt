@@ -189,9 +189,11 @@ class UpdateMenuViewModel @Inject constructor (
                 when(it) {
                     is MappingResult.Success<*> -> {
 
-                        // 앰플리튜드 전송
-                        val afterMenuArray = setUpdatedMenuList(updateArray, insertArray, deleteArray)
-                        AmplitudeUtils.menuEdit(_restaurantInfo.value!!.title, _restaurantInfo.value!!.menuArray, afterMenuArray)
+                        //val afterMenuArray = setUpdatedMenuList(updateArray, insertArray, deleteArray) // 구 앰플리튜드용 메뉴 변경용 데이터
+                        val totalMenu = _restaurantInfo.value!!.menuArray.size + insertArray.size - deleteArray.size
+
+                        // 메뉴 업데이트 완료 트래킹
+                        AmplitudeUtils.menuEditComplete(_restaurantInfo.value!!.menuArray.size, totalMenu, _restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title, _restaurantInfo.value!!.category)
 
                         // 토스트 메세지 띄우기
                         _toastLiveDate.value = it.message ?: "소중한 정보 감사해요.\n수정해주신 정보로 업데이트 되었어요!"

@@ -60,7 +60,7 @@ class Update : BaseActivity() {
             it?.let { successMsg ->
                 intent.putExtra("updateSuccess", successMsg)
                 intent.putExtra("updateCategory", viewmodel.afterInfoData.value!!.category)
-                Log.d("updateCategory", "${ viewmodel.afterInfoData.value!!.category}")
+
                 setResult(Activity.RESULT_OK, intent)
 
                 finish()
