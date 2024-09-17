@@ -62,13 +62,16 @@ fun MemberLevelResponse.toMemberLevel() : MemberLevel {
     )
 }
 
-fun MemberLevelUpResponse.toMemberLevelUp() : MemberLevelUp {
-
+/*fun MemberLevelUpResponse.toMemberLevelUp() : MemberLevelUp {
     return MemberLevelUp(
         levelUp = this.levelUp,
         userLevel = this.userLevel
     )
-}
+}*/
+
+
+
+
 
 fun MyRestaurantListResponse.toMyRestaurantList() : List<MyRestaurant>? {
     //mutableListOf<MyRestaurant>()

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.FragmentSignTermsBinding
 import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
@@ -44,6 +45,8 @@ class SignTermsFragment: BaseFragment() {
                     .replace(R.id.fragment_container_view, SignCompleteFragment())
                     .addToBackStack(null) // 백 스택에 추가
                     .commit()
+
+
             }
         })
 

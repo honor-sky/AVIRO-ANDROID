@@ -16,6 +16,10 @@ const val USER_EMAIL_KEY = "userEmailKey"
 
 const val USER_NICKNAME_KEY = "userNicknameKey"
 
+const val USER_BIRTH_KEY = "userBirthKey"
+
+const val USER_GENDER_KEY = "userGenderKey"
+
 const val DATASTORE_KEY = "authDataStoreKey"
 
 const val GOOGLE = "google"

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.aviro.android.BuildConfig
 import com.aviro.android.R
 import com.aviro.android.databinding.ActivitySplashBinding
 import com.aviro.android.domain.entity.base.MappingResult
@@ -18,6 +19,12 @@ import com.aviro.android.presentation.home.Home
 import com.aviro.android.presentation.sign.Sign
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -28,6 +35,10 @@ class Splash : BaseActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private val viewmodel: SplashViewModel by viewModels()
+
+    val MY_REQEUST_CODE = 1000
+    lateinit var appUpdateManager : AppUpdateManager
+    //var diff : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +63,8 @@ class Splash : BaseActivity() {
             }
         })
 
-        goToHomeOrGuideOrSignWithDelay()
+        //goToHomeOrGuideOrSignWithDelay()
+        updateApp()
 
     }
 
@@ -103,4 +115,75 @@ class Splash : BaseActivity() {
 
 
 
+    fun updateApp() {
+
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                // 업데이트가 있는 경우
+
+                val nowVersionCode = BuildConfig.VERSION_CODE
+                val newVersionCode = appUpdateInfo.availableVersionCode()
+                Log.d("updateApp","nowVersionCode : ${nowVersionCode}, newVersionCode : ${newVersionCode}")
+
+                /* 업데이트 규칙 */
+                val diff = newVersionCode - nowVersionCode
+                if(diff >= 5) {
+                    // 즉시 (+10 이상)
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        AppUpdateType.IMMEDIATE,
+                        this,
+                        MY_REQEUST_CODE
+                    )
+                    Log.d("SplashSignIn","무한대기")
+                } else {
+                    goToHomeOrGuideOrSignWithDelay()
+                }
+
+            } else {
+                // 업데이트가 없는 경우
+                Log.d("updateApp","업데이트 없음")
+                goToHomeOrGuideOrSignWithDelay()
+            }
+        }
+
+
+        Log.d("updateApp","리스너 없음")
+
+        goToHomeOrGuideOrSignWithDelay()
+
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == MY_REQEUST_CODE) {
+            if (resultCode != RESULT_OK) {
+                // 업데이트 실패
+                // 다시 업데이트 창 띄움
+                Log.d("SplashSignIn","업데이트 실패")
+                updateApp()
+            } else {
+                //goToHomeOrGuideOrSignWithDelay()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener {
+                // 업데이트가 진행중이었음
+                if (it.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                    updateApp()
+                }
+            }
+    }
 }

@@ -2,6 +2,7 @@ package com.aviro.android.data.repository
 
 import android.content.Context
 import android.util.Log
+import com.aviro.android.common.AmplitudeUtils
 
 import com.aviro.android.domain.entity.search.SearchedRestaurantItem
 import com.aviro.android.domain.entity.search.VeganOptions
@@ -173,8 +174,10 @@ class RestaurantRepositoryImp @Inject constructor (
 
             if (it.documents.size != 0) {
                 val isEnd = it.meta.is_end
-                result = getVeganTypeOfSearching(isEnd, it.documents)
-                Log.d("RestaurantAviroDataSourceImp","${result}")
+                val total_count = it.meta.total_count
+
+                result = getVeganTypeOfSearching(isEnd, total_count, it.documents)
+
             } else {
                 result = MappingResult.Error("검색 결과가 없어요")
             }
@@ -189,13 +192,13 @@ class RestaurantRepositoryImp @Inject constructor (
 
 
     // 검색한 가게들의 비건 유형을 받아옴
-    override suspend fun getVeganTypeOfSearching(isEnd : Boolean, SearchedPlaceRawList : List<Document>) : MappingResult { //Result<List<SearchedRestaurantItem>>
+    override suspend fun getVeganTypeOfSearching(isEnd : Boolean, total : Int, SearchedPlaceRawList : List<Document>) : MappingResult { //Result<List<SearchedRestaurantItem>>
         val request_list_veganTypeOfRestaurant = mutableListOf<RequestedVeganTypeOfRestaurantDTO>()
         val item_list  = mutableListOf<SearchedRestaurantItem>()
 
         SearchedPlaceRawList.map {
             request_list_veganTypeOfRestaurant.add(RequestedVeganTypeOfRestaurantDTO(it.place_name, it.x.toDouble(), it.y.toDouble()))
-            item_list.add(SearchedRestaurantItem(-1, null, it.place_name, it.address_name, it.road_address_name,it.phone, DistanceCalculator.translateDistanceLevel(it.distance), it.x, it.y, VeganOptions(false, false, false)))
+            item_list.add(SearchedRestaurantItem(-1, null, it.place_name, it.address_name, it.road_address_name,it.phone, DistanceCalculator.translateDistanceLevel(it.distance), it.x, it.y, VeganOptions(null, false, false, false)))
         }
 
         val request = RestaurantVeganTypeRequest(request_list_veganTypeOfRestaurant)
@@ -213,6 +216,7 @@ class RestaurantRepositoryImp @Inject constructor (
                         if (veganType.index in item_list.indices) {
                             item_list[veganType.index].index = veganType.index
                             item_list[veganType.index].placeId = veganType.placeId
+                            item_list[veganType.index].veganType.category = veganType.category
                             item_list[veganType.index].veganType.allVegan = veganType.allVegan
                             item_list[veganType.index].veganType.someMenuVegan =
                                 veganType.someMenuVegan
@@ -221,13 +225,13 @@ class RestaurantRepositoryImp @Inject constructor (
                         }
                     }
 
-                    val searchedRestaurantList = SearchedRestaurantList(isEnd, item_list)
+                    val searchedRestaurantList = SearchedRestaurantList(isEnd, total, item_list)
                     result = MappingResult.Success(null, searchedRestaurantList)
 
                 } else {
                     // 비건 정보 가져오기 실패
                     // 그냥 검색 결과만 화면에 띄움 -> 클릭해도 placeId 없기 떄문에 상세 정보 제공 X, 좌표 이동만 가능
-                    val searchedRestaurantList = SearchedRestaurantList(isEnd, item_list)
+                    val searchedRestaurantList = SearchedRestaurantList(isEnd, total, item_list)
                     result = MappingResult.Success(
                         "알 수 없는 오류로 비건 식당 정보를 제공하지 못합니다.\n다시 시도해주시면 더 자세한 비건 식당 정보를 알 수 있어요!",
                         searchedRestaurantList
@@ -392,7 +396,16 @@ class RestaurantRepositoryImp @Inject constructor (
             if(code == 200){
                 if(data != null){
                     // 진행중인 챌린지가 있음
-                    result =  MappingResult.Success(it.message, it.data.toMemberLevelUp())
+                    result =  MappingResult.Success(it.message, data.toRestaurantAddLevelUp()) //.data.toMemberLevelUp()
+
+                    // 등록한 가게 개수 앰플리튜드 트래킹
+                    AmplitudeUtils.updateTotalPlaces(data.addedPlace)
+                    AmplitudeUtils.updatePlaceDateLast()
+
+                    // 가게 등록 최초 앰플리튜드 트래킹
+                    if(data.isFirst) AmplitudeUtils.updatePlaceDateFirst()
+
+
                 } else {
                     result =  MappingResult.Success(it.message, null)
                 }
@@ -416,7 +429,16 @@ class RestaurantRepositoryImp @Inject constructor (
             if(code == 200){
                 if(data != null){
                     // 진행중인 챌린지가 있음
-                    result =  MappingResult.Success(it.message, it.data.toMemberLevelUp())
+                    result =  MappingResult.Success(it.message, data.toReviewAddLevelUp())
+
+
+                    // 등록한 가게 개수 앰플리튜드 트래킹
+                    AmplitudeUtils.updateTotalReviews(data.added_comment_num)
+                    AmplitudeUtils.updateReviewDateLast()
+
+                    // 가게 등록 최초 앰플리튜드 트래킹
+                    if(data.isFirst) AmplitudeUtils.updateReviewDateFirst()
+
                 } else {
                     result =  MappingResult.Success(it.message, null)
                 }

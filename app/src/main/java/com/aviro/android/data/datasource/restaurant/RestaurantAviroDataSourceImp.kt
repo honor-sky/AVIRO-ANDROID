@@ -1,6 +1,5 @@
 package com.aviro.android.data.datasource.restaurant
 
-import android.util.Log
 import com.android.aviro.data.model.restaurant.RestaurantVeganTypeResponse
 import com.aviro.android.data.api.RestaurantService
 import com.aviro.android.data.model.base.BaseResponse
@@ -8,6 +7,8 @@ import com.aviro.android.data.model.base.DataResponse
 import com.aviro.android.data.model.member.MemberLevelUpResponse
 import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
+import com.aviro.android.data.model.review.RestaurantReviewAddRequest
+import com.aviro.android.data.model.review.ReviewAddResponse
 import com.aviro.android.data.model.search.RestaurantVeganTypeRequest
 import javax.inject.Inject
 
@@ -17,7 +18,6 @@ class RestaurantAviroDataSourceImp @Inject constructor (
 ) : RestaurantAviroDataSource {
 
     override suspend fun getRestaurant(request : ReataurantListRequest) : Result<DataResponse<ReataurantListReponse>>  {
-        Log.d("RestaurantAviroDataSourceImp","${request}")
         return restaurantService.getRestaurant(request.x,request.y,request.wide,request.time)
         }
 
@@ -52,10 +52,10 @@ class RestaurantAviroDataSourceImp @Inject constructor (
         return restaurantService.getRestaurantTimetable(placeId)
     }
 
-    override suspend fun createRestaurant(request: RestaurantRequest) : Result<DataResponse<MemberLevelUpResponse>> {
+    override suspend fun createRestaurant(request: RestaurantRequest) : Result<DataResponse<RestaurantAddResponse>> { //DataResponse<MemberLevelUpResponse>
         return restaurantService.createRestaurant(request)
     }
-    override suspend fun creatReview(request : RestaurantReviewAddRequest) : Result<DataResponse<MemberLevelUpResponse>> {
+    override suspend fun creatReview(request : RestaurantReviewAddRequest) : Result<DataResponse<ReviewAddResponse>> { //DataResponse<MemberLevelUpResponse>
         return restaurantService.createRestaurantReview(request)
     }
 

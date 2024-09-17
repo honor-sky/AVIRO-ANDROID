@@ -6,8 +6,11 @@ import com.aviro.android.data.model.marker.MarkerDAO
 import com.aviro.android.data.model.menu.MenuDTO
 import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
+import com.aviro.android.data.model.review.RestaurantReviewAddRequest
+import com.aviro.android.data.model.review.ReviewAddResponse
 import com.aviro.android.data.model.search.PublicAddressListResponse
 import com.aviro.android.domain.entity.marker.MarkerOfMap
+import com.aviro.android.domain.entity.member.MemberLevelUp
 import com.aviro.android.domain.entity.menu.Menu
 import com.aviro.android.domain.entity.restaurant.*
 import com.aviro.android.domain.entity.review.Review
@@ -347,3 +350,18 @@ fun AddressOfCoordFromKakaoResponse.toRoadAddressOfCoordi() : RoadAddressOfCoord
         road_address = this.documents[0].road_address!!.address_name
     )
 }
+
+fun RestaurantAddResponse.toRestaurantAddLevelUp() : MemberLevelUp {
+    return MemberLevelUp(
+        levelUp = this.levelUp,
+        userLevel = this.userLevel
+    )
+}
+
+fun ReviewAddResponse.toReviewAddLevelUp() : MemberLevelUp {
+    return MemberLevelUp(
+        levelUp = this.levelUp,
+        userLevel = this.userLevel
+    )
+}
+

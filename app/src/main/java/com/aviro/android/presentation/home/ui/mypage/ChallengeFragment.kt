@@ -48,6 +48,8 @@ class ChallengeFragment : BaseFragment() {
         initListener()
         initObserver()
 
+        AmplitudeUtils.challengePresent() // 챌린지 화면 진입 트래킹
+
         return root
     }
 
@@ -77,7 +79,6 @@ class ChallengeFragment : BaseFragment() {
         binding.MyRestaurantList.setOnClickListener {
             viewmodel.getMyRestaurantList()
 
-            AmplitudeUtils.placeListPresent()
 
             val fragmentManager = parentFragmentManager.beginTransaction()
             fragmentManager.setCustomAnimations(
@@ -94,7 +95,6 @@ class ChallengeFragment : BaseFragment() {
         binding.MyReviewList.setOnClickListener {
             viewmodel.getMyReviewList()
 
-            AmplitudeUtils.reviewListPresent()
 
             val fragmentManager = parentFragmentManager.beginTransaction()
             fragmentManager.setCustomAnimations(
@@ -112,8 +112,6 @@ class ChallengeFragment : BaseFragment() {
         binding.MyBookmarkList.setOnClickListener {
             viewmodel.getMyBookmarkList()
 
-            AmplitudeUtils.bookmarkListPresent()
-
             val fragmentManager = parentFragmentManager.beginTransaction()
             fragmentManager.setCustomAnimations(
                 R.anim.slide_right_enter,
@@ -124,6 +122,9 @@ class ChallengeFragment : BaseFragment() {
             fragmentManager.replace(R.id.fragment_challenge_main, MyBookmarkFrag())
                 .addToBackStack(null)
                 .commit()
+
+            // 탤린지 화면에서 북마크 리스트 화면 클릭
+            AmplitudeUtils.bookmarkListPresent(viewmodel.myBookmarkList.value?.size ?: 0)
         }
 
 

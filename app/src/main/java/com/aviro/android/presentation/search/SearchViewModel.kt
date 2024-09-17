@@ -27,6 +27,7 @@ import com.aviro.android.domain.entity.base.MappingResult
 import com.aviro.android.domain.entity.search.SearchedRestaurantList
 import com.aviro.android.domain.usecase.retaurant.SearchRestaurantUseCase
 import com.aviro.android.presentation.entity.ItemAdapter
+import com.aviro.android.presentation.entity.SearchType
 import com.aviro.android.presentation.entity.SortingLocEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -66,6 +67,9 @@ class SearchViewModel @Inject constructor(
 
     val _SortAccText = MutableLiveData<String>()
     var SortAccText : LiveData<String> = _SortAccText
+
+    val _searchType = MutableLiveData<String>() // 검색 타입 (이전검색, 현재검색)
+    var searchType : LiveData<String> = _searchType
 
     private val _isSearchedList = MutableLiveData<Boolean>() // 가게 리스트 있는지 여부
     var isSearchedList : LiveData<Boolean> = _isSearchedList
@@ -110,6 +114,7 @@ class SearchViewModel @Inject constructor(
         _SortLocText.value = "내위치중심"
         _SortAccText.value = "정확도순"
 
+
     }
 
     fun getCurrentGPSLoc(): Location? {
@@ -146,9 +151,9 @@ class SearchViewModel @Inject constructor(
 
                         val data = it.data as SearchedRestaurantList
 
+
                         if(data.searchedList.size == 0) {
                             _isSearchedList.value = false
-
                         } else {
                             _isSearchedList.value = true
 
@@ -157,6 +162,13 @@ class SearchViewModel @Inject constructor(
 
                             _searchList.value = data.searchedList
                             searchListSize = data.searchedList.size
+                        }
+
+                        // 메인 검색인 경우만 사용
+                        _searchType.value?.let {
+                            //Log.d("API_TEST", "${_searchType.value!!}, ${data.total}, ${keyword.value}")
+                            AmplitudeUtils.enterKeyword(_searchType.value!!, data.total, keyword.value) // 검색 완료 트래킹
+                            _searchType.value = SearchType.CURRENT.typeName
                         }
 
                     }

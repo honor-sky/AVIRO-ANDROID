@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.PreSearchedWordBinding
+import com.aviro.android.presentation.entity.SearchType
 
 class PreSearchAdapter(private val searchViewModel : SearchViewModel, private val searchBar : EditText): RecyclerView.Adapter<PreSearchAdapter.PreSearchViewHolder>() {
 
@@ -18,7 +20,6 @@ class PreSearchAdapter(private val searchViewModel : SearchViewModel, private va
 
     override fun onBindViewHolder(holder: PreSearchViewHolder, position: Int) {
         if (preSearchedList != null) {
-            Log.d("이전검색어리스트_어댑터", "${preSearchedList}")
             holder.bind(preSearchedList!![position])
         }
     }
@@ -41,6 +42,8 @@ class PreSearchAdapter(private val searchViewModel : SearchViewModel, private va
             }
             binding.word.setOnClickListener {
                 // 이전 검색어 클릭
+                searchViewModel._searchType.value = SearchType.PRE.typeName
+
                 searchBar.setText(item)
                 searchViewModel._keyword.value = item
                 searchViewModel.initList()

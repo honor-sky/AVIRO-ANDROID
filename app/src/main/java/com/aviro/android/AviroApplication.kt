@@ -8,6 +8,9 @@ import com.amplitude.android.Configuration
 import com.amplitude.android.DefaultTrackingOptions
 import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.presentation.sign.GoogleSignInManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.HiltAndroidApp
@@ -34,7 +37,6 @@ class AviroApplication : Application() {
 
         // Amplitude 변수 초기화
         if (!BuildConfig.DEBUG) {
-            Log.d("Amplitude","Amplitude가 초기화 되었습니다!!")
             val amplitude = Amplitude(
                 Configuration(
                     apiKey = BuildConfig.AMPLITUDE_API_KEY,
@@ -53,5 +55,6 @@ class AviroApplication : Application() {
         }
 
     }
+
 
 }

@@ -9,7 +9,7 @@ import com.aviro.android.domain.entity.member.MyRestaurant
 class HomeViewModel : ViewModel()  {
 
     enum class WhereToGo {
-        REVIEW, RESTAURANT, BOOKMARK, REGISTER, MYPAGE
+        REVIEW, RESTAURANT, BOOKMARK, REGISTER, MYPAGE, MAP
     }
 
 
@@ -32,6 +32,8 @@ class HomeViewModel : ViewModel()  {
 
     init {
         _isNavigation.value = false
+        _currentNavigation.value = WhereToGo.MAP
+
     }
 
 

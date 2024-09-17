@@ -6,6 +6,7 @@ package com.aviro.android.domain.entity.search
 data class SearchedRestaurantList(
 
     val is_end : Boolean,
+    val total : Int,
     val searchedList: List<SearchedRestaurantItem>
 
 )

@@ -20,7 +20,7 @@ interface RestaurantRepository {
     //fun getMarkerForBookmark() : List<MarkerDAO>? //bookmark_list : List<String>
 
     suspend fun searchRestaurant(keyword : String, x : String?, y : String?, page : Int, size : Int, sort : String) : MappingResult //Result<SearchedPlaceListResponse>
-    suspend fun getVeganTypeOfSearching(isEnd : Boolean, SearchedPlaceRawList : List<Document>) : MappingResult
+    suspend fun getVeganTypeOfSearching(isEnd : Boolean,  total : Int, SearchedPlaceRawList : List<Document>) : MappingResult
     suspend fun getIsRegistered(title : String, address : String, x : Double, y :Double) : MappingResult
     suspend fun getBookmarkRestaurant(userId : String) : MappingResult
 

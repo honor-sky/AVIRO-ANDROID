@@ -112,6 +112,10 @@ class UpdateViewModel @Inject constructor (
     val error : LiveData<String?>
         get() = _error
 
+    val updatedCategoryForAmplitude = ArrayList<String>()
+    val updatedBeforeDataForAmplitude = ArrayList<String>()
+    val updatedAfterDataForAmplitude = ArrayList<String>()
+
     companion object {
         fun getCategoryBooleanList(category : String): List<Boolean> {
             return when (category) {
@@ -169,7 +173,6 @@ class UpdateViewModel @Inject constructor (
             sun = restaurantTimetable.value?.sun?.open ?: "",
             sunBreak = restaurantTimetable.value?.sun?.breaktime ?: "",
         )
-
 
     }
 
@@ -231,13 +234,12 @@ class UpdateViewModel @Inject constructor (
     fun afterTextChangedPlaceName(s : Editable) {
         _afterInfoData.value = _afterInfoData.value!!.copy(title = s.toString())
         checkChangedInfo()
-
     }
 
     fun afterTextChangedAddress2(s : Editable) {
+        Log.d("afterTextChangedAddress2", "${s}")
         _afterInfoData.value = _afterInfoData.value!!.copy(address2 = if (s.toString().isEmpty()) null else s.toString())
         checkChangedInfo()
-
     }
 
 
@@ -246,6 +248,10 @@ class UpdateViewModel @Inject constructor (
         val updatePhone = viewModelScope.async {
             // 가게 전화번호 정보 변경
             if (isChangePhone.value == true) {
+                updatedCategoryForAmplitude.add("phone number")
+                updatedBeforeDataForAmplitude.add(_restaurantInfo.value!!.phone ?: "null")
+                updatedAfterDataForAmplitude.add(_afterPhoneData.value ?: "null")
+
                 updateRestaurantUseCase.updatePhone(
                     _restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title,
                     _restaurantInfo.value!!.phone ?: "", _afterPhoneData.value!!
@@ -269,6 +275,10 @@ class UpdateViewModel @Inject constructor (
         val updateHomepage = viewModelScope.async {
             // 가게 홈페이지 정보 변경
             if (isChangeUrl.value == true) {
+                updatedCategoryForAmplitude.add("homepage")
+                updatedBeforeDataForAmplitude.add(_restaurantInfo.value!!.url ?: "null")
+                updatedAfterDataForAmplitude.add(afterHomepageData.value ?: "null")
+
                 updateRestaurantUseCase.updateUrl(
                     _restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title,
                     _restaurantInfo.value!!.url ?: "", afterHomepageData.value!!
@@ -294,6 +304,32 @@ class UpdateViewModel @Inject constructor (
         // 가게 타임테이블 정보 변경
         val updateTimetable = viewModelScope.async {
             if (isChangeTime.value == true) {
+                updatedCategoryForAmplitude.add("business hours")
+
+                val changes = compareTimetables(_beforeTimetableData.value!!, _afterTimetableData.value!!)
+
+                changes.forEach { (field, changed) ->
+                    if (changed) {
+                        if(field[2] == "" || field[2] == null || field[2] == "정보 없음") {
+                            updatedBeforeDataForAmplitude.add("${field[0]} ${field[1]} null")
+                        } else if (field[2] == "휴무") {
+                            updatedAfterDataForAmplitude.add("${field[0]} closed")
+                        } else {
+                            updatedBeforeDataForAmplitude.add("${field[0]} ${field[1]} ${field[2]}")
+                        }
+
+                        if(field[3] == "" || field[3] == null || field[3] == "정보 없음") {
+                            updatedAfterDataForAmplitude.add("${field[0]} ${field[1]} null")
+                        } else if (field[3] == "휴무") {
+                            updatedAfterDataForAmplitude.add("${field[0]} closed")
+                        } else {
+                            updatedAfterDataForAmplitude.add("${field[0]} ${field[1]} ${field[3]}")
+                        }
+
+                    }
+                }
+
+
                 updateRestaurantUseCase.updateTime(
                     _restaurantInfo.value!!.placeId,
                     afterTimetableData.value!!.toTimetableUpdating()
@@ -317,6 +353,8 @@ class UpdateViewModel @Inject constructor (
         // 가게 기본 정보 변경
         val updateInfo = viewModelScope.async {
             if (isChangeRestaurantInfo.value == true) {
+                updatedCategoryForAmplitude.add("address")
+
 
                 val infoUpdating: MutableMap<String, Any> = mutableMapOf(
                     "placeId" to _restaurantInfo.value!!.placeId,
@@ -329,6 +367,8 @@ class UpdateViewModel @Inject constructor (
                         _restaurantInfo.value!!.title,
                         afterInfoData.value!!.title
                     )
+                    updatedBeforeDataForAmplitude.add(_restaurantInfo.value!!.title)
+                    updatedAfterDataForAmplitude.add(afterInfoData.value!!.title)
                 }
 
                 // 가게 카테고리 변경 되었는가?
@@ -337,6 +377,8 @@ class UpdateViewModel @Inject constructor (
                         _restaurantInfo.value!!.category,
                         afterInfoData.value!!.category
                     )
+                    updatedBeforeDataForAmplitude.add(_restaurantInfo.value!!.category)
+                    updatedAfterDataForAmplitude.add(afterInfoData.value!!.category)
                 }
 
                 // 가게 주소 변경 되었는가? (하나라도 변경 되었으면 add1, add2 모두 넣음) -> 위치도
@@ -357,6 +399,16 @@ class UpdateViewModel @Inject constructor (
                         _restaurantInfo.value!!.y.toString(),
                         afterInfoData.value!!.y.toString()
                     )
+                }
+
+                if(restaurantInfo.value!!.address2 != afterInfoData.value!!.address2) {
+                    updatedBeforeDataForAmplitude.add(_restaurantInfo.value!!.address2 ?: "null")
+                    updatedAfterDataForAmplitude.add(afterInfoData.value!!.address2 ?: "null")
+                }
+
+                if(restaurantInfo.value!!.address != afterInfoData.value!!.address) {
+                    updatedBeforeDataForAmplitude.add(_restaurantInfo.value!!.address ?: "null")
+                    updatedAfterDataForAmplitude.add(afterInfoData.value!!.address ?: "null")
                 }
 
 
@@ -388,13 +440,22 @@ class UpdateViewModel @Inject constructor (
         var resultInfo =  updateInfo.await()
 
 
+
+
         // 모두 null 인 경우는 없음
         // 하나라도 "success"가 있고, 나머지가 null 또는 "success"인지 확인
         if (
             listOf(resultPhone, resultUrl, resultTimeTable, resultInfo).any { it == "success" } &&
             listOf(resultPhone, resultUrl, resultTimeTable, resultInfo).all { it == null || it == "success" }
         ) {
-            AmplitudeUtils.placeEdit(afterInfoData.value!!.title)
+
+            val edit_category = updatedCategoryForAmplitude.joinToString(separator = ",")
+            val edit_before = updatedBeforeDataForAmplitude.joinToString(separator = ",")
+            val edit_after = updatedAfterDataForAmplitude.joinToString(separator = ",")
+
+            AmplitudeUtils.placeEditComplete(edit_category, edit_before, edit_after,
+                afterInfoData.value!!.placeId, afterInfoData.value!!.title, afterInfoData.value!!.category)
+
             _toast.value = "조금만 기다려주세요!\n관리자가 매일 꼼꼼하게 검수하고 있어요."
 
         } else {
@@ -417,5 +478,23 @@ class UpdateViewModel @Inject constructor (
 
         }
 
+    fun compareTimetables(before: UpdatingTimetableEntity, after: UpdatingTimetableEntity): Map<Array<String>, Boolean> {
+        return mapOf(
+            arrayOf("mon", "business hours", before.mon, after.mon) to (before.mon != after.mon),
+            arrayOf("mon", "break time" , before.monBreak, after.monBreak) to (before.monBreak != after.monBreak),
+            arrayOf("tue", "business hours", before.tue, after.tue) to (before.tue != after.tue),
+            arrayOf("tue", "break time", before.tueBreak, after.tueBreak) to (before.tueBreak != after.tueBreak),
+            arrayOf("wed", "business hours", before.wed, after.wed) to (before.wed != after.wed),
+            arrayOf("wed", "break time", before.wedBreak, after.wedBreak) to (before.wedBreak != after.wedBreak),
+            arrayOf("thu", "business hours", before.thu, after.thu) to (before.thu != after.thu),
+            arrayOf("thu", "break time", before.thuBreak, after.thuBreak) to (before.thuBreak != after.thuBreak),
+            arrayOf("fri", "business hours", before.fri, after.fri)  to (before.fri != after.fri),
+            arrayOf("fri", "break time", before.friBreak, after.friBreak)to (before.friBreak != after.friBreak),
+            arrayOf("sat", "business hours", before.sat, after.sat) to (before.sat != after.sat),
+            arrayOf("sat", "break time", before.satBreak, after.satBreak) to (before.satBreak != after.satBreak),
+            arrayOf("sun", "business hours", before.sun, after.sun) to (before.sun != after.sun),
+            arrayOf("sun", "break time", before.sunBreak, after.sunBreak) to (before.sunBreak != after.sunBreak)
+        )
+    }
 
 }

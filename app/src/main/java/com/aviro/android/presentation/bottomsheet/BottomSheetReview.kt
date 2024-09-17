@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.FragmentBottomsheetReviewBinding
 import com.aviro.android.domain.entity.member.MemberLevelUp
 import com.aviro.android.domain.entity.review.Review
@@ -40,6 +41,10 @@ class BottomSheetReview(val setReviewAmount : (Int) -> Unit) : BaseFragment() {
         setAdapter()
         initObserver()
         initLisenter()
+
+        // 리뷰 탭 진입 트래킹
+        AmplitudeUtils.placePresentReview(viewmodel.restaurantSummary.value!!.placeId, viewmodel.restaurantSummary.value!!.title,
+            viewmodel.restaurantSummary.value!!.category, "click review tab")
 
         return root
     }
@@ -134,6 +139,10 @@ class BottomSheetReview(val setReviewAmount : (Int) -> Unit) : BaseFragment() {
 
             intent.putExtra("restaurant", restaurantInfo)
             startActivityForResult(intent, getString(R.string.REVIEW_RESULT_OK).toInt())
+
+            // 후기 작성 화면 진입 트래킹
+            AmplitudeUtils.reviewUploadClick(viewmodel.restaurantSummary.value!!.placeId, viewmodel.restaurantSummary.value!!.title,
+                viewmodel.restaurantSummary.value!!.category, "filed in review tab")
 
         }
     }

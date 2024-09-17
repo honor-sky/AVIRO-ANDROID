@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.amplitude.core.Amplitude
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.FragmentBottomsheetMenuBinding
 import com.aviro.android.presentation.BaseFragment
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
@@ -34,6 +36,11 @@ class BottomSheetMenu : BaseFragment() {
         binding.menuListView.adapter = menuAdapter
         initObserver()
         initListener()
+
+        // 메뉴 탭 진입 트래킹
+        AmplitudeUtils.placePresentMenu(viewmodel.restaurantSummary.value!!.placeId, viewmodel.restaurantSummary.value!!.title,
+            viewmodel.restaurantSummary.value!!.category, "click menu tab")
+
 
         return root
     }

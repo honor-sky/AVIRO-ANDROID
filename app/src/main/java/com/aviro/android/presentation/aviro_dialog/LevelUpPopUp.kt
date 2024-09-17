@@ -49,13 +49,12 @@ class LevelUpPopUp(context : Context, val levelup : MemberLevelUp, val viewmodel
             viewmodel._isNavigation.value = true
             dismiss()
 
-            AmplitudeUtils.challengePresent()
-            AmplitudeUtils.levelupDidMove(levelup.userLevel)
+            AmplitudeUtils.levelupMove(true)
         }
 
         binding.nextBtn.setOnClickListener {
             dismiss()
-            AmplitudeUtils.levelupDidNotMove(levelup.userLevel)
+            AmplitudeUtils.levelupMove(false)
         }
     }
 

@@ -214,7 +214,6 @@ class MypageViewModel @Inject constructor (
                 }
 
                 viewModelScope.launch {
-
                     getMyInfoUseCase.getChallengeLevel().let {
                         when (it) {
                             is MappingResult.Success<*> -> {
@@ -323,8 +322,8 @@ class MypageViewModel @Inject constructor (
                 updateMyNicnameUseCase(_nickname.value.toString()).let {
                     when (it) {
                         is MappingResult.Success<*> -> {
-                            Log.d("onClickChangeNickname", "닉네임 업뎃 성공 : ${_nickname.value}")
-
+                            // 유저 프로퍼티 (닉네임) 수정
+                            AmplitudeUtils.updateNickname(_nickname.value.toString())
                         }
                         is MappingResult.Error -> {
                             _errorLiveData.value = it.message
@@ -378,7 +377,7 @@ class MypageViewModel @Inject constructor (
                     // 성공했을 경우 -> 로그인 화면으로, 다이얼로그 창 뜨기
                     _movingScreen.value = R.string.LOGOUT.toString()
 
-                    AmplitudeUtils.logout()
+                    AmplitudeUtils.logout(_socialType.value!!)
 
                 }
             }
@@ -390,7 +389,7 @@ class MypageViewModel @Inject constructor (
                 _isLoding.value = true
 
                 withdrawUseCase().let {
-                    Log.d("withdraw","${it}")
+
                     // 성공했을 경우 -> 다이얼로그 창 뜨기, 로그인 화면으로
                     when (it) {
                         is MappingResult.Success<*> -> {

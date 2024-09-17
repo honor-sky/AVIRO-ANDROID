@@ -226,8 +226,6 @@ class Map : BaseFragment(), OnMapReadyCallback {
 
 
         binding.locationFloatingButton.setOnClickListener {
-            //naverMap.locationTrackingMode = LocationTrackingMode.Follow
-            //binding.locationFloatingButton.setBackgroundResource(R.drawable.ic_floating_location)
             checkOnOffGPS()
         }
 
@@ -277,8 +275,8 @@ class Map : BaseFragment(), OnMapReadyCallback {
 
         // 즐겨찾기 추가
         binding.bottomSheet.likeBtn.setOnClickListener {
-            bottomSheetViewmodel.updateBookmark() //viewmodel.selectedMarker.value.placeId
-        }
+            bottomSheetViewmodel.updateBookmark()
+             }
 
         // 필터링 기능
         binding.filterDish.setOnClickListener {
@@ -445,7 +443,10 @@ class Map : BaseFragment(), OnMapReadyCallback {
             if(it == null){
                 binding.searchbarTextView.text = "어디로 이동할까요?"
                 binding.searchbarTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray3))
+
             } else {
+
+                Log.d("selectedMarker","감지")
 
                 bottomSheetViewmodel._selectedMarker.value = it
 
@@ -453,7 +454,6 @@ class Map : BaseFragment(), OnMapReadyCallback {
                 val distanceToUser = setDistance(it.x, it.y)
                 binding.bottomSheet.distanceTextViewStep1.text = distanceToUser
                 binding.bottomSheet.distanceTextViewStep2.text = distanceToUser
-
 
                 viewmodel.getRestaurantSummary(it.placeId)
                 bottomSheetViewmodel.getRestaurantInfo(it.placeId)
@@ -467,12 +467,42 @@ class Map : BaseFragment(), OnMapReadyCallback {
                 viewmodel._bottomSheetState.value = 1
                 // 바텀시트 정보
                 binding.bottomSheet.typeTextViewStep1.text = viewmodel.selectedMarker.value!!.category + " ‧ " +getVeganTypeColor2Text(viewmodel.selectedMarker.value!!.veganTypeColor)
+
+                when(homeViewmodel.currentNavigation.value) {
+                    HomeViewModel.WhereToGo.BOOKMARK -> {
+                        // 북마크 목록에서 가게 화면 첫 진입 트래킹
+                        AmplitudeUtils.placePresentFirst(viewmodel.selectedMarker.value!!.placeId, viewmodel.selectedMarker.value!!.title, viewmodel.selectedMarker.value!!.category,
+                            "bookmark list in challenge tab", viewmodel.categoryFilter.value!!.get(0), viewmodel.categoryFilter.value!!.get(1), viewmodel.categoryFilter.value!!.get(2), viewmodel.categoryFilter.value!!.get(3))
+                        homeViewmodel._currentNavigation.value =  HomeViewModel.WhereToGo.MAP
+                    }
+                    HomeViewModel.WhereToGo.REVIEW -> {
+                        // 내가 쓴 리뷰 목록에서 가게 화면 첫 진입 트래킹
+                        AmplitudeUtils.placePresentFirst(viewmodel.selectedMarker.value!!.placeId, viewmodel.selectedMarker.value!!.title, viewmodel.selectedMarker.value!!.category,
+                            "registered review list in challenge tab", viewmodel.categoryFilter.value!!.get(0), viewmodel.categoryFilter.value!!.get(1), viewmodel.categoryFilter.value!!.get(2), viewmodel.categoryFilter.value!!.get(3))
+                        homeViewmodel._currentNavigation.value =  HomeViewModel.WhereToGo.MAP
+                    }
+                    HomeViewModel.WhereToGo.RESTAURANT -> {
+                        // 내가 등록한 가게 목록에서 가게 화면 첫 진입 트래킹
+                        AmplitudeUtils.placePresentFirst(viewmodel.selectedMarker.value!!.placeId, viewmodel.selectedMarker.value!!.title, viewmodel.selectedMarker.value!!.category,
+                            "registered place list in challenge tab", viewmodel.categoryFilter.value!!.get(0), viewmodel.categoryFilter.value!!.get(1), viewmodel.categoryFilter.value!!.get(2), viewmodel.categoryFilter.value!!.get(3))
+                        homeViewmodel._currentNavigation.value = HomeViewModel.WhereToGo.MAP
+                    }
+
+                    HomeViewModel.WhereToGo.REGISTER -> {}
+                    HomeViewModel.WhereToGo.MYPAGE -> {}
+
+                    HomeViewModel.WhereToGo.MAP -> {
+                        AmplitudeUtils.placePresentFirst(viewmodel.selectedMarker.value!!.placeId, viewmodel.selectedMarker.value!!.title, viewmodel.selectedMarker.value!!.category,
+                            "marker", viewmodel.categoryFilter.value!!.get(0), viewmodel.categoryFilter.value!!.get(1), viewmodel.categoryFilter.value!!.get(2), viewmodel.categoryFilter.value!!.get(3))
+
+                    }
+
+                    null -> {}
+                }
             }
         })
 
         viewmodel._restaurantSummary.observe(viewLifecycleOwner) {
-
-            AmplitudeUtils.placePresent(it.title)
 
             bottomSheetViewmodel._isLike.value = it.bookmark
 
@@ -785,10 +815,12 @@ class Map : BaseFragment(), OnMapReadyCallback {
                         viewmodel._isShowBottomSheetTab.value = true
 
                         persistenetBottomSheet.state = STATE_HALF_EXPANDED
-                        //viewmodel._BottomSheetStep1.value = false
                         viewmodel._bottomSheetState.value = 2
                         bottomSheetSate = 2
                         binding.bottomSheet.typeTextViewStep2.text = getVeganTypeColor2Text(viewmodel.selectedMarker.value!!.veganTypeColor)
+
+                        // 바텀시트 절반 진입 트래킹
+                        AmplitudeUtils.placePresentHalf(viewmodel.selectedMarker.value!!.placeId, viewmodel.selectedMarker.value!!.title, viewmodel.selectedMarker.value!!.category)
 
                     } else if (viewmodel._bottomSheetState.value == 2) {
                         persistenetBottomSheet.state = STATE_EXPANDED
@@ -798,7 +830,7 @@ class Map : BaseFragment(), OnMapReadyCallback {
 
                     }
                 } else if(distanceY > 0) {
-                    if (viewmodel._bottomSheetState.value == 2) { //step == 1 persistenetBottomSheet.state == STATE_HALF_EXPANDED
+                    if (viewmodel._bottomSheetState.value == 2) {
 
                         viewmodel._isShowBottomSheetTab.value = true
                         persistenetBottomSheet.state = STATE_COLLAPSED
@@ -850,6 +882,11 @@ class Map : BaseFragment(), OnMapReadyCallback {
                         val searchMarker = markerList.filter { it.placeId == serahed_item.placeId }.first()
                         //viewmodel._selectedMarker.value = searchMarker
                         searchMarker.marker.performClick()
+
+                        // 검색한 가게 첫 진입 트래킹
+                        AmplitudeUtils.placePresentFirst(serahed_item.placeId!!, serahed_item.placeName, serahed_item.veganType.category!!,
+                            "search", viewmodel.categoryFilter.value!!.get(0), viewmodel.categoryFilter.value!!.get(1), viewmodel.categoryFilter.value!!.get(2), viewmodel.categoryFilter.value!!.get(3))
+
                     }
 
                 }
@@ -918,7 +955,6 @@ class Map : BaseFragment(), OnMapReadyCallback {
                         }
                     }
                     if (check) {
-                        Log.d("위치 추적", "위치추적")
                         naver_map!!.locationSource = locationSource
                         naver_map!!.locationTrackingMode = LocationTrackingMode.Follow
                     }
