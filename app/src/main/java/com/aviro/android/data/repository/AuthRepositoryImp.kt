@@ -79,11 +79,11 @@ class AuthRepositoryImp @Inject constructor(
             val data = it.data
 
             if (code == 200 && data != null) {
-                result = MappingResult.Success("", User(true, data.nickname))
+                result = MappingResult.Success("", User(true, data.nickname, data.gender, data.birthday))
             } else {
                 // 서버 내부 에러
                 when(code){
-                    400 -> result = MappingResult.Success("", User(false, null))
+                    400 -> result = MappingResult.Success("", User(false, "", null, null))
                     else -> result = MappingResult.Error(it.message ?: "잘못된 요청값 입니다.\n다시 로그인 해주세요")
                 }
             }

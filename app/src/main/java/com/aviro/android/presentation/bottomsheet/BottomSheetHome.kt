@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.viewpager2.widget.ViewPager2
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.databinding.FragmentBottomsheetHomeBinding
 import com.aviro.android.domain.entity.member.MemberLevelUp
 import com.aviro.android.domain.entity.review.Review
@@ -44,58 +45,12 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
     lateinit var menuAdapter :  MenuAdapter
     lateinit var reviewAdapter : ReviewAdapter
 
-    //private lateinit var setReviewAmount: (Int) -> Unit
+    var isMenuView = false
+    var isReviewView = false
 
     enum class UpdateType {
         LOC, TIME, NUMBER, HOMEPAGE
     }
-
-
-    /*
-
-    companion object {
-
-        private const val ARG_SET_REVIEW_AMOUNT = "setReviewAmount"
-        private const val HOME_VIEWMODEL = "homeViewModel"
-        private const val MAP_VIEWMODEL = "mapViewModel"
-        private const val BOTTOM_SHEET_VIEWMODEL = "bottomsheetViewModel"
-
-        @JvmStatic
-        fun newInstance(
-            bottomSheetViewModel: BottomSheetViewModel,
-            mapViewModel: MapViewModel,
-            homeViewModel: HomeViewModel,
-            setReviewAmount: (Int) -> Unit
-        ) : BottomSheetHome{
-            Log.d("글자 크기 변경 에러","newInstance")
-
-             return BottomSheetHome().apply {
-                this.setReviewAmount = setReviewAmount
-                this.viewmodel = bottomSheetViewModel
-                this.homeViewmodel = homeViewModel
-                this.mapViewmodel = mapViewModel
-            }
-
-        }
-
-    }
-
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("글자 크기 변경 에러","BottomSheet_Home:onCreate")
-        arguments?.let {
-            setReviewAmount = it.getSerializable(ARG_SET_REVIEW_AMOUNT) as (Int) -> Unit
-            this.viewmodel = it.getSerializable(BOTTOM_SHEET_VIEWMODEL) as BottomSheetViewModel
-            this.homeViewmodel = it.getSerializable(HOME_VIEWMODEL) as HomeViewModel
-            this.mapViewmodel = it.getSerializable(MAP_VIEWMODEL) as MapViewModel
-        }
-    }
-
-     */
-
 
 
 
@@ -123,7 +78,6 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
 
 
     fun setViewModel(bottomSheetViewModel: BottomSheetViewModel, mapViewModel: MapViewModel,  homeViewmodel: HomeViewModel) {
-        Log.d("글자 크기 변경 에러","setViewModel")
 
         this.viewmodel = bottomSheetViewModel
         this.mapViewmodel = mapViewModel
@@ -136,7 +90,6 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
         reviewAdapter = ReviewAdapter(viewmodel,  //viewmodel.userNickname!!
             {item ->
                 viewmodel._selectedReviewForReport.value = item
-                Log.d("_selectedReviewForReport", "${item}")
 
                 val bottomSheetDialog = ReviewReportBottomSheetDialog() { code, content ->
                     viewmodel.reportReview(code, content)
@@ -181,7 +134,6 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
             viewPager.setCurrentItem(2, true)
         }
 
-
         binding.writingReviewBtn.setOnClickListener {
             // 후기 작성 화면으로 이동
             val intent = Intent(requireContext(), ReviewActivity::class.java)
@@ -189,6 +141,10 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
                 viewmodel.restaurantSummary.value!!.category,viewmodel.restaurantSummary.value!!.address, viewmodel.selectedMarker.value!!.veganTypeColor)
             intent.putExtra("restaurant", restaurantInfo)
             startActivityForResult(intent, getString(R.string.REVIEW_RESULT_OK).toInt())
+
+            // 후기 작성 화면 진입 트래킹
+            AmplitudeUtils.reviewUploadClick(viewmodel.restaurantSummary.value!!.placeId, viewmodel.restaurantSummary.value!!.title,
+                viewmodel.restaurantSummary.value!!.category, "button in home tab")
         }
 
         binding.infoUpdatebtn.setOnClickListener {
@@ -199,7 +155,11 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
             intent.putExtra("RestaurantInfo", viewmodel.restaurantDataForUpdate.value)
             intent.putExtra("RestaurantTimeTable", viewmodel.restaurantTimetable.value)
             startActivityForResult(intent, getString(R.string.UPDATE_RESULT_OK).toInt())
+
+            // 가게 정보 수정 진입 트래킹
+            AmplitudeUtils.placeEditClick(viewmodel.restaurantDataForUpdate.value!!.placeId, viewmodel.restaurantDataForUpdate.value!!.address, viewmodel.restaurantDataForUpdate.value!!.category)
         }
+
         binding.menuUpdateBtn.setOnClickListener {
             // 메뉴 업데이트 화면
             viewmodel.setRestaurantData(mapViewmodel.selectedMarker.value!!)
@@ -207,10 +167,51 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
             val intent = Intent(requireContext(), UpdateMenu::class.java)
             intent.putExtra("RestaurantInfo", viewmodel.restaurantDataForUpdate.value)
             startActivityForResult(intent, getString(R.string.UPDATE_MENU_RESULT_OK).toInt())
+
+            // 가게 정보 수정 진입 트래킹
+            AmplitudeUtils.menuEditClick(viewmodel.restaurantDataForUpdate.value!!.placeId, viewmodel.restaurantDataForUpdate.value!!.address, viewmodel.restaurantDataForUpdate.value!!.category)
         }
 
         binding.reportBtn.setOnClickListener {
             RestaurantReportDialog(requireContext(), mapViewmodel).show()
+
+            // 가게 신고(삭제) 진입 트래킹
+            AmplitudeUtils.placeRemoveClick(viewmodel.selectedMarker.value!!.placeId, viewmodel.selectedMarker.value!!.title, viewmodel.selectedMarker.value!!.category)
+        }
+
+        // 스크롤시 메뉴, 리뷰 위치 감지
+        binding.homeScrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+
+            val menuLayoutLocation = IntArray(2) // 메뉴 레이아웃 위치를 담음
+            val reviewLayoutLocation = IntArray(2) // 리뷰 레이아웃 위치를 담음
+
+            binding.menuLinearLayout.getLocationOnScreen(menuLayoutLocation)
+            binding.reviewLinearLayout.getLocationOnScreen(reviewLayoutLocation)
+
+            val menuListY = menuLayoutLocation[1]
+            val reviewListY = reviewLayoutLocation[1]
+
+            // 스크롤된 위치가 메뉴 리스트의 Y 위치보다 큰지 확인
+            if (scrollY + binding.homeScrollView.height >= menuListY) {
+                // 사용자가 메뉴 리스트에 도달 트래킹
+                if(!isMenuView) {
+                    AmplitudeUtils.placePresentMenu(viewmodel.restaurantSummary.value!!.placeId, viewmodel.restaurantSummary.value!!.title,
+                        viewmodel.restaurantSummary.value!!.category, "scroll in home tab")
+
+                    isMenuView = true
+                }
+
+            }
+
+            if (scrollY + binding.homeScrollView.height >= reviewListY) {
+                // 사용자가 리뷰 리스트에 도달 트래킹
+                if(!isReviewView) {
+                    AmplitudeUtils.placePresentReview(viewmodel.restaurantSummary.value!!.placeId, viewmodel.restaurantSummary.value!!.title,
+                        viewmodel.restaurantSummary.value!!.category, "scroll in home tab")
+
+                    isReviewView = true
+                }
+            }
         }
     }
 
@@ -249,6 +250,9 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
         }
 
         viewmodel.restaurantInfo.observe(viewLifecycleOwner) {
+            isMenuView = false
+            isReviewView = false
+
             binding.restaurantInfo = it
 
             // 영업 시간
@@ -274,6 +278,10 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
                         intent.putExtra("RestaurantInfo", viewmodel.restaurantDataForUpdate.value)
                         intent.putExtra("RestaurantTimeTable", viewmodel.restaurantTimetable.value)
                         startActivityForResult(intent, getString(R.string.UPDATE_RESULT_OK).toInt())
+
+                        // 가게 정보 수정 진입 트래킹
+                        AmplitudeUtils.menuEditClick(viewmodel.restaurantDataForUpdate.value!!.placeId, viewmodel.restaurantDataForUpdate.value!!.address, viewmodel.restaurantDataForUpdate.value!!.category)
+
                     }
                 }
                 }
@@ -294,6 +302,10 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
                         intent.putExtra("RestaurantInfo", viewmodel.restaurantDataForUpdate.value)
                         intent.putExtra("RestaurantTimeTable", viewmodel.restaurantTimetable.value)
                         startActivityForResult(intent, getString(R.string.UPDATE_RESULT_OK).toInt())
+
+                        // 가게 정보 수정 진입 트래킹
+                        AmplitudeUtils.menuEditClick(viewmodel.restaurantDataForUpdate.value!!.placeId, viewmodel.restaurantDataForUpdate.value!!.address, viewmodel.restaurantDataForUpdate.value!!.category)
+
                     }
                 }
             } else {
@@ -326,6 +338,10 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
                         intent.putExtra("RestaurantInfo", viewmodel.restaurantDataForUpdate.value)
                         intent.putExtra("RestaurantTimeTable", viewmodel.restaurantTimetable.value)
                         startActivityForResult(intent, getString(R.string.UPDATE_RESULT_OK).toInt())
+
+                        // 가게 정보 수정 진입 트래킹
+                        AmplitudeUtils.menuEditClick(viewmodel.restaurantDataForUpdate.value!!.placeId, viewmodel.restaurantDataForUpdate.value!!.address, viewmodel.restaurantDataForUpdate.value!!.category)
+
                     }
                 }
 
@@ -422,7 +438,7 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
 
                 if(data != null) {
                     val updateSuccessMsg = data.getStringExtra("updateSuccess")
-                    Log.d("가게정보수정","${updateSuccessMsg}")
+
                     AviroDialogUtils.createOneDialog(
                         requireContext(),
                         "수정 요청이 완료되었어요",
@@ -433,6 +449,9 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
                     // 마커 변경
                     val  updatedCategory = data.getStringExtra("updateCategory") ?: ""
                     if(updatedCategory != "") {
+
+                        homeViewmodel._currentNavigation.value = null // 바텀 시트 최초 진입 중복 방지
+
                         mapViewmodel.updateCategory(viewmodel.selectedMarker.value!!.placeId, updatedCategory)
                     }
                 }
@@ -442,7 +461,7 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
 
                 if(data != null) {
                     val updateSuccessMsg = data.getStringExtra("updateSuccess")
-                    Log.d("가게메뉴수정","${updateSuccessMsg}")
+
                     AviroDialogUtils.createOneDialog(
                         requireContext(),
                         "수정 완료되었어요",

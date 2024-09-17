@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.common.getBookmarkMarkerIcon
 import com.aviro.android.common.getMarkerIcon
 import com.aviro.android.common.getSelectedMarkerIcon
@@ -178,11 +179,11 @@ class MapViewModel @Inject constructor (
                                         data.map { new ->
                                             if (markerList.value!!.filter { it.placeId == new.placeId }
                                                     .isEmpty()) {
-                                                Log.d("updateMap", "추가:${new}")
+                                                //Log.d("updateMap", "추가:${new}")
                                                 _markerList.value = _markerList.value?.plus(data)
                                                 drawBasicMarker(naver_map, data)
                                             } else {
-                                                Log.d("updateMap", "업데이트:${new}")
+                                                //Log.d("updateMap", "업데이트:${new}")
                                                 drawUpdatedMarker(new)
 
                                                 // 한개 아니라 여러개면...?
@@ -229,7 +230,6 @@ class MapViewModel @Inject constructor (
             markerOfMap.marker.performClick()
             //getSelectedMarkerIcon(markerOfMap.category, allVegan, someMenuVegan, ifRequestVegan)
 
-            Log.d("updateMap:updateVeganType","${markerOfMap}")
         }
     }
 
@@ -242,7 +242,6 @@ class MapViewModel @Inject constructor (
             markerOfMap.category = category
             markerOfMap.marker.icon = getSelectedMarkerIcon(category, markerOfMap.allVegan, markerOfMap.someMenuVegan, markerOfMap.ifRequestVegan )//getSelectedMarkerIcon(markerOfMap.category, allVegan, someMenuVegan, ifRequestVegan)
 
-            //_selectedMarker.value = markerOfMap
 
             markerOfMap.marker.setOnClickListener {
                 cancelSelectedMarker(_selectedMarker.value) // 먼저 클릭된 마커 있는 경우 변경
@@ -252,7 +251,6 @@ class MapViewModel @Inject constructor (
                 _selectedMarker.value = markerOfMap
                 false
             }
-            Log.d("updateMap:updateCategory","${markerOfMap}")
 
             markerOfMap.marker.performClick()
 
@@ -273,11 +271,16 @@ class MapViewModel @Inject constructor (
                 // 선택한 마커
                 _selectedMarker.value = markerOfMap
 
+                // 맵 가게 바텀시트 최초 진입 트래킹
+               /* AmplitudeUtils.placePresentFirst(selectedMarker.value!!.placeId, selectedMarker.value!!.title, selectedMarker.value!!.category,
+                    "marker", categoryFilter.value!!.get(0), categoryFilter.value!!.get(1), categoryFilter.value!!.get(2), categoryFilter.value!!.get(3))
+*/
                 false
             }
         }
     }
 
+    // 북마크 ON 상태에서 마커 업데이트 된 경우
     fun drawUpdatedMarker(updatedMarker : MarkerOfMap) {
         val marker = _markerList.value?.filter { it.placeId == updatedMarker.placeId }?.first()
 
@@ -298,6 +301,11 @@ class MapViewModel @Inject constructor (
                 markerOfMap.marker.icon = setMarkerClickListener(updatedMarker.category, markerOfMap.veganTypeColor)
                 // 선택한 마커
                 _selectedMarker.value = markerOfMap
+
+                /*// 맵 가게 바텀시트 최초 진입 트래킹
+                AmplitudeUtils.placePresentFirst(selectedMarker.value!!.placeId, selectedMarker.value!!.title, selectedMarker.value!!.category,
+                    "marker", categoryFilter.value!!.get(0), categoryFilter.value!!.get(1), categoryFilter.value!!.get(2), categoryFilter.value!!.get(3))
+*/
                 false
             }
             _selectedMarker.value?.let {
@@ -378,6 +386,10 @@ class MapViewModel @Inject constructor (
                                     // 선택한 마커
                                     _selectedMarker.value = markerOfMap
 
+                                  /* // 북마크한 가게 바텀시트 최초 진입 트래킹
+                                   AmplitudeUtils.placePresentFirst(selectedMarker.value!!.placeId, selectedMarker.value!!.title, selectedMarker.value!!.category,
+                                       "bookmark in map", categoryFilter.value!!.get(0), categoryFilter.value!!.get(1), categoryFilter.value!!.get(2), categoryFilter.value!!.get(3))
+*/
                                     false
                                 }
 
@@ -398,7 +410,7 @@ class MapViewModel @Inject constructor (
 
 
     fun cancelSelectedMarker(pre_selected_msrekr : MarkerOfMap?) {
-        Log.d("cancelSelectedMarker", "$pre_selected_msrekr")
+        //Log.d("cancelSelectedMarker", "$pre_selected_msrekr")
         pre_selected_msrekr?.let{
             pre_selected_msrekr.marker.icon = getMarkerIcon(pre_selected_msrekr.category, pre_selected_msrekr.allVegan, pre_selected_msrekr.someMenuVegan, pre_selected_msrekr.ifRequestVegan)
         }
@@ -455,6 +467,10 @@ class MapViewModel @Inject constructor (
         // 즐겨찾기 설정한 가게만 보임
         if(_isFavorite.value == true) {
             getBookmarkList()
+
+            // 맵화면 북마크 ON 트래킹
+            AmplitudeUtils.clickMapBookmark()
+
         } else {
             removeBookmarkList()
         }
@@ -474,6 +490,10 @@ class MapViewModel @Inject constructor (
                 when(it) {
                     is MappingResult.Success<*> -> {
                         _diallogLiveData.value = it.message
+
+                        // 가게 신고 완료 트래킹
+                        AmplitudeUtils.placeRemoveComplete(selectedMarker.value!!.placeId, selectedMarker.value!!.title,
+                            selectedMarker.value!!.category)
                     }
                     is MappingResult.Error -> {
                         _errorLiveData.value = it.message

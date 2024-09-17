@@ -17,6 +17,7 @@ import com.aviro.android.data.model.member.NicknameCheckResponse
 import com.aviro.android.data.model.member.NicknameUpdateRequest
 import com.aviro.android.data.model.member.SignUpRequest
 import com.aviro.android.data.model.member.UpdateReviewRequest
+import com.aviro.android.data.model.member.BookmarkAddResponse
 import retrofit2.http.*
 
 interface MemberService {
@@ -56,7 +57,7 @@ interface MemberService {
     @POST("map/update/bookmark")
     suspend fun addBookmark(
         @Body request: AddBookmarkRequest
-    ): Result<BaseResponse>
+    ): Result<BookmarkAddResponse>
 
     @DELETE("map/update/bookmark")
     suspend fun deleteBookmark(

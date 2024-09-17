@@ -129,7 +129,7 @@ class Home : FragmentActivity() {
                         frag2.location_y = frag1.NaverMapOfY
                         binding.homeContainer.setPadding(0, getStatusBarHeight(this), 0, getNaviBarHeight(this)
                         )
-                         */
+                        */
                     }
 
                     HomeViewModel.WhereToGo.MYPAGE -> {
@@ -143,7 +143,10 @@ class Home : FragmentActivity() {
                             getNaviBarHeight(this)
                         )
 
-                        AmplitudeUtils.challengePresent()
+                    }
+
+                    HomeViewModel.WhereToGo.MAP -> {
+
                     }
 
                     null -> {}
@@ -186,8 +189,6 @@ class Home : FragmentActivity() {
                     binding.navView.isVisible = true
                     binding.homePager.isUserInputEnabled = false
                     binding.homeContainer.setPadding(0,getStatusBarHeight(this), 0, getNaviBarHeight(this))
-
-                    AmplitudeUtils.challengePresent()
 
                 }
             }
@@ -259,7 +260,6 @@ class Home : FragmentActivity() {
             data?.let {
                 val levelUp = it.getParcelableExtra<MemberLevelUp>("levelUp")
                 levelUp?.let {
-                    Log.d("LevelUpPopUp", "${levelUp}")
                     LevelUpPopUp(this, levelUp, homeViewModel).show()
                 }
 

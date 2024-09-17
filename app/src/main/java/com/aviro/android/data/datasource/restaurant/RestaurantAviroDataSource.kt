@@ -6,6 +6,8 @@ import com.aviro.android.data.model.base.DataResponse
 import com.aviro.android.data.model.member.MemberLevelUpResponse
 import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
+import com.aviro.android.data.model.review.RestaurantReviewAddRequest
+import com.aviro.android.data.model.review.ReviewAddResponse
 import com.aviro.android.data.model.search.RestaurantVeganTypeRequest
 
 interface RestaurantAviroDataSource {
@@ -22,8 +24,8 @@ interface RestaurantAviroDataSource {
     suspend fun getRestaurantReview(placeId : String) : Result<DataResponse<RestaurantReviewResponse>>
     suspend fun getRestaurantTimeTable(placeId : String) : Result<DataResponse<RestaurantTimetableResponse>>
 
-    suspend fun createRestaurant(request: RestaurantRequest) : Result<DataResponse<MemberLevelUpResponse>>
-    suspend fun creatReview(request : RestaurantReviewAddRequest) : Result<DataResponse<MemberLevelUpResponse>>
+    suspend fun createRestaurant(request: RestaurantRequest) : Result<DataResponse<RestaurantAddResponse>> //Result<DataResponse<MemberLevelUpResponse>>
+    suspend fun creatReview(request : RestaurantReviewAddRequest) : Result<DataResponse<ReviewAddResponse>> //Result<DataResponse<MemberLevelUpResponse>>
 
     suspend fun reportRestaurant(request : RestaurantReportRequest) : Result<BaseResponse>
 

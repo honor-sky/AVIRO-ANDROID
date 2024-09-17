@@ -23,6 +23,8 @@ fun toSiginInRequest(refresh_token : String) : SignInRequest {
             userName = this.userName,
             userEmail = this.userEmail,
             nickname = this.nickname,
+            gender = this.gender,
+            birthday = this.birthday
         )
     }
 

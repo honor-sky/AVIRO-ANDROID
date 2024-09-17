@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import com.aviro.android.R
+import com.aviro.android.common.AmplitudeUtils
 
 import com.aviro.android.databinding.MypageListFragBinding
 import com.aviro.android.domain.entity.member.MyRestaurant
@@ -57,7 +58,7 @@ class MyBookmarkFrag : BaseFragment() {
     fun initAdapter() {
         adapter = MyRestaurantAdapter(viewmodel) {  item ->
             homeViewmodel._restaurantData.value = item
-            Log.d("MyBookmarkFrag","${homeViewmodel._restaurantData.value}")
+            //Log.d("MyBookmarkFrag","${homeViewmodel._restaurantData.value}")
             homeViewmodel._isNavigation.value = true
 
             val fragmentManager = parentFragmentManager.beginTransaction()

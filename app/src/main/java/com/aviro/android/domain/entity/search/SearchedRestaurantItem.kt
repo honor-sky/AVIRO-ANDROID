@@ -8,29 +8,22 @@ import kotlinx.serialization.Serializable
 
 
 @Parcelize
-//@Serializable
 data class SearchedRestaurantItem(
-   // @SerializedName("placeId")
     var index : Int,
     var placeId : String?,
-    //@SerializedName("placeName")
     val placeName : String,
-    //@SerializedName("placeAddress")
     val addressName : String,
-    val roadAddressName : String, // val placeAddress : String,
+    val roadAddressName : String,
     val phone : String?,
-    //@SerializedName("distance")
     var distance : String,
-    //@SerializedName("x")
     val x : String,
-    //@SerializedName("y")
     val y : String,
-    //@SerializedName("veganType")
     val veganType :VeganOptions
     ): Parcelable
 
 @Parcelize
 data class VeganOptions(
+    var category : String?,
     var allVegan: Boolean,
     var someMenuVegan: Boolean,
     var ifRequestVegan: Boolean

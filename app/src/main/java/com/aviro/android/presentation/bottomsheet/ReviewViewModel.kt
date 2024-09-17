@@ -91,7 +91,8 @@ class ReviewViewModel @Inject constructor (
                 when(it) {
                     is MappingResult.Success<*> -> {
 
-                        AmplitudeUtils.reviewUpload(_restaurantInfo.value!!.placeId, reviewText.value!!)
+                        // 후기 작성 완료 트래킹
+                        AmplitudeUtils.reviewUploadComplete(_restaurantInfo.value!!.placeId, _restaurantInfo.value!!.title, _restaurantInfo.value!!.category, reviewId, reviewText.value!!)
 
                         // 레벨업 여부 확인
                         if(it.data != null) {

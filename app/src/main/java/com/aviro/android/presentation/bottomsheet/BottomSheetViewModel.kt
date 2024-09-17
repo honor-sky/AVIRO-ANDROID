@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aviro.android.common.AmplitudeUtils
 import com.aviro.android.domain.entity.base.MappingResult
 import com.aviro.android.domain.entity.marker.MarkerOfMap
 import com.aviro.android.domain.entity.restaurant.*
@@ -202,6 +203,10 @@ class BottomSheetViewModel @Inject constructor (
                     when (it) {
                         is MappingResult.Success<*> -> {
                             _toastLiveData.value = it.message ?: "즐겨찾기가 추가되었습니다."
+
+                            // 특정 가게 즐겨찾기 추가 트래킹
+                            AmplitudeUtils.clickPlaceBookmark(restaurantSummary.value!!.placeId, restaurantSummary.value!!.title,restaurantSummary.value!!.address, restaurantSummary.value!!.category )
+
                         }
 
                         is MappingResult.Error -> {
@@ -222,13 +227,12 @@ class BottomSheetViewModel @Inject constructor (
 
     fun reportReview(code : Int, content : String?) {
         // 신고 번호
-        //Log.d("bottomSheetDialog", "${_selectedMarker.value!!.title}, ${_selectedReviewForReport.value!!}, ${code},${content}")
-
         viewModelScope.launch {
             reportReviewUseCase(selectedMarker.value!!.title , selectedReviewForReport.value!!, code + 1, content).let {
                 when(it) {
                     is MappingResult.Success<*> -> {
                         _toastLiveData.value = it.message ?: "신고가 완료되었습니다."
+
                     }
                     is MappingResult.Error -> {
                         _errorLiveData.value = it.message ?: "가게 신고에 실패했습니다.\n다시 시도해주세요."
@@ -254,10 +258,6 @@ class BottomSheetViewModel @Inject constructor (
         }
     }
 
-
-    fun afterTextChanged(s : Editable) {
-        val reportContent = s.toString()
-    }
 
 
 

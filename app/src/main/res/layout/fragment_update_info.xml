@@ -228,10 +228,11 @@
             android:text="@{viewmodel.afterInfoData.address2}"
             android:textSize="15dp"
             android:fontFamily="@font/pretendard_medium"
-            android:afterTextChanged="@{viewmodel::afterTextChangedAddress2}"
+
             android:hint="상세 정보를 입력하세요. (예. 동,층,호)"
             android:background="@drawable/base_roundsquare_gray6"
             android:orientation="horizontal" />
+        <!--android:afterTextChanged="@{viewmodel::afterTextChangedAddress2}"-->
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

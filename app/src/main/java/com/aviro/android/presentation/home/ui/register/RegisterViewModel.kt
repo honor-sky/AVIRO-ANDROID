@@ -178,7 +178,9 @@ class RegisterViewModel @Inject constructor (
                                 when(it) {
                                     is MappingResult.Success<*> -> {
 
-                                        AmplitudeUtils.placeUpload(registerRestaurant.value!!.placeName)
+                                        // 가게 등록 완료 트래킹
+                                        AmplitudeUtils.placeUploadComplete(restaurantID, registerRestaurant.value!!.placeName,
+                                            category, menuList.value?.size ?: 0)
 
                                         // 레벨업 여부 확인
                                         if(it.data != null) {

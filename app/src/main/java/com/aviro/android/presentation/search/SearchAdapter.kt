@@ -13,10 +13,7 @@ class SearchAdapter(private val searchViewModel : SearchViewModel): RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder.from(parent, searchViewModel)
-            /* return SearchViewHolder(
-                 SearchRestaurantItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                 this.searchedItemClickLister)*/ //SearchViewHolder.from(parent,searchedItemClickLister) // 가게 데이터 하나를 홀더에 셋팅해줄 때마다 그 가게 데이터에 대한 레이아웃을 뷰바인딩 해주고
-    }
+     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         if(searchedList != null) {

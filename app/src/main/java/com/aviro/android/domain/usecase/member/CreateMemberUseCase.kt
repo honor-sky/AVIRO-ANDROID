@@ -44,6 +44,8 @@ class CreateMemberUseCase @Inject constructor (
                     memberRepository.saveMemberInfoToLocal(USER_NAME_KEY, userName)  //
                     memberRepository.saveMemberInfoToLocal(USER_EMAIL_KEY, data.userEmail) //data.userEmail //email
                     memberRepository.saveMemberInfoToLocal(USER_NICKNAME_KEY, data.nickname) //data.nickname //nickname
+                    //memberRepository.saveMemberInfoToLocal(USER_BIRTH_KEY, data.birthday ?: "")
+                    // memberRepository.saveMemberInfoToLocal(USER_GENDER_KEY, data.gender ?: "")
                     authRepository.saveSignTypeToLocal(type)
 
                 }
