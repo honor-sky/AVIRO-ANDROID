@@ -15,8 +15,6 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 android {
 
     namespace = "com.aviro.android"
-    signingConfigs {
-    }
 
     compileSdk 34
 
@@ -24,9 +22,9 @@ android {
         applicationId "com.aviro.android"
         minSdk 29
         targetSdk 34
-        versionCode 101
+        versionCode 111
 
-        versionName "1.1.0"
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

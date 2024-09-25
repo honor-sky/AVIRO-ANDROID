@@ -93,7 +93,6 @@ class Map : BaseFragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("글자 크기 변경 에러","onCreate:Map")
 
         //checkOnOffGPS()
 
@@ -105,21 +104,6 @@ class Map : BaseFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         bottomSheetViewmodel.getNickname()
-
-        /*
-        val frag1 = BottomSheetHome.newInstance(
-            bottomSheetViewModel = bottomSheetViewmodel,
-            mapViewModel = viewmodel,
-            homeViewModel = homeViewmodel,
-            {reviewAmount -> setBottomSheetTabRevieAmount(reviewAmount)}
-        )
-
-        val frag2 = BottomSheetMenu()
-        val frag3 = BottomSheetReview({count -> setBottomSheetTabRevieAmount(count)})
-        fragList = arrayOf(frag1, frag2, frag3)
-
-         */
-
 
 
         frag1.setViewModel(bottomSheetViewmodel, viewmodel, homeViewmodel)
@@ -611,6 +595,7 @@ class Map : BaseFragment(), OnMapReadyCallback {
             viewmodel.updateMap(naver_map!!, false)
             viewmodel._isFirst.value = false
         }
+
     }
 
 
