@@ -129,7 +129,7 @@ class Splash : BaseActivity() {
 
                 val nowVersionCode = BuildConfig.VERSION_CODE
                 val newVersionCode = appUpdateInfo.availableVersionCode()
-                Log.d("updateApp","nowVersionCode : ${nowVersionCode}, newVersionCode : ${newVersionCode}")
+                //Log.d("updateApp","nowVersionCode : ${nowVersionCode}, newVersionCode : ${newVersionCode}")
 
                 /* 업데이트 규칙 */
                 val diff = newVersionCode - nowVersionCode
@@ -141,22 +141,19 @@ class Splash : BaseActivity() {
                         this,
                         MY_REQEUST_CODE
                     )
-                    Log.d("SplashSignIn","무한대기")
+                    //Log.d("SplashSignIn","무한대기")
                 } else {
                     goToHomeOrGuideOrSignWithDelay()
                 }
 
             } else {
                 // 업데이트가 없는 경우
-                Log.d("updateApp","업데이트 없음")
+                //Log.d("updateApp","업데이트 없음")
                 goToHomeOrGuideOrSignWithDelay()
             }
         }
 
-
-        Log.d("updateApp","리스너 없음")
-
-        goToHomeOrGuideOrSignWithDelay()
+        //goToHomeOrGuideOrSignWithDelay()
 
     }
 
@@ -166,7 +163,6 @@ class Splash : BaseActivity() {
             if (resultCode != RESULT_OK) {
                 // 업데이트 실패
                 // 다시 업데이트 창 띄움
-                Log.d("SplashSignIn","업데이트 실패")
                 updateApp()
             } else {
                 //goToHomeOrGuideOrSignWithDelay()
