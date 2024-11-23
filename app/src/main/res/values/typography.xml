@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Aviro Custom Font Style Heading -->
+    <style name="Title.Screen">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_2xl</item>
+        <item name="android:lineHeight">@dimen/line_hight_2xl</item>
+        <item name="android:letterSpacing">-2</item>
+    </style>
+
+    <style name="Title.Section">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_2xl</item>
+        <item name="android:lineHeight">@dimen/line_hight_2xl</item>
+        <item name="android:letterSpacing">-1.5</item>
+    </style>
+
+    <style name="Title.Subsection">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_lg</item>
+        <item name="android:lineHeight">@dimen/line_hight_lg</item>
+        <item name="android:letterSpacing">-1</item>
+    </style>
+
+    <style name="Title.Body">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_md</item>
+        <item name="android:lineHeight">@dimen/line_hight_md</item>
+        <item name="android:letterSpacing">-0.5</item>
+    </style>
+
+    <style name="Title.Group">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Aviro Custom Font Style Body Large -->
+    <style name="Body.Large.Strong">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Large.Regular">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Large.Emphasis">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Large.Link">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+
+
+    <!-- Aviro Custom Font Style Body Default -->
+    <style name="Body.Default.Strong">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Default.Regular">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Default.Emphasis">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Default.Link">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+
+    <!-- Aviro Custom Font Style Body Small -->
+    <style name="Body.Small.Strong">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_xxs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xxs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Small.Regular">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">@dimen/font_xxs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xxs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Small.Emphasis">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">@dimen/font_xxs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xxs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Small.Link">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_xxs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xxs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+</resources>
