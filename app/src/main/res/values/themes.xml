@@ -111,58 +111,106 @@
         <item name="android:textSize">15dp</item> <!-- 원하는 텍스트 크기로 변경 -->
     </style>
 
-    <!--<style name="ThemeOverlay.AVIRO.Dialog.ItemList" parent="">
-        <item name="colorPrimary">@color/Cobalt</item>
+
+
+    <!-- Aviro Custom Font Style Heading -->
+    <style name="Title.Screen">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_2xl</item>
+        <item name="android:lineHeight">@dimen/line_hight_2xl</item>
+        <item name="android:letterSpacing">-2</item>
+    </style>
+
+    <style name="Title.Section">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_2xl</item>
+        <item name="android:lineHeight">@dimen/line_hight_2xl</item>
+        <item name="android:letterSpacing">-1.5</item>
+    </style>
+
+    <style name="Title.Subsection">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_lg</item>
+        <item name="android:lineHeight">@dimen/line_hight_lg</item>
+        <item name="android:letterSpacing">-1</item>
+    </style>
+
+    <style name="Title.Body">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_md</item>
+        <item name="android:lineHeight">@dimen/line_hight_md</item>
+        <item name="android:letterSpacing">-0.5</item>
+    </style>
+
+    <style name="Title.Group">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Aviro Custom Font Style Body Large -->
+    <style name="Body.Large.Strong">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Large.Regular">
         <item name="android:fontFamily">@font/pretendard_regular</item>
-        <item name="android:textSize">17dp</item>
-        <item name="android:textAlignment">center</item>
-    </style>-->
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Large.Emphasis">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Large.Link">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_sm</item>
+        <item name="android:lineHeight">@dimen/line_hight_sm</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
 
 
 
+    <!-- Aviro Custom Font Style Body Default -->
+    <style name="Body.Default.Strong">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Default.Regular">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Default.Emphasis">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Body.Default.Link">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:lineHeight">@dimen/line_hight_xs</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
 
 </resources>
 
-    <!--Bottom Sheet-->
-
-
-    <!-- Base application theme. -->
-   <!-- <style name="Theme.AVIRO" parent="Theme.MaterialComponents.Light.NoActionBar">
-        &lt;!&ndash; Customize your light theme here. &ndash;&gt;
-        &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;
-    </style>
-
-
- <style name="AVIRO.Dialog" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">@color/Gray0</item>
-        <item name="colorSecondary">@color/Gray0</item>
-        <item name="colorSurface">@color/Gray0</item>
-        <item name="colorOnSurface">@color/Gray0</item>
-     <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
-
- </style>
-
-    <style name="AVIRO.Dialog.Button" parent="Widget.Material3.Button.TextButton.Dialog" >
-        <item name="colorPrimary">@color/Keyword_Blue</item>
-        <item name="android:textColor">@color/Keyword_Blue</item>
-    </style>
-
-    &lt;!&ndash;Dialog Title Custom Style&ndash;&gt;
-    <style name="AVIRO.Dialog.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
-        <item name="android:textColor">@color/Gray0</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.Material3.Title.Panel.CenterStacked</item>
-    </style>
-
-    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.Material3">
-        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
-        <item name="shapeAppearanceOverlay">@null</item>
-    </style>
-
-    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">8dp</item>
-    </style>
--->
 
 
 

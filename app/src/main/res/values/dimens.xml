@@ -3,4 +3,25 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Aviro Custom Font Sizes -->
+    <dimen name="font_xxs">12dp</dimen>
+    <dimen name="font_xs">14dp</dimen>
+    <dimen name="font_sm">16dp</dimen>
+    <dimen name="font_md">20dp</dimen>
+    <dimen name="font_lg">24dp</dimen>
+    <dimen name="font_xl">28dp</dimen>
+    <dimen name="font_2xl">32dp</dimen>
+
+
+    <!-- Aviro Custom Line Hight -->
+    <dimen name="line_hight_xxs">16dp</dimen>
+    <dimen name="line_hight_xs">20dp</dimen>
+    <dimen name="line_hight_sm">24dp</dimen>
+    <dimen name="line_hight_md">28dp</dimen>
+    <dimen name="line_hight_lg">32dp</dimen>
+    <dimen name="line_hight_xl">36dp</dimen>
+    <dimen name="line_hight_2xl">40dp</dimen>
+
+
 </resources>
