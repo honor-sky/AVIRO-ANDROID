@@ -477,8 +477,6 @@ class MapViewModel @Inject constructor (
     }
 
 
-
-
     fun setReportCode(code : Int) {
         _reportCode.value = code
         reportRestaurant()

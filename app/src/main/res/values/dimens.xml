@@ -23,5 +23,35 @@
     <dimen name="line_hight_xl">36dp</dimen>
     <dimen name="line_hight_2xl">40dp</dimen>
 
+    <!-- Aviro Custom Radius -->
+    <dimen name="radius_sharp">0dp</dimen>
+    <dimen name="radius_xxs">1dp</dimen>
+    <dimen name="radius_xs">2dp</dimen>
+    <dimen name="radius_s">4dp</dimen>
+    <dimen name="radius_sm">6dp</dimen>
+    <dimen name="radius_m">10dp</dimen>
+    <dimen name="radius_ml">16dp</dimen>
+    <dimen name="radius_lg">24dp</dimen>
+    <dimen name="radius_xl">36dp</dimen>
+    <dimen name="radius_round">999dp</dimen>
+
+
+    <!-- Aviro Custom Spacing -->
+    <dimen name="spacing_base">16dp</dimen>
+    <dimen name="spacing_none">0</dimen>
+    <dimen name="spacing_xxs">2dp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_s">8dp</dimen>
+    <dimen name="spacing_sm">12dp</dimen>
+    <dimen name="spacing_m">16dp</dimen>
+    <dimen name="spacing_ml">20dp</dimen>
+    <dimen name="spacing_l">28dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_2xl">40dp</dimen>
+    <dimen name="spacing_3xl">48dp</dimen>
+
+
+
+
 
 </resources>
