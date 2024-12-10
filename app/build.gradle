@@ -27,7 +27,6 @@ android {
         versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField "String", "NAVER_CLIENT_ID", properties['naver.client_id']
         buildConfigField "String", "NAVER_CLIENT_SECRET", properties['naver.client_secret']
@@ -83,12 +82,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8' //1.8 //11
+        jvmTarget = "1.8" //1.8 //11
     }
 
     buildFeatures {
         viewBinding true
         buildConfig = true
+        compose = true
     }
     viewBinding {
         enabled = true
@@ -99,12 +99,33 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
 }
 
 
 dependencies {
 
     //implementation 'com.android.tools.build:gradle:8.3.0'
+    implementation platform("androidx.compose:compose-bom:2023.10.00")
+
+    // Compose UI
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+
+    // Lifecycle 및 Navigation
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'androidx.activity:activity-compose:1.7.2'
+
+    // Debugging 및 Preview
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    // 테스트 종속성 (선택 사항)
+    //androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+
 
     implementation 'androidx.core:core-ktx:1.12.0' // 1.12.0
     implementation 'androidx.appcompat:appcompat:1.6.1' //1.6.1
@@ -116,6 +137,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
     implementation 'com.google.android.gms:play-services-maps:19.0.0'
+  /*  implementation 'androidx.compose.ui:ui-tooling-preview-android:1.7.5'
+    implementation 'androidx.compose.foundation:foundation-layout-android:1.7.5'
+    implementation 'androidx.compose.material3:material3-android:1.2.1' //1.2.1*/
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

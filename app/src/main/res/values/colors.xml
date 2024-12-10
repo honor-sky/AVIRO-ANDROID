@@ -23,7 +23,7 @@
 
     <!-- New Aviro Color System -->
     <color name="Base_White">#FFFFFF</color>
-    <color name="Base_Black">#DFF0FA</color>
+    <color name="Base_Black">@color/Gray_Primary</color>
 
 
     <color name="Green_Primary">@color/Green_500</color>
@@ -116,6 +116,66 @@
     <color name="Black_800">#3D1A1F29</color>
     <color name="Black_900">#4D1A1F29</color>
     <color name="Black_950">@color/Gray_950</color>
+
+    <color name="White_50">#0DFFFFFF</color>
+    <color name="White_100">#1AFFFFFF</color>
+    <color name="White_200">#33FFFFFF</color>
+    <color name="White_300">#4DFFFFFF</color>
+    <color name="White_400">#66FFFFFF</color>
+    <color name="White_500">#80FFFFFF</color>
+    <color name="White_600">#99FFFFFF</color>
+    <color name="White_700">#B3FFFFFF</color>
+    <color name="White_800">#CCFFFFFF</color>
+    <color name="White_900">#E6FFFFFF</color>
+    <color name="White_950">@color/Base_White</color>
+
+
+
+
+    <!-- Token -->
+    <!-- text -->
+    <color name="text_primary">@color/Base_Black</color>
+    <color name="text_body">@color/Gray_800</color>
+    <color name="text_disabled">@color/Gray_300</color>
+    <color name="text_secondary">@color/Gray_600</color>
+    <color name="text_destructive">@color/Red_Primary</color>
+    <color name="text_destructive_active">@color/Red_700</color>
+    <color name="text_destructive_disabled">@color/Red_200</color>
+    <color name="text_white">@color/Base_White</color>
+    <color name="text_white_secondary">@color/White_800</color>
+    <color name="text_gray">@color/Gray_700</color>
+
+    <color name="text_tertiary">@color/Blue_Primary</color>
+    <color name="text_tertiary_active">@color/Blue_700</color>
+    <color name="text_link">@color/Gray_700</color>
+    <color name="text_link_active">@color/Blue_600</color>
+
+    <color name="background_button_primary_normal">@color/Blue_Primary</color>
+    <color name="background_button_primary_active">@color/Blue_700</color>
+    <color name="background_button_primary_disabled">@color/Gray_100</color>
+    <color name="background_button_secondary_normal">@color/White_950</color>
+    <color name="background_button_secondary_active">@color/Gray_100</color>
+    <color name="background_button_secondary_disabled">@color/Gray_50</color>
+    <color name="background_button_tertiary_normal">@color/White_950</color>
+    <color name="background_button_destructive">@color/White_950</color>
+    <color name="background_button_destructive_active">@color/Red_50</color>
+    <color name="background_button_destructive_disabled">@color/Red_50</color>
+
+    <color name="border_button_outline_normal">@color/Blue_Primary</color>
+    <color name="border_button_outline_active">@color/Blue_700</color>
+    <color name="border_button_outline_disabled">@color/Gray_200</color>
+    <color name="border_button_outline_destructive">@color/Red_Primary</color>
+    <color name="border_button_outline_destructive_active">@color/Red_700</color>
+    <color name="border_button_outline_destructive_disabled">@color/Red_50</color>
+    <color name="border_button_secondary_normal">@color/Gray_400</color>
+    <color name="border_button_secondary_active">@color/Gray_500</color>
+    <color name="border_button_secondary_disabled">@color/Gray_200</color>
+
+
+
+
+
+
 
 
 </resources>

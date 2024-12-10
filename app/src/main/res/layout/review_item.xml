@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -70,18 +70,42 @@
         android:ellipsize="end"-->
     </LinearLayout>
 
+        <!-- 좋아요 버튼 / 신고 삭제 버튼 -->
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="7dp">
-            <TextView
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reviewLikeBtn"
+                style="@style/Theme.AVIRO.IconButton.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
-                android:textColor="@color/Gray0"
-                android:textSize="16dp"/>
-        </LinearLayout>
+                android:text="102"
+                android:textColor="@color/Base_Black"
+                android:backgroundTint="@color/Base_White"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/Gray_100"
+                app:icon="@drawable/ic_thumb_up"
+                app:iconTint="@color/Base_Black"
+                app:iconSize="20dp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_price_dot"/>
+
+        </LinearLayout> -->
 
     </LinearLayout>
 

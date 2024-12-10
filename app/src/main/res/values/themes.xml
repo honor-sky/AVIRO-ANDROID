@@ -1,13 +1,15 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme" parent="Theme.AppCompat.Light.NoActionBar"> <!--Theme.Material3.Light.NoActionBar--> <!-- Theme.AppCompat.Light.NoActionBar-->
+    <style name="Base.Theme" parent="Theme.Material3.Light.NoActionBar"> <!--Theme.Material3.Light.NoActionBar--> <!-- Theme.AppCompat.Light.NoActionBar-->
         <!-- Customize your light theme here. -->
         <!--<item name="colorSecondary">@color/Gray7</item>-->
 
         <item name="materialAlertDialogTheme">@style/Theme.AVIRO.Dialog</item>
 
         <item name="android:navigationBarColor">@android:color/transparent</item> <!-- 네비게이션 바 배경 투명 -->
+
+
         <item name="android:windowLightNavigationBar">true</item> <!-- 네비게이션 바 아이콘 색상을 밝게 -->
         <item name="android:statusBarColor">@android:color/transparent</item> <!-- 상태 표시줄 배경 투명 -->
         <item name="android:windowLightStatusBar">true</item> <!-- 상태 표시줄 아이콘 색상을 밝게 -->
@@ -38,9 +40,16 @@
 
 
     <style name="BottomNavigationViewTextStyle" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textSize">11dp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="background">@null</item>
+        <item name="colorSurface">@color/Base_White</item>
+        <item name="colorOnSurfaceVariant">@color/Base_White</item>
+
+        <item name="android:color">@color/Base_White</item>
+
     </style>
+
 
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">17dp</item>
@@ -110,6 +119,80 @@
         <item name="android:fontFamily">@font/pretendard_semibold</item> <!-- 원하는 글꼴로 변경 -->
         <item name="android:textSize">15dp</item> <!-- 원하는 텍스트 크기로 변경 -->
     </style>
+
+
+    <!-- 커스텀 버튼 -->
+
+
+
+    <!-- Primary -->
+    <!-- Large -->
+    <style name="Theme.AVIRO.Button.Large" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">52dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAppearance">@style/Body.Large.Strong</item>
+    </style>
+
+    <!-- Default -->
+    <style name="Theme.AVIRO.Button.Defualt" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:minHeight">44dp</item>
+    <item name="android:paddingTop">10dp</item>
+    <item name="android:paddingBottom">10dp</item>
+    <item name="android:textAppearance">@style/Body.Large.Strong</item>
+</style>
+
+
+    <!-- Small -->
+    <style name="Theme.AVIRO.Button.Small" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">32dp</item>
+        <item name="android:paddingTop">7.5dp</item>
+        <item name="android:paddingBottom">7.5dp</item>
+        <item name="android:textAppearance">@style/Body.Default.Strong</item>
+
+    </style>
+
+
+    <!-- Icon Button -->
+    <!-- Large -->
+    <style name="Theme.AVIRO.IconButton.Large" parent="Widget.Material3.Button.OutlinedButton.Icon">
+        <item name="android:height">52dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAppearance">@style/Body.Large.Strong</item>
+
+        <item name="iconPadding">4dp</item>
+
+    </style>
+
+    <!-- Default -->
+    <style name="Theme.AVIRO.IconButton.Defualt" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:height">44dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textAppearance">@style/Body.Large.Strong</item>
+
+        <item name="iconPadding">4dp</item>
+
+    </style>
+
+    <!-- Small -->
+    <style name="Theme.AVIRO.IconButton.Small" parent="Widget.Material3.Button.OutlinedButton.Icon">
+        <item name="android:height">32dp</item>
+        <item name="android:paddingTop">7.5dp</item>
+        <item name="android:paddingBottom">7.5dp</item>
+        <item name="android:textAppearance">@style/Body.Default.Strong</item>
+
+        <item name="iconPadding">4dp</item>
+    </style>
+
+    <!-- Destructive -->
+    <!-- Tertiary -->
+    <!-- Link -->
+
+
+    <!-- 커스텀 뱆지 -->
+
 
 
 
