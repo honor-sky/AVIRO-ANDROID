@@ -21,7 +21,8 @@ import javax.inject.Singleton
 class ApiModule {
 
     private val AVIRO_BASE_URL_V2 = com.aviro.android.BuildConfig.AWS_API_KEY_V2
-    private val AVIRO_BASE_URL_V3 = com.aviro.android.BuildConfig.AWS_API_KEY_V3
+    private val AVIRO_BASE_URL_V4 = com.aviro.android.BuildConfig.AWS_API_KEY_V4
+    //AWS_API_KEY_V3
     private val KAKAO_BASE_URL = com.aviro.android.BuildConfig.KAKAO_RESTAPI_URL
     private val PUBLIC_BASE_URL = com.aviro.android.BuildConfig.PUBLIC_API_URL
 
@@ -126,7 +127,7 @@ class ApiModule {
     fun provideAviroSupportRetrofit(@ApiModule.AviroSupportClient client : OkHttpClient, resultCallAdapterFactory: ResultCallAdapterFactory): Retrofit { //AWS
         return Retrofit.Builder()
             .client(client)
-            .baseUrl(AVIRO_BASE_URL_V3)
+            .baseUrl(AVIRO_BASE_URL_V4)
             .addConverterFactory(GsonConverterFactory.create()) //gson
             .addCallAdapterFactory(resultCallAdapterFactory)
             .build()

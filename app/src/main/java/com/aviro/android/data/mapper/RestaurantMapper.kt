@@ -8,6 +8,7 @@ import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
 import com.aviro.android.data.model.review.RestaurantReviewAddRequest
 import com.aviro.android.data.model.review.ReviewAddResponse
+import com.aviro.android.data.model.review.ReviewLikeRequest
 import com.aviro.android.data.model.search.PublicAddressListResponse
 import com.aviro.android.domain.entity.marker.MarkerOfMap
 import com.aviro.android.domain.entity.member.MemberLevelUp
@@ -15,6 +16,7 @@ import com.aviro.android.domain.entity.menu.Menu
 import com.aviro.android.domain.entity.restaurant.*
 import com.aviro.android.domain.entity.review.Review
 import com.aviro.android.domain.entity.review.ReviewAdding
+import com.aviro.android.domain.entity.review.ReviewLike
 import com.aviro.android.domain.entity.review.ReviewReporting
 import com.aviro.android.domain.entity.search.CoordiOfPublicAddress
 import com.aviro.android.domain.entity.search.PublicAddressItem
@@ -181,6 +183,15 @@ fun ReviewAdding.toRestaurantReviewAddRequest() : RestaurantReviewAddRequest {
         content = this.content
     )
 }
+
+fun ReviewLike.toReviewLikeRequest() : ReviewLikeRequest {
+    return ReviewLikeRequest(
+        commentId = this.commentId,
+        placeId = this.placeId,
+        userId = this.userId
+    )
+}
+
 
 fun ReportRestaurant.toRestaurantReportRequest() : RestaurantReportRequest {
     return RestaurantReportRequest(

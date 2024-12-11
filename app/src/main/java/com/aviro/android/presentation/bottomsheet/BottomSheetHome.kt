@@ -172,6 +172,7 @@ class BottomSheetHome(val setReviewAmount : (Int) -> Unit) : BaseFragment() { //
             AmplitudeUtils.menuEditClick(viewmodel.restaurantDataForUpdate.value!!.placeId, viewmodel.restaurantDataForUpdate.value!!.address, viewmodel.restaurantDataForUpdate.value!!.category)
         }
 
+
         binding.reportBtn.setOnClickListener {
             RestaurantReportDialog(requireContext(), mapViewmodel).show()
 

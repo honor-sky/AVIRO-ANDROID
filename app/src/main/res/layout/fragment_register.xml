@@ -442,7 +442,6 @@
                     android:layout_height="51dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-
                     android:background="@drawable/base_roundsquare_border_keyword_30"
                     android:orientation="vertical">
                     <LinearLayout

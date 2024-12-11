@@ -3,13 +3,14 @@ package com.aviro.android.data.api
 import com.android.aviro.data.model.restaurant.RestaurantVeganTypeResponse
 import com.aviro.android.data.model.base.BaseResponse
 import com.aviro.android.data.model.base.DataResponse
-import com.aviro.android.data.model.member.MemberLevelUpResponse
 import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
 import com.aviro.android.data.model.review.RestaurantReviewAddRequest
 import com.aviro.android.data.model.review.ReviewAddResponse
+import com.aviro.android.data.model.review.ReviewLikeRequest
 import com.aviro.android.data.model.search.RestaurantVeganTypeRequest
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -103,6 +104,20 @@ interface RestaurantService {
     suspend fun updateMenu(
         @Body request : MenuUpdateRequest
     ): Result<BaseResponse>
+
+    @POST("map/update/like")
+    suspend fun addReviewLike(
+        @Body request : ReviewLikeRequest
+    ): Result<BaseResponse>
+
+    @DELETE("map/update/like")
+    suspend fun cancelReviewLike(
+        @Query("placeId") placeId: String,
+        @Query("commentId") commentId: String,
+        @Query("userId") userId : String
+    ): Result<BaseResponse>
+
+
     @POST("map/report/phone")
     suspend fun updatePhone(
         @Body request : PhoneUpdateRequest

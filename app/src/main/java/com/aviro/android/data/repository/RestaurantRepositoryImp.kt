@@ -492,6 +492,44 @@ class RestaurantRepositoryImp @Inject constructor (
         return result
     }
 
+    override suspend fun addReviewLike(likeEntity : ReviewLike) : MappingResult {
+        val response =  restaurantAviroDataSource.addReviewLike(likeEntity.toReviewLikeRequest())
+        lateinit var  result : MappingResult
+        response.onSuccess {
+            val code = it.statusCode
+            if(code == 200){
+                result =  MappingResult.Success(it.message, null)
+
+            } else {
+                result =  MappingResult.Error(it.statusCode.toString() + ":" + it.message)
+            }
+
+        }.onFailure {
+            result =  MappingResult.Error(it.message)
+        }
+
+        return result
+    }
+
+    override suspend fun cancelReviewLike(likeEntity : ReviewLike) : MappingResult {
+        val response =  restaurantAviroDataSource.cancelReviewLike(likeEntity.toReviewLikeRequest())
+        lateinit var  result : MappingResult
+        response.onSuccess {
+            val code = it.statusCode
+            if(code == 200){
+                result =  MappingResult.Success(it.message, null)
+
+            } else {
+                result =  MappingResult.Error(it.statusCode.toString() + ":" + it.message)
+            }
+
+        }.onFailure {
+            result =  MappingResult.Error(it.message)
+        }
+
+        return result
+    }
+
 
     override suspend fun reportReview(report: ReviewReporting) : MappingResult {
         val response = restaurantAviroDataSource.reportReview(report.toReportReviewRequest())

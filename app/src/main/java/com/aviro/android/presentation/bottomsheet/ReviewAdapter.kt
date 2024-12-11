@@ -2,6 +2,7 @@ package com.aviro.android.presentation.bottomsheet
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.aviro.android.R
@@ -77,8 +78,41 @@ class ReviewAdapter(val viewmodel : BottomSheetViewModel,
                 }
 
             }
+
+            // 좋아요 현황에 따라서 디자인 변경
+            binding.reviewLikeBtnThumb.background = ContextCompat.getDrawable(binding.root.context, R.drawable.ic_thumb_up)
+
+            if(binding.reviewLikeBtn.isSelected) {
+                binding.reviewLikeBtn.isSelected = !binding.reviewLikeBtn.isSelected
+                binding.reviewLikeBtnThumb.background = ContextCompat.getDrawable(binding.root.context, R.drawable.ic_thumb_up_fill)
+
+            } else {
+                binding.reviewLikeBtn.isSelected = !binding.reviewLikeBtn.isSelected
+                binding.reviewLikeBtnThumb.background = ContextCompat.getDrawable(binding.root.context, R.drawable.ic_thumb_up)
+            }
+
+            binding.reviewLikeBtn.setOnClickListener {
+                if(binding.reviewLikeBtn.isSelected) {
+                    // 좋아요 취소
+                    binding.reviewLikeBtn.isSelected = !binding.reviewLikeBtn.isSelected
+                    binding.reviewLikeBtnThumb.background = ContextCompat.getDrawable(binding.root.context, R.drawable.ic_thumb_up)
+                    // binding.reviewLikeCount.text -= 1
+                    // api 호출
+                } else {
+                    // 좋아요 클릭
+                    val bounceAnimation = AnimationUtils.loadAnimation(binding.reviewLikeBtn.context, R.anim.bounce)
+                    binding.reviewLikeBtn.startAnimation(bounceAnimation)
+                    binding.reviewLikeBtn.isSelected = !binding.reviewLikeBtn.isSelected
+                    binding.reviewLikeBtnThumb.background = ContextCompat.getDrawable(binding.root.context, R.drawable.ic_thumb_up_fill)
+                    // binding.reviewLikeCount.text += 1
+                    // api 호출
+                }
+
+            }
+
         }
 
     }
+
 
 }

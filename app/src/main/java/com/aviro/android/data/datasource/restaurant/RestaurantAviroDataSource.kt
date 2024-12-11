@@ -8,6 +8,7 @@ import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
 import com.aviro.android.data.model.review.RestaurantReviewAddRequest
 import com.aviro.android.data.model.review.ReviewAddResponse
+import com.aviro.android.data.model.review.ReviewLikeRequest
 import com.aviro.android.data.model.search.RestaurantVeganTypeRequest
 
 interface RestaurantAviroDataSource {
@@ -32,6 +33,8 @@ interface RestaurantAviroDataSource {
     suspend fun recommendRestaurant(request : RestaurantRecommendRequest) : Result<BaseResponse>
 
     suspend fun reportReview(request : ReportReviewRequest) : Result<BaseResponse>
+    suspend fun addReviewLike(request : ReviewLikeRequest) : Result<BaseResponse>
+    suspend fun cancelReviewLike(request : ReviewLikeRequest) : Result<BaseResponse>
 
     suspend fun updateTimetable(request : TimeUpdateRequest) : Result<BaseResponse>
     suspend fun updatePhone(request : PhoneUpdateRequest) : Result<BaseResponse>

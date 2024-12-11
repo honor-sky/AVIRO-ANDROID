@@ -9,6 +9,7 @@ import com.aviro.android.data.model.restaurant.*
 import com.aviro.android.data.model.review.ReportReviewRequest
 import com.aviro.android.data.model.review.RestaurantReviewAddRequest
 import com.aviro.android.data.model.review.ReviewAddResponse
+import com.aviro.android.data.model.review.ReviewLikeRequest
 import com.aviro.android.data.model.search.RestaurantVeganTypeRequest
 import javax.inject.Inject
 
@@ -68,6 +69,13 @@ class RestaurantAviroDataSourceImp @Inject constructor (
     }
     override suspend fun reportReview(request : ReportReviewRequest) : Result<BaseResponse> {
         return restaurantService.reportReview(request)
+    }
+
+    override suspend fun addReviewLike(request : ReviewLikeRequest) : Result<BaseResponse> {
+        return restaurantService.addReviewLike(request)
+    }
+    override suspend fun cancelReviewLike(request : ReviewLikeRequest) : Result<BaseResponse> {
+        return restaurantService.cancelReviewLike(placeId = request.placeId, commentId = request.commentId, userId = request.userId)
     }
 
     override suspend fun updateTimetable(request : TimeUpdateRequest) : Result<BaseResponse> {

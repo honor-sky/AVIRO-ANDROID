@@ -46,7 +46,6 @@ android {
 
         buildConfigField "String", "AMPLITUDE_API_KEY", properties['amplitude.api_key']
 
-
         manifestPlaceholders = [KAKAO_SDK_KEY :  properties['kakao_login.sdk_key']]
 
     }
@@ -57,9 +56,11 @@ android {
             resValue "string", "naver_maps_api_key", "개발용 API KEY"
             buildConfigField "String", "AWS_API_KEY_V2", properties['aws.debug_api_key_v2']
             buildConfigField "String", "AWS_API_KEY_V3", properties['aws.debug_api_key_v3']
+            buildConfigField "String", "AWS_API_KEY_V4", properties['aws.debug_api_key_v4']
             buildConfigField "String", "AWS_API_HEADER", properties['aws.api_debug_header']
             manifestPlaceholders = [AWS_API_KEY_V2 : properties['aws.debug_api_key_v2'] as String]
             manifestPlaceholders = [AWS_API_KEY_V3 : properties['aws.debug_api_key_v3'] as String]
+            manifestPlaceholders = [AWS_API_KEY_V4 : properties['aws.debug_api_key_v4'] as String]
         }
 
         release {
@@ -70,9 +71,11 @@ android {
             resValue "string", "naver_maps_api_key", "배포용 API KEY"
             buildConfigField "String", "AWS_API_KEY_V2", properties['aws.release_api_key_v2']
             buildConfigField "String", "AWS_API_KEY_V3", properties['aws.release_api_key_v3']
+            buildConfigField "String", "AWS_API_KEY_V4", properties['aws.release_api_key_v4']
             buildConfigField "String", "AWS_API_HEADER", properties['aws.api_release_header']
             manifestPlaceholders = [AWS_API_KEY_V2 : properties['aws.release_api_key_v2'] as String]
             manifestPlaceholders = [AWS_API_KEY_V3 : properties['aws.release_api_key_v3'] as String]
+            manifestPlaceholders = [AWS_API_KEY_V4 : properties['aws.release_api_key_v4'] as String]
         }
     }
 

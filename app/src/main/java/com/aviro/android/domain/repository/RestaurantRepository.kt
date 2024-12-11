@@ -11,6 +11,7 @@ import com.aviro.android.domain.entity.restaurant.Restaurant
 import com.aviro.android.domain.entity.restaurant.TimetableUpdating
 import com.aviro.android.domain.entity.restaurant.UrlUpdating
 import com.aviro.android.domain.entity.review.ReviewAdding
+import com.aviro.android.domain.entity.review.ReviewLike
 import com.aviro.android.domain.entity.review.ReviewReporting
 
 interface RestaurantRepository {
@@ -38,6 +39,8 @@ interface RestaurantRepository {
     suspend fun recommendRestaurant(placeId: String, userId: String, isRecommend : Boolean) : MappingResult
 
     suspend fun reportReview(reviewId: ReviewReporting) : MappingResult
+    suspend fun addReviewLike(likeEntity : ReviewLike) : MappingResult
+    suspend fun cancelReviewLike(likeEntity : ReviewLike) : MappingResult
 
     suspend fun updatePhone(updating: PhoneUpdating) : MappingResult
     suspend fun updateUrl(updating: UrlUpdating) : MappingResult

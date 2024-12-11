@@ -39,12 +39,7 @@
             android:textColor="@color/Gray2"
             android:textSize="13dp"
             android:text="@{review.updatedTime}" />
-        <ImageButton
-            android:id="@+id/updateBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:background="@drawable/ic_price_dot" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -71,27 +66,37 @@
     </LinearLayout>
 
         <!-- 좋아요 버튼 / 신고 삭제 버튼 -->
-        <!--
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="7dp">
+            android:layout_marginTop="4dp">
 
-
-            <com.google.android.material.button.MaterialButton
+            <LinearLayout
                 android:id="@+id/reviewLikeBtn"
-                style="@style/Theme.AVIRO.IconButton.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="102"
-                android:textColor="@color/Base_Black"
-                android:backgroundTint="@color/Base_White"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/Gray_100"
-                app:icon="@drawable/ic_thumb_up"
-                app:iconTint="@color/Base_Black"
-                app:iconSize="20dp" />
+                android:background="@drawable/custom_button_secondary_selector"
+                android:layout_margin="2dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="14dp">
+
+                <ImageView
+                    android:id="@+id/reviewLikeBtnThumb"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_thumb_up"/>
+
+                <TextView
+                    android:id="@+id/reviewLikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="6dp"
+                    android:textAppearance="@style/Body.Default.Strong" />
+                <!-- android:text="@{review.count}"  -->
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="0dp"
@@ -99,13 +104,14 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/updateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_price_dot"/>
+                android:background="@drawable/ic_price_dot" />
 
-        </LinearLayout> -->
+        </LinearLayout>
 
     </LinearLayout>
 

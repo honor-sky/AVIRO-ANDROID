@@ -1,7 +1,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme" parent="Theme.Material3.Light.NoActionBar"> <!--Theme.Material3.Light.NoActionBar--> <!-- Theme.AppCompat.Light.NoActionBar-->
+    <style name="Base.Theme" parent="Theme.AppCompat.Light.NoActionBar"> <!--Theme.Material3.Light.NoActionBar--> <!-- Theme.AppCompat.Light.NoActionBar-->
         <!-- Customize your light theme here. -->
         <!--<item name="colorSecondary">@color/Gray7</item>-->
 
