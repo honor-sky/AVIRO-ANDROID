@@ -14,23 +14,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.aviro.android.core.designsystem.CustomButton.getButtonColors
-import com.aviro.android.core.designsystem.CustomButton.getButtonDimensions
 
-object DropDownVeiw {
+object DropDownView {
 
     @Composable
     fun BasicDropdown (
+        albumMenuExpanded : Boolean,
         itemList : List<String>, // 목록 리스트
         onClickItem : (Int) -> Unit // 목록 클릭시 동작
     ) {
-        var expanded by remember { mutableStateOf(false) }
+        var expanded by remember { mutableStateOf(albumMenuExpanded) }
         val scrollState = rememberScrollState()
 
         return Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopStart)) {
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = {expanded = false}
+                onDismissRequest = { expanded = false}
             ) {
                 repeat(itemList.size) {
                     DropdownMenuItem(
@@ -44,7 +43,14 @@ object DropDownVeiw {
                 }
 
             }
-        }
+
+         /*   LaunchedEffect(expanded) {
+                if (expanded) {
+                    // Scroll to show the bottom menu items.
+                    scrollState.scrollTo(scrollState.maxValue)
+                }
+            }
+        }*/
     }
     }
 }

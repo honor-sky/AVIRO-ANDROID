@@ -13,10 +13,12 @@
     <!--전화걸기-->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
+    <!-- 갤러리 이미지 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/> <!-- 33 이후부터는 세분화 해서 권하 요청 -->
 
     <!--앰플리튜드-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
 
     <application
         android:usesCleartextTraffic="true"
@@ -126,6 +128,22 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".presentation.review.CustomGallery"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".presentation.review.ReviewWriting"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
+
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -151,6 +169,8 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
+
+
 
 
         <meta-data
