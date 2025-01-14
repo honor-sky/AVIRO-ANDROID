@@ -49,6 +49,7 @@ class Splash : BaseActivity() {
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        appUpdateManager = AppUpdateManagerFactory.create(this)
 
 
 
@@ -63,8 +64,13 @@ class Splash : BaseActivity() {
             }
         })
 
-        //goToHomeOrGuideOrSignWithDelay()
-        updateApp()
+
+        if (!BuildConfig.DEBUG) {
+            updateApp()
+        } else {
+            goToHomeOrGuideOrSignWithDelay()
+        }
+
 
     }
 
@@ -117,7 +123,7 @@ class Splash : BaseActivity() {
 
     fun updateApp() {
 
-        appUpdateManager = AppUpdateManagerFactory.create(this)
+        //appUpdateManager = AppUpdateManagerFactory.create(this)
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
 
@@ -148,9 +154,10 @@ class Splash : BaseActivity() {
 
             } else {
                 // 업데이트가 없는 경우
-                //Log.d("updateApp","업데이트 없음")
+
                 goToHomeOrGuideOrSignWithDelay()
             }
+
         }
 
         //goToHomeOrGuideOrSignWithDelay()

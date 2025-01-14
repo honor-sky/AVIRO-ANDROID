@@ -21,4 +21,101 @@
     <color name="BG_Red">#FFF1F1</color>
 
 
+    <!-- New Aviro Color System -->
+    <color name="Base_White">#FFFFFF</color>
+    <color name="Base_Black">#DFF0FA</color>
+
+
+    <color name="Green_Primary">@color/Green_500</color>
+    <color name="Green_50">#EEFFF6</color>
+    <color name="Green_100">#CEF5E2</color>
+    <color name="Green_200">#A9F2CE</color>
+    <color name="Green_300">#6FF2B2</color>
+    <color name="Green_400">#09DB76</color>
+    <color name="Green_500">#00D06C</color>
+    <color name="Green_600">#00A657</color>
+    <color name="Green_700">#008546</color>
+    <color name="Green_800">#0A7140</color>
+    <color name="Green_900">#0A5D37</color>
+    <color name="Green_950">#00341D</color>
+
+    <color name="Orange_Primary">@color/Orange_500</color>
+    <color name="Orange_50">#FFFAF5</color>
+    <color name="Orange_100">#FFF6ED</color>
+    <color name="Orange_200">#FFECD4</color>
+    <color name="Orange_300">#FFD5A8</color>
+    <color name="Orange_400">#FFB671</color>
+    <color name="Orange_500">#F56710</color>
+    <color name="Orange_600">#EF5007</color>
+    <color name="Orange_700">#C63A08</color>
+    <color name="Orange_800">#9D2F0F</color>
+    <color name="Orange_900">#7E2910</color>
+    <color name="Orange_950">#441106</color>
+
+    <color name="Yellow_Primary">@color/Yellow_400</color>
+    <color name="Yellow_50">#FFFCF2</color>
+    <color name="Yellow_100">#FEF5DD</color>
+    <color name="Yellow_200">#FEEBBB</color>
+    <color name="Yellow_300">#FDE199</color>
+    <color name="Yellow_400">#FCCD55</color>
+    <color name="Yellow_500">#FBC22F</color>
+    <color name="Yellow_600">#FBB608</color>
+    <color name="Yellow_700">#D89D04</color>
+    <color name="Yellow_800">#B28103</color>
+    <color name="Yellow_900">#8C6502</color>
+    <color name="Yellow_950">#664902</color>
+
+    <color name="Blue_Brand">@color/Blue_500</color>
+    <color name="Blue_Primary">@color/Blue_600</color>
+    <color name="Blue_50">#EEF3FB</color>
+    <color name="Blue_100">#DBECFF</color>
+    <color name="Blue_200">#B6D9FF</color>
+    <color name="Blue_300">#6DB3FF</color>
+    <color name="Blue_400">#218CFF</color>
+    <color name="Blue_500">#007AFF</color>
+    <color name="Blue_600">#0070EB</color>
+    <color name="Blue_700">#0063CF</color>
+    <color name="Blue_800">#0055B2</color>
+    <color name="Blue_900">#00438C</color>
+    <color name="Blue_950">#003166</color>
+
+    <color name="Red_Primary">@color/Red_600</color>
+    <color name="Red_50">#FFEFEC</color>
+    <color name="Red_100">#FFDAD3</color>
+    <color name="Red_200">#FFC5B6</color>
+    <color name="Red_300">#FFAB92</color>
+    <color name="Red_400">#FF916D</color>
+    <color name="Red_500">#FF3D00</color>
+    <color name="Red_600">#DE3700</color>
+    <color name="Red_700">#D12C0A</color>
+    <color name="Red_800">#A1210B</color>
+    <color name="Red_900">#821E0C</color>
+    <color name="Red_950">#460B04</color>
+
+    <color name="Gray_Primary">@color/Gray_950</color>
+    <color name="Gray_50">#FAFCFF</color>
+    <color name="Gray_100">#EFF1F5</color>
+    <color name="Gray_200">#C9CFDD</color>
+    <color name="Gray_300">#A8B2C4</color>
+    <color name="Gray_400">#8995AD</color>
+    <color name="Gray_500">#687794</color>
+    <color name="Gray_600">#5B6C8F</color>
+    <color name="Gray_700">#4E5C7A</color>
+    <color name="Gray_800">#3C485F</color>
+    <color name="Gray_900">#2B3344</color>
+    <color name="Gray_950">#1A1F29</color>
+
+    <color name="Black_50">#0A1A1F29</color>
+    <color name="Black_100">#0D1A1F29</color>
+    <color name="Black_200">#0F1A1F29</color>
+    <color name="Black_300">#141A1F29</color>
+    <color name="Black_400">#1A1A1F29</color>
+    <color name="Black_500">#1F1A1F29</color>
+    <color name="Black_600">#241A1F29</color>
+    <color name="Black_700">#291A1F29</color>
+    <color name="Black_800">#3D1A1F29</color>
+    <color name="Black_900">#4D1A1F29</color>
+    <color name="Black_950">@color/Gray_950</color>
+
+
 </resources>
