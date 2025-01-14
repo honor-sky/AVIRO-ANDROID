@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.aviro.android">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>  <!--네트워크로만 위치 측정-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>  <!--GPS 센서를 사용하여 위치 측정-->
+    <!--전화걸기-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.DIAL_PHONE" />
+
+    <!--앰플리튜드-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:name=".AviroApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/app_icon_v1"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/app_icon_v1_round"
+        android:supportsRtl="true"
+        android:theme="@style/Base.Theme"
+        tools:targetApi="31">
+
+
+        <activity
+            android:name=".presentation.guide.Guide"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".presentation.splash.Splash"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presentation.sign.Sign"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="app"
+                    android:host="aviro.co.kr"/>
+                <data
+                    android:scheme="aviro"
+                    android:host="testcallback"/>
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".presentation.home.Home"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--android:configChanges="fontScale|screenSize|orientation"-->
+        <!--android:windowSoftInputMode="adjustResize|stateHidden|"-->
+
+        <activity
+            android:name=".presentation.home.ui.register.RegisterActivity"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--android:configChanges="fontScale|screenSize|orientation"-->
+
+
+        <activity
+            android:name=".presentation.bottomsheet.ReviewActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".presentation.home.ui.register.SearchRegisteration"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".presentation.update.Update"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".presentation.search.Search"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".presentation.update.UpdateMenu"
+            android:exported="true"
+            android:configChanges="fontScale|screenSize|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="@string/KAKAO_SDK_KEY" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+
+
+        <meta-data
+            android:name="aviro.aws.v3.API_KEY"
+            android:value="AWS_API_KEY_V3" />
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="NAVER_CLIENT_ID" /> <!--${NAVER_CLIENT_ID}--> <!--@string/NAVER_CLIENT_ID-->
+
+        <meta-data
+            android:name="aviro.aws.v2.API_KEY"
+            android:value="AWS_API_KEY_V2"/> <!--"${AWS_API_KEY_V2}" --> <!--@string/AWS_API_KEY_V2-->
+
+    </application>
+
+
+    <!-- 태블릿 모드 지원 안 함 -->
+    <supports-screens
+        android:largeScreens="false"
+        android:xlargeScreens="false"
+        android:requiresSmallestWidthDp="600" />
+
+</manifest>
