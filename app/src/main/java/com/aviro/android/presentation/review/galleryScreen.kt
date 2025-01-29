@@ -1,20 +1,16 @@
 package com.aviro.android.presentation.review
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,15 +27,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -47,13 +38,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
@@ -61,146 +47,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import com.aviro.android.R
 import com.aviro.android.common.ImageUtils
-import com.aviro.android.core.designsystem.DropDownView
 import com.aviro.android.core.designsystem.Typographys
-import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
 import com.aviro.android.presentation.entity.GalleryPhotoItem
-import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
-@AndroidEntryPoint
-class CustomGallery : ComponentActivity() {
-
-    private val viewmodel : ReviewWritingViewModel by viewModels()
-
-    var imageList : MutableList<GalleryPhotoItem> = mutableListOf()
-    var albumList : MutableList<String> = mutableListOf()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        checkReadImagesPermission()
-
-    }
-
-
-    fun checkReadImagesPermission() {
-
-        val cameraPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-
-                setContent {
-                    Surface {
-                        albumList = fetchAlbums()
-                        imageList = fetchImages(albumList[0]) // 앨범 리스트 가져오기
-
-                         // 사진 가져오기 (처음엔 무조건 최근항목)
-
-                        galleryScreen(
-                            viewmodel,
-                            onComplete =  { }, // 다음 화면으로 넘어가기
-                            onBack = {finish()},
-                            imageList = imageList,
-                            albumList = albumList,
-                            onShowAlbum = {},
-                            currentAlbum = albumList[0],
-                            onDismisssAlbum = { },
-                            onSelectAlbum = { }, // 선택된 앨범으로 다시 사진 가져오기
-                            onSelectPhoto = { selectedPhoto ->
-                                viewmodel.toggleSelectedPhoto(selectedPhoto) }
-                        )
-                    }
-                }
-
-            } else {
-                // 권한 거부 처리 로직 // 사용 못함
-                AviroDialogUtils.createTwoDialog(this,
-                    "사진 권한 필요 알림",
-                    "권한 거절로 사진 등록 서비스 이용이 불가능합니다.\n사진을 등록하시려면 앱설정에서 사진 선택 권한을 활성화해주세요. ",
-                    "취소",
-                    "설정으로 이동",
-                    { moveToAppSetting() } ).show()
-            }
-        }
-
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            if(ContextCompat.checkSelfPermission(this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-                cameraPermLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            } else {
-                setContent {
-                    Surface {
-                        albumList = fetchAlbums()
-                        imageList = fetchImages(albumList[0]) // 앨범 리스트 가져오기
-
-                        // 사진 가져오기 (처음엔 무조건 최근항목)
-                        galleryScreen(
-                            viewmodel,
-                            onComplete =  {}, // 다음 화면으로 넘어가기
-                            onBack = {finish()},
-                            imageList = imageList,
-                            albumList = albumList,
-                            onShowAlbum = { },
-                            currentAlbum = albumList[0],
-                            onDismisssAlbum = { },
-                            onSelectAlbum = { }, // 선택된 앨범으로 다시 사진 가져오기
-                            onSelectPhoto = { selectedPhoto ->
-                                viewmodel.toggleSelectedPhoto(selectedPhoto) }
-                        )
-                    }
-                }
-            }
-
-        } else {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.READ_MEDIA_IMAGES
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                cameraPermLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
-            } else {
-                setContent {
-                    Surface {
-                        albumList = fetchAlbums()
-                        imageList = fetchImages(albumList[0]) // 앨범 리스트 가져오기
-
-                        // 사진 가져오기 (처음엔 무조건 최근항목)
-
-                        galleryScreen(
-                            viewmodel,
-                            onComplete =  {}, // 다음 화면으로 넘어가기
-                            onBack = {finish()},
-                            imageList = imageList,
-                            albumList = albumList,
-                            onShowAlbum = {  },
-                            currentAlbum = albumList[0],
-                            onDismisssAlbum = { },
-                            onSelectAlbum = { }, // 선택된 앨범으로 다시 사진 가져오기
-                            onSelectPhoto = { selectedPhoto ->
-                                viewmodel.toggleSelectedPhoto(selectedPhoto) }
-                        )
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    private fun moveToAppSetting() {
+    private fun moveToAppSetting(context: Context) {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val uri = Uri.fromParts("package", packageName, null)
+        val uri = Uri.fromParts("package", context.packageName, null)
         intent.data = uri
-        startActivity(intent)
+        context.startActivity(intent)
     }
 
-    fun fetchAlbums() : MutableList<String> {
+    fun fetchAlbums(context: Context) : MutableList<String> {
         // 갤러리 내 앨범 항목 가져오기
         val galleryAlbumList = mutableListOf<String>()
 
@@ -210,7 +71,7 @@ class CustomGallery : ComponentActivity() {
         )
 
         val queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val cursor: Cursor? = this.contentResolver.query(
+        val cursor: Cursor? = context.contentResolver.query(
             queryUri,
             projection,
             null,
@@ -236,7 +97,7 @@ class CustomGallery : ComponentActivity() {
 
     // 사진 저장소에서 사진 가져오기
     @SuppressLint("Range")
-    fun fetchImages(albumName : String) : MutableList<GalleryPhotoItem> {
+    fun fetchImages(albumName : String, context : Context) : MutableList<GalleryPhotoItem> {
         // 이미지 가져오기 // Paging, 캐싱 필수
         val galleryPhotoList = mutableListOf<GalleryPhotoItem>()
 
@@ -259,7 +120,7 @@ class CustomGallery : ComponentActivity() {
             else null*/
 
 
-        val cursor: Cursor? = this.contentResolver.query(
+        val cursor: Cursor? = context.contentResolver.query(
             queryUri,
             projection,
             selection,
@@ -289,51 +150,40 @@ class CustomGallery : ComponentActivity() {
         return galleryPhotoList
     }
 
-}
+//}
+
+
+
 
 /*
-@Preview(showBackground = false)
-@Composable
-fun galleryScreenPreview() {
-    val context = LocalContext.current
-    Surface(
-    ) {
+onComplete : (List<GalleryPhotoItem>) -> Unit, // 이미지 선택 완료
+onBack : () -> Unit, // 뒤로가기
 
-        galleryScreen(
-            onComplete =  {},
-            onBack = {(context as CustomGallery).finish()},
-            imageList = listOf(GalleryPhotoItem(0,"",false)),
-            albumList = listOf(""),
-            onShowAlbum = {},
-            currentAlbum = "최근항목",
-            onDismisssAlbum = {},
-            onSelectAlbum = {}, // 선택된 앨범으로 다시 사진 가져오기
-            onSelectPhoto = {} // 선택한 이미지를 선택됨으로 바꾸고, 선택 리스트에 넣음
-        )
+imageList : List<GalleryPhotoItem>, // 이미지 리스트
+albumList : List<String>, // 앨범 리스트
 
-    }
-}
-
- */
-
+currentAlbum : String,  // 현재 앨범 이름
+onShowAlbum : @Composable () -> Unit, // 앨범 리스트 열기
+onDismisssAlbum : () -> Unit, // 앨범 리스트 닫기
+onSelectAlbum : (String) -> Unit, // 앨범 선택
+onSelectPhoto : (GalleryPhotoItem) -> Unit // 사진 하나 선택 // 뷰모델에서 처리 // 해당 이미지 선택 여부 변경, 선택됨 리스트에 추가 및 삭제
+*/
 
 
 @Composable
 fun galleryScreen(
+    context : Context,
     viewmodel : ReviewWritingViewModel,
-    onComplete : (List<GalleryPhotoItem>) -> Unit, // 이미지 선택 완료
-    onBack : () -> Unit, // 뒤로가기
-    imageList : List<GalleryPhotoItem>, // 이미지 리스트
-    albumList : List<String>, // 앨범 리스트
-    currentAlbum : String,  // 현재 앨범 이름
-    onShowAlbum : @Composable () -> Unit, // 앨범 리스트 열기
-    onDismisssAlbum : () -> Unit, // 앨범 리스트 닫기
-    onSelectAlbum : (String) -> Unit, // 앨범 선택
-    onSelectPhoto : (GalleryPhotoItem) -> Unit // 사진 하나 선택 // 뷰모델에서 처리 // 해당 이미지 선택 여부 변경, 선택됨 리스트에 추가 및 삭제
-) {
+    onBackButtonClicked : () -> Unit,
+    onNextButtonClicked : () -> Unit,
+
+   ) {
+
+    val albumList = fetchAlbums(context) // 앨범 리스트 반환
+    Log.d("albumList","$albumList")
+    val imageList = fetchImages(albumList[0], context) // 이미지 리스트 반환
 
 
-    val context = LocalContext.current
     val selectedPhotos by viewmodel.selectedPhotoList.collectAsState()
 
     Column(modifier = Modifier
@@ -358,7 +208,7 @@ fun galleryScreen(
                     IconButton(modifier = Modifier
                         .width(24.dp)
                         .height(24.dp),
-                        onClick = { onBack() }) {
+                        onClick = { onBackButtonClicked() }) {
 
                         Icon(
                             painter = painterResource(id = R.drawable.ic_arrow_left),
@@ -386,7 +236,9 @@ fun galleryScreen(
 
 
                 // 선택 완료 버튼
-                Box( modifier = Modifier.weight(1f), // 우측 박스
+                Box( modifier = Modifier
+                    .weight(1f)
+                    .clickable {onNextButtonClicked()}, // 우측 박스
                     contentAlignment = Alignment.CenterEnd // 우측 정렬
                 ) {
                     Row {
@@ -425,7 +277,8 @@ fun galleryScreen(
                             modifier = Modifier
                                 .aspectRatio(1f) // 정사각형 모양 유지
                                 .clickable {
-                                    onSelectPhoto(imageList[item])
+                                    viewmodel.toggleSelectedPhoto(imageList[item])
+                                    //onSelectPhoto(imageList[item])
                                 }
                                 .then(
                                     if (selectedPhotos.contains(imageList[item])) {
@@ -472,6 +325,7 @@ fun galleryScreen(
 @Composable
 fun SelectedPhotoButton(selectedPhotos : List<GalleryPhotoItem>, item : GalleryPhotoItem) {
  Box(modifier = Modifier
+     .padding(end = 8.dp, top = 8.dp) // 이 코드가 선언된 위치도 중요 (size 밑에 선언되면 동그라미가 작아짐)
      .size(24.dp)
      .background(color = colorResource(R.color.Blue_Primary), shape = CircleShape),
      contentAlignment = Alignment.Center

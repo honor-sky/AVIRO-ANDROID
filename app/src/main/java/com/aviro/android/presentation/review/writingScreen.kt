@@ -2,15 +2,16 @@ package com.aviro.android.presentation.review
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
-import android.os.Bundle
-import androidx.activity.ComponentActivity
+import android.provider.Settings
+import android.util.Log
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,12 +28,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -46,56 +46,50 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import com.aviro.android.R
 import com.aviro.android.core.designsystem.CustomButton
 import com.aviro.android.core.designsystem.Typographys
 import com.aviro.android.presentation.aviro_dialog.AviroDialogUtils
-import com.aviro.android.presentation.bottomsheet.ReviewViewModel
-import com.aviro.android.presentation.home.ui.register.RegisterActivity
-import java.security.Permission
-
-class ReviewWriting : ComponentActivity() {
 
 
-    private val viewmodel : ReviewWritingViewModel by viewModels() // 뷰모델
+@Composable
+fun writingScreen(
+    context : Context,
+    viewmodel : ReviewWritingViewModel,
+    onBackButtonClicked : () -> Unit,
+    onNextButtonClicked : () -> Unit
+) {
 
+    val galleryPermissionLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                // 권한이 허용된 경우
+                onNextButtonClicked()
+            } else {
+                // 권한 거부 시 처리
+                AviroDialogUtils.createTwoDialog(
+                    context,
+                    "권한 설정 필요",
+                    "갤러리 접근 권한이 필요합니다. 설정에서 권한을 활성화해주세요.",
+                    "확인",
+                    "설정으로 이동",
+                    {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.fromParts("package", context.packageName, null)
+                        }
+                        context.startActivity(intent)
+                    }
+                ).show()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            Surface {
-                BaseScreen()
             }
         }
-    }
-
-
-}
-
-
-
-@Preview(showBackground = false)
-@Composable
-fun BasePreview() {
-    Surface(
-    ) {
-        BaseScreen()
-    }
-}
-
-
-
-@Composable
-fun BaseScreen() {
-    val context = LocalContext.current
 
     Column(modifier = Modifier.
     fillMaxSize()
+        //.verticalScroll(rememberScrollState())
         .padding(start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -115,7 +109,7 @@ fun BaseScreen() {
                 IconButton(modifier = Modifier
                     .width(24.dp)
                     .height(24.dp),
-                    onClick = { ((context as Activity).finish()) }) {
+                    onClick = { onBackButtonClicked() }) {
 
                     Icon(
                         painter = painterResource(id = R.drawable.ic_close),
@@ -156,7 +150,7 @@ fun BaseScreen() {
                 .fillMaxWidth()
                 .padding(top = 24.dp))
             {
-                reviewImage()
+                reviewImage(viewmodel, galleryPermissionLauncher, onNextButtonClicked)
             }
 
             // 후기 작성
@@ -202,8 +196,6 @@ fun ratingView() {
             style = Typographys.Title.Subsection
         )
 
-
-
         // 별점
          Box(modifier = Modifier
               .fillMaxWidth()
@@ -226,64 +218,16 @@ fun ratingView() {
 
 
 @Composable
-fun reviewImage() {
+fun reviewImage(
+    viewmodel : ReviewWritingViewModel,
+    galleryPermissionLauncher : ManagedActivityResultLauncher<String, Boolean>,
+    onNextButtonClicked : () -> Unit) {
 
     val context = LocalContext.current
 
-    // 갤러리 화면 이동 런처
-    val galleryStartLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-        //// 넘어온 값이 RESULT_OK이면 getStringExtra로 값 가져오기
-        if (result.resultCode == Activity.RESULT_OK) {
-            // 선택한 사진 가져오기
-            // val data = result.data
-        }
-    }
+    val isImage = viewmodel.selectedPhotoList.collectAsState().value.isNotEmpty()
 
-    // 갤러리 접근 권한 런처
-    val galleryPermissionLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                // 권한 허가 처리 로직
-                galleryStartLauncher.launch(Intent(context, CustomGallery::class.java))
-            }
-            else {
-                // 권한 거부 처리 로직
-                // dialog 띄움
-                AviroDialogUtils.createOneDialog(context,
-                    "갤러리 접근 권한 요청",
-                    "사진을 업로드 하기 위해서는\n갤러리 접근 권한 요청에 동의해주세요.",
-                    "확인").show()
-            }
-        }
-
-
-    fun checkGalleryPermission() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES)
-                == PackageManager.PERMISSION_GRANTED) {
-                // 이미 권한이 허용된 경우
-                galleryStartLauncher.launch(Intent(context, CustomGallery::class.java))
-            } else {
-                galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-            }
-        } else {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                // 이미 권한이 허용된 경우
-                galleryStartLauncher.launch(Intent(context, CustomGallery::class.java))
-            } else {
-                galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-        }
-    }
-
-
-    var isImage = true
-
-      Column()
-      {
+      Column() {
           Text(
               text = "사진/동영상 (선택)",
               color = colorResource(R.color.Base_Black),
@@ -301,12 +245,7 @@ fun reviewImage() {
                   style = Typographys.BodyDefault.Regular
               )
 
-              if(isImage) {
-                  // 사지 추가 버튼
-              }
           }
-
-
 
           val stroke = Stroke(width = 3f,
               pathEffect = PathEffect.dashPathEffect(floatArrayOf(33f, 30f), 2f)
@@ -318,8 +257,8 @@ fun reviewImage() {
               .fillMaxWidth()
           ) {
               Box {
-                  // 이미지 없음
-                  if(isImage) {
+                  // 이미지 없음 false
+                  if(!isImage) {
                       IconButton(modifier = Modifier
                           .size(width = 120.dp, height = 120.dp)
                           .drawBehind {
@@ -330,8 +269,31 @@ fun reviewImage() {
                               )
                           },
                           onClick = {
-                              //checkGalleryPermission()
-                              galleryStartLauncher.launch(Intent(context, CustomGallery::class.java))
+                              // 권한 확인 및 요청 로직
+                              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                  if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES)
+                                      == PackageManager.PERMISSION_GRANTED
+                                  ) {
+                                      // 이미 권한이 허용된 경우
+                                      onNextButtonClicked()
+                                  } else {
+                                      // 권한 요청
+                                      galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+                                  }
+                              } else {
+                                  if (ContextCompat.checkSelfPermission(
+                                          context,
+                                          Manifest.permission.READ_EXTERNAL_STORAGE
+                                      )
+                                      == PackageManager.PERMISSION_GRANTED
+                                  ) {
+                                      // 이미 권한이 허용된 경우
+                                      onNextButtonClicked()
+                                  } else {
+                                      // 권한 요청
+                                      galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                  }
+                              }
                           }){
                           Icon(
                               modifier = Modifier
@@ -359,14 +321,8 @@ fun reviewImage() {
           }
       }
 
-
-
 }
 
-
-
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun reviewScript() {
 
@@ -465,6 +421,17 @@ fun CustomMultiLineTextField(hint : String, maxCount : Int, label : String) {
     }
 
 }
+
+
+/*@Preview(showBackground = false)
+@Composable
+fun BasePreview() {
+    Surface(
+    ) {
+        writingScreen()
+    }
+}*/
+
 
 
 

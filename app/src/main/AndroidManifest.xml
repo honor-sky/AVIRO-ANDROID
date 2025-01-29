@@ -129,20 +129,14 @@
         </activity>
 
         <activity
-            android:name=".presentation.review.CustomGallery"
+            android:name=".presentation.review.Review"
             android:exported="true"
             android:configChanges="fontScale|screenSize|orientation"
             android:windowSoftInputMode="adjustPan|adjustResize"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity
-            android:name=".presentation.review.ReviewWriting"
-            android:exported="true"
-            android:configChanges="fontScale|screenSize|orientation"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            android:screenOrientation="portrait">
-        </activity>
+
 
 
         <activity

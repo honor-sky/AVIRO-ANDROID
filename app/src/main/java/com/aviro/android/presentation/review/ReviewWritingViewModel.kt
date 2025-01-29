@@ -24,16 +24,24 @@ class ReviewWritingViewModel @Inject constructor (
 ) : ViewModel() {
 
     // 가게 정보
+    private val _restaurantInfo = MutableStateFlow<Int>(0)
+    val restaurantInfo: StateFlow<Int> = _restaurantInfo.asStateFlow()
 
     // 별점
+    private val _ratingAmount = MutableStateFlow<Int>(0)
+    val ratingAmount: StateFlow<Int> = _ratingAmount.asStateFlow()
 
     // 갤러리에서 선택된 이미지만
     private val _selectedPhotoList = MutableStateFlow<List<GalleryPhotoItem>>(emptyList())
     val selectedPhotoList: StateFlow<List<GalleryPhotoItem>> = _selectedPhotoList.asStateFlow()
 
+    // 리뷰글
+    private val _reviewContent = MutableStateFlow<String>("")
+    val reviewContent: StateFlow<String> = _reviewContent.asStateFlow()
+
+
     // Review 리스트 (수정 가능하도록)
 
-    // 리뷰글
 
     // 에러 메세지
 
@@ -51,6 +59,14 @@ class ReviewWritingViewModel @Inject constructor (
     }
 
 
+    // 해당 식당의 메뉴 정보를 받아와 태그로 생성
+    fun getMenus() {
+
+    }
+
+    fun setRestaurantInfo() {
+
+    }
 
 
 
